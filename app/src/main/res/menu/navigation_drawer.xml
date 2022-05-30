@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:title="Hello"
+        android:id="@+id/hello">
+        <menu>
+            <item
+                android:id="@+id/gen_opd"
+                android:title="Genera OPD"></item>
+            <item
+                android:id="@+id/service"
+                android:title="Services"></item>
+            <item
+                android:id="@+id/settings"
+                android:title="Settings"></item>
+            <item
+                android:id="@+id/testimonies"
+                android:title="Testimonies"></item>
+            <item
+                android:id="@+id/booking"
+                android:title="Bookings"></item>
+        </menu>
+    </item>
+
+    <item android:title="Gallery"
+        android:id="@+id/gala">
+        <menu>
+            <item android:title="Gallery"
+                android:id="@+id/gallery">
+
+            </item>
+        </menu>
+
+    </item>
+
+</menu>
