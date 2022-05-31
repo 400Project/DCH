@@ -6,23 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.DCH.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            app:title="DCH"
-            style="@style/Widget.Material3.Toolbar"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.DCH.PopupOverlay" />
-
-
-    </com.google.android.material.appbar.AppBarLayout>
-   <include
-       layout="@layout/content_main"></include>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,7 +6,7 @@
         android:id="@+id/hello">
         <menu>
             <item
-                android:id="@+id/gen_opd"
+                android:id="@+id/SecondFragment"
                 android:title="Genera OPD"></item>
             <item
                 android:id="@+id/service"

@@ -7,26 +7,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer"
     android:fitsSystemWindows="true"
-
     >
 
-<include android:id="@+id/main"
-    layout="@layout/activity_main">
 
-</include>
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.DCH.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            app:title="DCH"
+            style="@style/Widget.Material3.Toolbar"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.DCH.PopupOverlay" />
+        <include
+            layout="@layout/content_main"></include>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:id="@+id/navigation_drawer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/navigation_drawer">
     </com.google.android.material.navigation.NavigationView>
 
-</FrameLayout>
 
 /
 </androidx.drawerlayout.widget.DrawerLayout>
