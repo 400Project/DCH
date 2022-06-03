@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/Theme.DCH.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             app:title="DCH"
@@ -23,8 +23,12 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/Theme.DCH.PopupOverlay" />
+
         <include
             layout="@layout/content_main"></include>
+
+
+
 
     </com.google.android.material.appbar.AppBarLayout>
 

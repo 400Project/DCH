@@ -5,10 +5,20 @@
     android:layout_width="match_parent"
     android:layout_margin="16sp"
     android:layout_height="match_parent"
-    tools:context=".HomePage">
+    tools:context=".ui.HomePage">
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/home_linear_layout">
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/welcome"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.AppCompat.Display1"
         android:text="Our Vision"
@@ -21,7 +31,7 @@
     </com.google.android.material.textview.MaterialTextView>
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/welcome_message"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.AppCompat.Headline"
         android:text="@string/sample"
@@ -30,19 +40,18 @@
         app:layout_constraintStart_toStartOf="@id/welcome"
         app:layout_constraintTop_toBottomOf="@id/welcome">
     </com.google.android.material.textview.MaterialTextView>
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:id="@+id/advert_layout"
-       android:layout_marginTop="16dp"
-       android:orientation="vertical"
-       app:layout_constraintTop_toBottomOf="@id/welcome_message"
-       app:layout_constraintStart_toStartOf="parent">
-       <androidx.recyclerview.widget.RecyclerView
-           android:id="@+id/advert_recycle"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent" />
-   </LinearLayout>
+        <include android:id="@+id/advert_bunner"
+            layout="@layout/advert_card"></include>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/advert_layout"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/welcome_message"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/staff_portal"
@@ -54,4 +63,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
     </com.google.android.material.button.MaterialButton>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,19 +1,19 @@
 package com.oyatech.dch
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.oyatech.dch.databinding.FragmentHomeBinding
 import com.oyatech.dch.databinding.FragmentLoginBinding
+import com.oyatech.dch.records.PatientsDataPage
 
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class Login : Fragment() {
+class LoginFrgment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
 
@@ -35,7 +35,7 @@ class Login : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loginLayout.login.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            startActivity(Intent(context, PatientsDataPage::class.java))
         }
     }
 

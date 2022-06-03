@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.oyatech.dch.HomePage"
+        android:name="com.oyatech.dch.ui.HomePage"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_home">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.oyatech.dch.Login"
+        android:name="com.oyatech.dch.LoginFrgment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_login">
 
