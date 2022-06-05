@@ -6,8 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".consultations.ADayConsultation">
+    tools:context=".patient.Patients">
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/patient_recycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/patient_particulars_card"></androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:id="@+id/patient_record"
@@ -28,7 +39,7 @@
         android:layout_marginEnd="20dp"
         app:icon="@drawable/ic_search_24"
         style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         app:layout_constraintEnd_toEndOf="parent">
 
     </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>

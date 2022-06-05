@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/HomePageFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/HomePageFragment"
         android:name="com.oyatech.dch.ui.HomePage"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_HomePageFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.oyatech.dch.LoginFrgment"
+        android:id="@+id/LoginFragment"
+        android:name="com.oyatech.dch.LoginFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_login">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_LoginFragment_to_HomePageFragment"
+            app:destination="@id/HomePageFragment" />
     </fragment>
 </navigation>

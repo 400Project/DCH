@@ -1,13 +1,12 @@
-package com.oyatech.dch.records
+package com.oyatech.dch.tabdesign
 
 import android.os.Bundle
 import android.view.Menu
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
+import androidx.core.view.MenuItemCompat
+import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oyatech.dch.R
-import com.oyatech.dch.RegisterNewPatient
 import com.oyatech.dch.databinding.ActivityPatientsDataPageBinding
 import com.oyatech.dch.ui.MainActivity
 
@@ -16,6 +15,7 @@ private val title = arrayListOf("Patient","Consultation","Pharmacy")
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityPatientsDataPageBinding
 
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -24,9 +24,13 @@ private val title = arrayListOf("Patient","Consultation","Pharmacy")
        setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
+
+        /**
+         * Create a tab layout with PatientFragment, Consultation, Pharmacy etc
+         */
         val tablelayout = binding.tabLayout
         val viewPager2 =binding.viewPager
-      viewPager2.adapter = TapAdapter(this)
+      viewPager2.adapter = TabAdapter(this)
         TabLayoutMediator(tablelayout,viewPager2){
             tab, position ->
             run {
@@ -60,6 +64,9 @@ private val title = arrayListOf("Patient","Consultation","Pharmacy")
         (menu.findItem(R.id.search).actionView as SearchView).apply {
             setSearchableInfo(searchableInfo.getSearchableInfo(componentName))
         }*/
+
+
         return true
+        }
+
     }
-}

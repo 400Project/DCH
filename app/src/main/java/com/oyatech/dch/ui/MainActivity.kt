@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
-import com.oyatech.dch.records.PatientsDataPage
+import com.oyatech.dch.tabdesign.PatientsDataPage
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.HomeActivityMainBinding
 

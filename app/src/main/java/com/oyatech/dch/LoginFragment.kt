@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.oyatech.dch.databinding.FragmentLoginBinding
-import com.oyatech.dch.records.PatientsDataPage
+import com.oyatech.dch.tabdesign.PatientsDataPage
 
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class LoginFrgment : Fragment() {
+class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
 

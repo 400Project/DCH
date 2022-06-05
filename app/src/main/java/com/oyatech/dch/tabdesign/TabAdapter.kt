@@ -1,4 +1,4 @@
-package com.oyatech.dch.records
+package com.oyatech.dch.tabdesign
 
 import android.content.res.Resources
 import androidx.fragment.app.Fragment
@@ -10,7 +10,7 @@ import com.oyatech.dch.consultations.ADayConsultation
 import com.oyatech.dch.pharmacy.Pharmacy
 
 
-class TapAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class TabAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
 
     /**

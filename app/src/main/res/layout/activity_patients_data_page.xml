@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".records.PatientsDataPage">
-
+    tools:context=".tabdesign.PatientsDataPage">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -20,6 +19,7 @@
         android:id="@+id/toolbar">
     </androidx.appcompat.widget.Toolbar>
 
+
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
     </com.google.android.material.tabs.TabLayout>
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

@@ -14,27 +14,33 @@
         android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".records.PatientsDataPage"
-            android:exported="true"
+            android:name=".patient.PatientRegistrationFormActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.DayNight"
+            android:label="REGISTRATION"
+            android:parentActivityName=".tabdesign.PatientsDataPage">
+
+        </activity>
+        <activity
+            android:name=".tabdesign.PatientsDataPage"
+            android:exported="false"
             android:label="@string/title_activity_patients_data_page"
             android:theme="@style/Theme.Material3.DayNight.NoActionBar"
-           >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:parentActivityName=".ui.MainActivity">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-          <!--  <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" ></meta-data>-->
+
         </activity>
-
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Material3.DayNight.NoActionBar">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
     </application>

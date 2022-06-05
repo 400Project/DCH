@@ -35,7 +35,7 @@ class HomePage : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.staffPortal.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            findNavController().navigate(R.id.action_HomePageFragment_to_LoginFragment)
             Toast.makeText(context,"Click",Toast.LENGTH_SHORT).show()
         }
     }
