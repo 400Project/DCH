@@ -4,17 +4,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.get
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.oyatech.dch.R
 import com.oyatech.dch.patient.data.ParticularsAdapter.ParticularsViewHolder
 
-class ParticularsAdapter(private val particularList: List<Paticulars>): RecyclerView.Adapter<ParticularsViewHolder>() {
+class ParticularsAdapter(private var particularList: List<Particulars>):
+    RecyclerView.Adapter<ParticularsViewHolder>() {
 
 
     class ParticularsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val firstName: TextView = itemView.findViewById(R.id.firtName)
         val otherName: TextView = itemView.findViewById(R.id.otherName)
+
 
     }
 
@@ -73,8 +79,10 @@ val particularsLayout = LayoutInflater.from(parent.context)
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: ParticularsViewHolder, position: Int) {
-        holder.firstName.text = particularList[position].firstName
-        holder.otherName.text = particularList[position].otherNames
+        holder.firstName.text = particularList.get(position).firstName
+        holder.otherName.text = particularList.get(position).otherNames
+
+
 
     }
 

@@ -2,8 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:title="Hello"
-        android:id="@+id/hello">
+    <item android:title="Hello">
         <menu>
             <item
                 android:id="@+id/LoginFragment"
@@ -11,23 +10,15 @@
             <item
                 android:id="@+id/service"
                 android:title="Services"></item>
-            <item
-                android:id="@+id/settings"
-                android:title="Settings"></item>
-            <item
-                android:id="@+id/testimonies"
-                android:title="Testimonies"></item>
-            <item
-                android:id="@+id/booking"
-                android:title="Bookings"></item>
+            <item android:title="Settings"></item>
+            <item android:title="Testimonies"></item>
+            <item android:title="Bookings"></item>
         </menu>
     </item>
 
-    <item android:title="Gallery"
-        android:id="@+id/gala">
+    <item android:title="Gallery">
         <menu>
-            <item android:title="Gallery"
-                android:id="@+id/gallery">
+            <item android:title="Gallery">
 
             </item>
         </menu>

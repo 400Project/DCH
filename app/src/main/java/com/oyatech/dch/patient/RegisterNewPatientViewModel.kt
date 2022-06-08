@@ -2,15 +2,16 @@ package com.oyatech.dch.patient
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+
 import androidx.lifecycle.ViewModel
-import com.oyatech.dch.patient.data.Paticulars
+import com.oyatech.dch.patient.data.Particulars
 import com.oyatech.dch.patient.data.listOfPatientPaticulars
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class RegisterNewPatientViewModel : ViewModel() {
-    private var _patientsList :ArrayList<Paticulars> = listOfPatientPaticulars
-   var patientList:List<Paticulars> = _patientsList
+  private  val _patientsList : MutableList<Particulars> = listOfPatientPaticulars
+    val patientList:MutableList<Particulars> = _patientsList
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDateAndTime(): String {
@@ -19,9 +20,13 @@ class RegisterNewPatientViewModel : ViewModel() {
 
 
     fun getPatientParticulars(firsName:String,otherName:String)
-    { val newPatient = Paticulars(firsName,otherName)
-        _patientsList.add(newPatient)
+    { val newPatient = Particulars(firsName,otherName)
+            _patientsList.add(newPatient)
 
+    }
+
+    fun getConsultationQue(particulars: Particulars){
+        _patientsList.add(particulars)
     }
 
 }

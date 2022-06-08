@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:id="@+id/dch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="DCH"
@@ -50,7 +49,6 @@
             app:layout_constraintStart_toStartOf="@id/doc_image"
             app:layout_constraintEnd_toEndOf="@id/doc_image">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Username">
@@ -68,7 +66,6 @@
             app:layout_constraintStart_toStartOf="@id/user_id"
             app:layout_constraintEnd_toEndOf="@id/user_id">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/user_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
@@ -89,7 +86,6 @@
         </com.google.android.material.button.MaterialButton>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/reset_password"
             style="@style/MaterialAlertDialog.Material3.Body.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

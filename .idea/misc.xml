@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/drawable/ad_bunner1_background.xml" value="0.1" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/drawable/ic_image_doc.xml" value="0.172" />
+        <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/drawable/ic_location.xml" value="0.1445" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/activity_patient_registration_form.xml" value="0.2" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/activity_patients_data_page.xml" value="0.22" />
@@ -13,6 +14,7 @@
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/content_main.xml" value="0.22" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/content_patients_data_page.xml" value="0.25" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/dch_patient_data_tab.xml" value="0.19895833333333332" />
+        <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_consultation.xml" value="0.2" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_consultation_que.xml" value="0.2" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_first.xml" value="0.25" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_home.xml" value="0.17916666666666667" />
@@ -27,6 +29,7 @@
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/login.xml" value="0.1" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/nav_header_main.xml" value="0.2" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/nav_view.xml" value="0.1" />
+        <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/patient_particulars_card.xml" value="0.2" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/patient_paticulars_card.xml" value="0.19895833333333332" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/patient_register_content.xml" value="0.10697674418604651" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/patient_vital.xml" value="0.22" />

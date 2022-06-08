@@ -1,11 +1,19 @@
 package com.oyatech.dch.patient.data
 
-data class Paticulars(val firstName:String,
-                      val otherNames:String){
+import androidx.annotation.Nullable
+import java.io.Serializable
+import java.util.*
 
-    var fName = firstName.uppercase()
-    set(value){
-        if (value.isNotEmpty()) field = firstName
-    }
+data class Particulars(
+    val firstName:String,
+    val otherNames:String
+   ):Serializable{
 
+/* @Nullable val sex:String,
+    @Nullable val dateOfBirth: String,
+    @Nullable val occupation: String,
+    @Nullable val mobile: String,
+    @Nullable val insuranceNumber:String,
+    @Nullable val folderNumber:String,
+    @Nullable val vitals: Vitals?*/
 }

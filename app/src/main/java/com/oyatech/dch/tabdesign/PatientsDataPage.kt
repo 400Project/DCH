@@ -8,12 +8,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.ActivityPatientsDataPageBinding
+import com.oyatech.dch.patient.RegisterNewPatientViewModel
+import com.oyatech.dch.patient.data.Particulars
 import com.oyatech.dch.ui.MainActivity
 
 class PatientsDataPage : MainActivity() {
 private val title = arrayListOf("Patient","Consultation","Pharmacy")
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityPatientsDataPageBinding
+    private val viewModel = RegisterNewPatientViewModel()
 
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +26,7 @@ private val title = arrayListOf("Patient","Consultation","Pharmacy")
         binding = ActivityPatientsDataPageBinding.inflate(layoutInflater)
        setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+
 
 
         /**
@@ -51,20 +55,10 @@ private val title = arrayListOf("Patient","Consultation","Pharmacy")
         }*/
     }
 
-    /**
-     * TODO: setOnBackPress for Patient Data Page
-     */
-
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
-       /* val searchableInfo = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.search).actionView as SearchView).apply {
-            setSearchableInfo(searchableInfo.getSearchableInfo(componentName))
-        }*/
-
 
         return true
         }

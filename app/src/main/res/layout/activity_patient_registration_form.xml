@@ -31,10 +31,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></TextView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/registration_form"
         android:elevation="10dp"
         app:layout_constraintTop_toBottomOf="@+id/form"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,21 +41,23 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:elevation="5dp"
 
             >
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:startIconDrawable="@drawable/ic_search_24"
+                app:startIconDrawable="@drawable/ic_person"
                 android:layout_marginBottom="10dp"
+
                 android:id="@+id/firstname_layout">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/patient_firstName"
                     android:inputType="text"
                     android:hint="First Name"
-                    android:id="@+id/patient_firstName"
 
                     ></com.google.android.material.textfield.TextInputEditText>
 
@@ -66,14 +67,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/firstname_layout"
                 android:layout_marginBottom="10dp"
-                app:startIconDrawable="@drawable/ic_search_24"
+                app:startIconDrawable="@drawable/ic_person"
                 android:id="@+id/otherNames_layout">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:hint="Other Names"
-                    android:id="@+id/patient_OtherNames"
+                    android:id="@+id/patient_otherNames"
 
                     ></com.google.android.material.textfield.TextInputEditText>
 
@@ -83,14 +84,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/otherNames_layout"
                 android:layout_marginBottom="10dp"
-                app:startIconDrawable="@drawable/ic_search_24"
+                app:startIconDrawable="@drawable/ic_location"
                 android:id="@+id/address_layout">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:hint="Address"
-                    android:id="@+id/patient_address"
 
                     ></com.google.android.material.textfield.TextInputEditText>
 
@@ -100,14 +100,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/address_layout"
                 android:layout_marginBottom="10dp"
-                app:startIconDrawable="@drawable/ic_search_24"
+                app:startIconDrawable="@drawable/ic_occupation"
                 android:id="@+id/occupation_layout">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:hint="Occupation"
-                    android:id="@+id/patient_occupation"
 
                     ></com.google.android.material.textfield.TextInputEditText>
 
@@ -117,14 +116,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/occupation_layout"
                 android:layout_marginBottom="10dp"
-                app:startIconDrawable="@drawable/ic_search_24"
+                app:startIconDrawable="@drawable/ic_mobile"
                 android:id="@+id/mobile_layout">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
                     android:hint="Mobile Number"
-                    android:id="@+id/patient_mobile"
 
                     ></com.google.android.material.textfield.TextInputEditText>
 
@@ -140,32 +138,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"
-                    android:hint="Date Of Birth"
-                    android:id="@+id/patient_date_of_birth"
-                    ></com.google.android.material.textfield.TextInputEditText>
+                    android:hint="Date Of Birth"></com.google.android.material.textfield.TextInputEditText>
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatSpinner
+            <Spinner
                 android:id="@+id/patient_sex"
                 android:layout_width="169dp"
                 android:layout_height="65dp"
                 android:layout_below="@id/mobile_layout"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="-8dp"
                 android:layout_marginBottom="100dp"
                 android:layout_toRightOf="@id/date_of_birth_layout"
                 android:entries="@array/sex"
-                android:tooltipText="Sex"></androidx.appcompat.widget.AppCompatSpinner>
+                android:tooltipText="Sex"></Spinner>
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/register"
+              android:id="@+id/register"
                 style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/patient_sex"
                 android:text="Register"></com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
         </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

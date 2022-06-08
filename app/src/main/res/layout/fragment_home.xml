@@ -14,8 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/home_linear_layout">
+        android:orientation="vertical">
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/welcome"
         android:layout_width="match_parent"
@@ -40,8 +39,7 @@
         app:layout_constraintStart_toStartOf="@id/welcome"
         app:layout_constraintTop_toBottomOf="@id/welcome">
     </com.google.android.material.textview.MaterialTextView>
-        <include android:id="@+id/advert_bunner"
-            layout="@layout/advert_card"></include>
+        <include layout="@layout/advert_card"></include>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,9 +52,9 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/staff_portal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/staffPortal"
         android:text="Staff Portal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/advert_layout"

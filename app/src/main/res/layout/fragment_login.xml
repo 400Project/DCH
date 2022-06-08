@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginFragment">
-    <include
-        android:id="@+id/login_layout"
+    <include android:id="@+id/loginLayout"
         layout="@layout/login"></include>
 </androidx.constraintlayout.widget.ConstraintLayout>
