@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.oyatech.dch.R
 
-class Pharmacy : Fragment() {
+class Product : Fragment() {
 
     companion object {
-        fun newInstance() = Pharmacy()
+        fun newInstance() = Product()
     }
 
-    private lateinit var viewModel: PharmacyViewModel
+    private lateinit var viewModel: ProductViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +26,7 @@ class Pharmacy : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(PharmacyViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
     }
 
 }

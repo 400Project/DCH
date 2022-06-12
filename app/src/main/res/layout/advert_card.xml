@@ -35,12 +35,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAlignment="center"
-                style="@style/TextAppearance.AppCompat.Headline"
+                style="@style/TextAppearance.AppCompat.Body2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/advert_image"
-                android:text="Malaria: This is a bacterial sicknes cause by mosquito">
+                android:text="Malaria: This is a bacterial sickness cause by mosquito">
 
             </TextView>
 

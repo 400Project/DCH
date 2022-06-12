@@ -14,10 +14,10 @@
         android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".patient.PatientRegistrationFormActivity"
+            android:name=".patient.recordforms.PatientRegistrationFormActivity"
             android:exported="false"
             android:theme="@style/Theme.Material3.DayNight"
-            android:label="REGISTRATION"
+            android:label="New Patient"
             android:parentActivityName=".tabdesign.PatientsDataPage">
 
         </activity>

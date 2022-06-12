@@ -13,7 +13,7 @@ import com.oyatech.dch.patient.data.Particulars
 import com.oyatech.dch.ui.MainActivity
 
 class PatientsDataPage : MainActivity() {
-private val title = arrayListOf("Patient","Consultation","Pharmacy")
+private val title = arrayListOf("Patient","Consultation","Product")
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityPatientsDataPageBinding
     private val viewModel = RegisterNewPatientViewModel()
@@ -28,9 +28,8 @@ private val title = arrayListOf("Patient","Consultation","Pharmacy")
         setSupportActionBar(binding.toolbar)
 
 
-
         /**
-         * Create a tab layout with PatientFragment, Consultation, Pharmacy etc
+         * Create a tab layout with PatientFragment, Consultation, Product etc
          */
         val tablelayout = binding.tabLayout
         val viewPager2 =binding.viewPager

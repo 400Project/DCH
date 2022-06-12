@@ -10,17 +10,18 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class RegisterNewPatientViewModel : ViewModel() {
-  private  val _patientsList : MutableList<Particulars> = listOfPatientPaticulars
+  //  private val listOfParticulars = PatientRepository(listOfPatientPaticulars)
+  private  val _patientsList : MutableList<Particulars> =listOfPatientPaticulars
     val patientList:MutableList<Particulars> = _patientsList
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getDateAndTime(): String {
+    public fun getDateAndTime(): String {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("M/d/y H:m:ss"))
     }
 
 
-    fun getPatientParticulars(firsName:String,otherName:String)
-    { val newPatient = Particulars(firsName,otherName)
+    fun getPatientParticulars(firsName:String,otherName:String,date:String)
+    { val newPatient = Particulars(firsName, otherName, date)
             _patientsList.add(newPatient)
 
     }

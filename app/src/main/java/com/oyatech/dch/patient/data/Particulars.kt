@@ -5,9 +5,10 @@ import java.io.Serializable
 import java.util.*
 
 data class Particulars(
-    val firstName:String,
-    val otherNames:String
-   ):Serializable{
+    val firstName: String,
+    val otherNames: String,
+    val dateAndTime: String
+){
 
 /* @Nullable val sex:String,
     @Nullable val dateOfBirth: String,

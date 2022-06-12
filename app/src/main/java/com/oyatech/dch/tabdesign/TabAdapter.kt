@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.oyatech.dch.patient.Patients
 import com.oyatech.dch.consultations.ADayConsultation
-import com.oyatech.dch.pharmacy.Pharmacy
+import com.oyatech.dch.pharmacy.Product
 
 
 class TabAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
@@ -45,7 +45,7 @@ class TabAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(frag
                 ADayConsultation()
             }
             2 -> {
-                Pharmacy()
+                Product()
             }
             else -> {throw Resources.NotFoundException("Position not found")}
         }

@@ -2,6 +2,6 @@ package com.oyatech.dch.pharmacy
 
 import androidx.lifecycle.ViewModel
 
-class PharmacyViewModel : ViewModel() {
+class ProductViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }

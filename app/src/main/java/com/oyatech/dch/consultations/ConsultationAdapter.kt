@@ -1,28 +1,26 @@
-package com.oyatech.dch.patient.data
+package com.oyatech.dch.consultations
 
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.LayoutInflater.from
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.get
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.oyatech.dch.R
+import com.oyatech.dch.databinding.FragmentConsultationBinding
+import com.oyatech.dch.patient.data.Particulars
+import com.oyatech.dch.consultations.ConsultationAdapter.ConsultationViewHolder
+import com.oyatech.dch.databinding.PatientConsultationCardBinding
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
-import com.oyatech.dch.patient.data.ParticularsAdapter.ParticularsViewHolder
 
-class ParticularsAdapter(private var particularList: MutableList<Particulars>):
-    RecyclerView.Adapter<ParticularsViewHolder>() {
+class ConsultationAdapter(context: Context,que:MutableList<Particulars>):
+    RecyclerView.Adapter<ConsultationViewHolder>(){
+    private    val queList =que
+   private val context = context
 
 
-    class ParticularsViewHolder(val binding: PatientParticularsCardBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+        class ConsultationViewHolder(var binding: PatientParticularsCardBinding):
+            RecyclerView.ViewHolder(binding.root){
 
-    }
+        }
 
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
@@ -47,14 +45,10 @@ class ParticularsAdapter(private var particularList: MutableList<Particulars>):
      * @see .getItemViewType
      * @see .onBindViewHolder
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-    : ParticularsViewHolder {
-
-        //Inflating the particular layout as the View for the ViewHolder class
-
-val particularsLayout = PatientParticularsCardBinding
-    .inflate(from(parent.context),parent,false)
-        return ParticularsViewHolder(particularsLayout)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConsultationViewHolder {
+        val consultLayoutBinder = PatientParticularsCardBinding.
+        inflate(LayoutInflater.from(parent.context),parent,false)
+        return ConsultationViewHolder(consultLayoutBinder)
     }
 
     /**
@@ -78,21 +72,14 @@ val particularsLayout = PatientParticularsCardBinding
      * item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
-    override fun onBindViewHolder(holder: ParticularsViewHolder, position: Int) {
-
-        with(holder)
-        {
-
-
-                binding.firstName.text = particularList[position].firstName
-            binding.otherName.text = particularList[position].otherNames
-            binding.date.text = particularList[position].dateAndTime
-
+    override fun onBindViewHolder(holder: ConsultationViewHolder, position: Int) {
+        with(holder){
+            with(queList[position]){
+                binding.firstName.text = this.firstName
+                binding.otherName.text = this.otherNames
+            }
         }
-        holder.itemView.setOnClickListener{
-            Log.i("Adapter", "onBindViewHolder: Particular at position:  $position")
 
-        }
 
     }
 
@@ -102,6 +89,13 @@ val particularsLayout = PatientParticularsCardBinding
      * @return The total number of items in this adapter.
      */
     override fun getItemCount(): Int {
-    return particularList.size
+        return if(queList.isNotEmpty()){
+            queList.size
+        }else -1
+
+
+
     }
+
+
 }

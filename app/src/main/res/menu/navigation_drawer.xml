@@ -2,25 +2,42 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:title="Hello">
+    <item android:title="DCH Staff">
         <menu>
-            <item
-                android:id="@+id/LoginFragment"
-                android:title="Genera OPD"></item>
-            <item
-                android:id="@+id/service"
-                android:title="Services"></item>
-            <item android:title="Settings"></item>
-            <item android:title="Testimonies"></item>
-            <item android:title="Bookings"></item>
+            <group >
+                <item
+                    android:id="@+id/service"
+                    android:title="General OPD"></item>
+                <item
+                    android:id="@+id/LoginFragment"
+                    android:title="Services"></item>
+            </group>
         </menu>
     </item>
 
-    <item android:title="Gallery">
-        <menu>
-            <item android:title="Gallery">
 
-            </item>
+    <item android:title="DCH Patient">
+        <menu>
+            <group>
+                <item android:title="Gallery">
+
+                </item>
+                <item android:title="Testimonies"></item>
+                <item android:title="Bookings"></item>
+            </group>
+        </menu>
+
+    </item>
+
+
+    <item android:title="Administration">
+        <menu>
+
+                <item android:title="Settings">
+
+                </item>
+                <item android:title="Policy Privacy"></item>
+                <item android:title="About"></item>
         </menu>
 
     </item>

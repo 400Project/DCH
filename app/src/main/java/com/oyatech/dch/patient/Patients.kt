@@ -8,13 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.databinding.FragmentPatientsBinding
-import com.oyatech.dch.patient.data.Particulars
 import com.oyatech.dch.patient.data.ParticularsAdapter
+import com.oyatech.dch.patient.recordforms.PatientRegistrationFormActivity
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -56,7 +55,7 @@ class Patients : Fragment() {
 
 
         binding.addPatient.setOnClickListener{
-            startActivity(Intent(context,PatientRegistrationFormActivity::class.java))
+            startActivity(Intent(context, PatientRegistrationFormActivity::class.java))
             Toast.makeText(context,"Click", Toast.LENGTH_SHORT).show()
         }
 

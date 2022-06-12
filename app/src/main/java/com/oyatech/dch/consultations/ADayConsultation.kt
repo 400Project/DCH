@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.oyatech.dch.databinding.FragmentConsultationBinding
 import com.oyatech.dch.databinding.FragmentPatientsBinding
+import com.oyatech.dch.databinding.PatientConsultationCardBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
 import com.oyatech.dch.patient.data.Particulars
 import com.oyatech.dch.patient.data.ParticularsAdapter
@@ -18,7 +20,7 @@ import com.oyatech.dch.patient.data.ParticularsAdapter
  */
 class ADayConsultation : Fragment() {
 private val viewModel : RegisterNewPatientViewModel by viewModels()
-    private var _binding: FragmentPatientsBinding? = null
+    private var _binding:FragmentConsultationBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -29,7 +31,7 @@ private val viewModel : RegisterNewPatientViewModel by viewModels()
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentPatientsBinding.inflate(inflater, container, false)
+        _binding = FragmentConsultationBinding.inflate(inflater, container, false)
 
         return binding.root
 
@@ -39,10 +41,12 @@ private val viewModel : RegisterNewPatientViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.patientRecycleView.adapter = ParticularsAdapter(viewModel.patientList)
-        binding.patientRecycleView.layoutManager = LinearLayoutManager(this.requireContext())
-        binding.patientRecycleView.adapter?.notifyDataSetChanged()
-
+        //This with is a function that keeps the reference of it argument and use it
+        with(binding.consultReviewer){
+            adapter = ConsultationAdapter(requireContext(),viewModel.patientList)
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter?.notifyDataSetChanged()
+        }
 
     }
 
@@ -53,7 +57,7 @@ private val viewModel : RegisterNewPatientViewModel by viewModels()
 
     override fun onResume() {
         super.onResume()
-        binding.patientRecycleView.adapter = ParticularsAdapter(viewModel.patientList)
+        binding.consultReviewer.adapter = ParticularsAdapter(viewModel.patientList)
     }
 
 }
