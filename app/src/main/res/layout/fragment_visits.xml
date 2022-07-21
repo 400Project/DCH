@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,25 +11,23 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/patientRecycleView"
+        android:id="@+id/visitsRecycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/patient_particulars_card">
+        tools:listitem="@layout/visits_card">
+
     </androidx.recyclerview.widget.RecyclerView>
-
-
-
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
         android:id="@+id/add_patient"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Add New Patient"
+        android:text="Add Vitals"
         android:layout_marginEnd="20dp"
         app:icon="@drawable/ic_pen"
         style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
@@ -36,4 +35,6 @@
         app:layout_constraintEnd_toEndOf="parent">
 
     </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
+
+    //TODO: make visitation page Collapsable Action bar
 </androidx.constraintlayout.widget.ConstraintLayout>

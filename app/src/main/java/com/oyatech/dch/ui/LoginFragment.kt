@@ -1,4 +1,4 @@
-package com.oyatech.dch
+package com.oyatech.dch.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import com.oyatech.dch.R
 import com.oyatech.dch.databinding.FragmentLoginBinding
-import com.oyatech.dch.tabdesign.PatientsDataPage
+import com.oyatech.dch.datacenter.PatientsDataPage
 
 
 /**
@@ -32,8 +34,10 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//Setting auto complete for users
+        autocomplete()
 
-        binding.loginLayout.login.setOnClickListener {
+       binding.loginLayout.login.setOnClickListener {
             startActivity(Intent(context, PatientsDataPage::class.java))
         }
     }
@@ -41,5 +45,12 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    //Setting AutoComplete. this will be implemented in the description field
+    private fun autocomplete(){
+        val stringAuto = resources.getStringArray(R.array.autocomplete_address)
+        val adapterView = ArrayAdapter<String>(requireContext(),android.R.layout.simple_list_item_1,stringAuto)
+        binding.loginLayout.userId.setAdapter(adapterView)
     }
 }

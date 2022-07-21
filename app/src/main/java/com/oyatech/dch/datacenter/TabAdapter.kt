@@ -1,4 +1,4 @@
-package com.oyatech.dch.tabdesign
+package com.oyatech.dch.datacenter
 
 import android.content.res.Resources
 import androidx.fragment.app.Fragment

@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
-import com.oyatech.dch.tabdesign.PatientsDataPage
+import com.oyatech.dch.datacenter.PatientsDataPage
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.HomeActivityMainBinding
 
@@ -43,19 +43,34 @@ open class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController,appBarConfiguration)
 
 
+
       /*  val toggle = ActionBarDrawerToggle(this,drawerLayout,
             R.string.open,
         R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()*/
         navigationView.setNavigationItemSelectedListener {
-            if (it.itemId == R.id.service) {
-                val intent = Intent(this, PatientsDataPage::class.java)
-                startActivity(intent)
-                Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
+
+
+                with(findNavController(R.id.nav_host_fragment_content_main)){
+                    when (it.itemId){
+                    R.id.LoginFragment -> {
+                    this.navigate(R.id.LoginFragment)
+                }
+                    R.id.gallery -> {
+                    this.navigate(R.id.product)
+                }
+                }
+
+
+            }
+
+               /* val intent = Intent(this, PatientsDataPage::class.java)
+                startActivity(intent)*/
+         //       Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
                 drawerLayout.closeDrawer(Gravity.LEFT)
                 true
-            } else false
+
         }
 
 

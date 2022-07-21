@@ -11,10 +11,10 @@ import com.oyatech.dch.consultations.ConsultationAdapter.ConsultationViewHolder
 import com.oyatech.dch.databinding.PatientConsultationCardBinding
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
 
-class ConsultationAdapter(context: Context,que:MutableList<Particulars>):
+class ConsultationAdapter(que:MutableList<Particulars>):
     RecyclerView.Adapter<ConsultationViewHolder>(){
     private    val queList =que
-   private val context = context
+
 
 
         class ConsultationViewHolder(var binding: PatientParticularsCardBinding):

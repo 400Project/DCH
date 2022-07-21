@@ -6,8 +6,7 @@ import java.util.*
 
 data class Particulars(
     val firstName: String,
-    val otherNames: String,
-    val dateAndTime: String
+    val otherNames: String
 ){
 
 /* @Nullable val sex:String,

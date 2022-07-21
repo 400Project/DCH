@@ -27,25 +27,26 @@
                 android:layout_marginTop="8dp"
                 android:textAlignment="center"
                 android:paddingStart="1dp"
-                style="@style/TextAppearance.AppCompat.Headline"
+                style="@style/TextAppearance.Material3.BodyLarge"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/other_name"
+
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="Francis">
 
             </TextView>
+
             <TextView
 
                 android:id="@+id/other_name"
-                android:layout_width="wrap_content"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAlignment="center"
-                style="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/first_name"
                 app:layout_constraintEnd_toEndOf="parent"
+
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Oyadier Teye">
 

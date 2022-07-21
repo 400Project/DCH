@@ -18,5 +18,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="autocomplete_address">
+        <item>Ahwiam</item>
+        <item>Ningo</item>
+        <item>Ayetepa</item>
+        <item>Tsopoli</item>
+        <item>Prampram</item>
+    </string-array>
 
 </resources>

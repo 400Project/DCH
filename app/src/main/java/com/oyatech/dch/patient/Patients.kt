@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.databinding.FragmentPatientsBinding
 import com.oyatech.dch.patient.data.ParticularsAdapter
+import com.oyatech.dch.patient.data.listOfPatientPaticulars
 import com.oyatech.dch.patient.recordforms.PatientRegistrationFormActivity
 
 /**
@@ -41,21 +42,30 @@ class Patients : Fragment() {
 
         val viewModel = ViewModelProvider(requireActivity()).get(RegisterNewPatientViewModel::class.java)
         //populating patient data using recycleView
+      val adapter = ParticularsAdapter()
 
+        with(binding.patientRecycleView){
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
+        }
 
-        binding.patientRecycleView.adapter = ParticularsAdapter(viewModel.patientList)
-           binding.patientRecycleView.layoutManager = LinearLayoutManager(this.requireContext())
+        viewModel.patientList.observe(viewLifecycleOwner){
+            adapter.submitList(listOfPatientPaticulars)
+        }
+        /*binding.patientRecycleView.
+           binding.patientRecycleView.
            //drawing a divider line between each data set(Patient)
            binding.patientRecycleView.addItemDecoration(
                    DividerItemDecoration(this.requireContext(),DividerItemDecoration.VERTICAL)
-                   )
+                   )*/
 
 
 
 
 
         binding.addPatient.setOnClickListener{
-            startActivity(Intent(context, PatientRegistrationFormActivity::class.java))
+            startActivity(Intent(context?.applicationContext, PatientRegistrationFormActivity::class.java))
+            //clears the fragment from stack
             Toast.makeText(context,"Click", Toast.LENGTH_SHORT).show()
         }
 
@@ -70,7 +80,8 @@ class Patients : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.patientRecycleView.adapter = ParticularsAdapter(viewModel.patientList)
+        binding.patientRecycleView.adapter = ParticularsAdapter(requireContext(),
+            listOfPatientPaticulars)
        /* binding.patientRecycleView.adapter = ParticularsAdapter(viewModel.patientList.sortedBy {
             it.otherNames
         })*/

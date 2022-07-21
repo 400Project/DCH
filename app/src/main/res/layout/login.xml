@@ -37,24 +37,20 @@
 
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/ic_image_doc" />
-        <com.google.android.material.textfield.TextInputLayout
+        <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/user_id"
             app:endIconContentDescription=""
             android:layout_marginTop="40dp"
+            android:hint="User"
             android:elevation="@dimen/cardview_default_elevation"
 
             app:layout_constraintTop_toBottomOf="@id/doc_image"
             app:layout_constraintStart_toStartOf="@id/doc_image"
             app:layout_constraintEnd_toEndOf="@id/doc_image">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Username">
 
-            </com.google.android.material.textfield.TextInputEditText>
-        </com.google.android.material.textfield.TextInputLayout>
+        </AutoCompleteTextView>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,9 +62,11 @@
             app:layout_constraintStart_toStartOf="@id/user_id"
             app:layout_constraintEnd_toEndOf="@id/user_id">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/staff_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
+                android:inputType="textPassword"
+                android:imeOptions="actionDone"
                 android:hint="Password">
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>

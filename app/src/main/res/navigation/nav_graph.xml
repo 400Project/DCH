@@ -16,12 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/LoginFragment"
-        android:name="com.oyatech.dch.LoginFragment"
+        android:name="com.oyatech.dch.ui.LoginFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_login">
-
-        <action
-            android:id="@+id/action_LoginFragment_to_HomePageFragment"
-            app:destination="@id/HomePageFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_login"/>
+    <fragment
+        android:id="@+id/product"
+        android:name="com.oyatech.dch.pharmacy.Product"
+        android:label="fragment_pharmacy"
+        tools:layout="@layout/fragment_pharmacy" />
 </navigation>

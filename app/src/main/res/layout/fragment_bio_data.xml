@@ -28,7 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:elevation="5dp"
-
             >
 
             <ImageView
@@ -52,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/patient_firstName"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:hint="First Name"
 
                     ></com.google.android.material.textfield.TextInputEditText>
@@ -65,12 +64,13 @@
                 android:layout_marginBottom="10dp"
                 app:startIconDrawable="@drawable/ic_person"
                 android:id="@+id/otherNames_layout">
+
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_otherNames"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
                     android:hint="Other Names"
-                    android:id="@+id/patient_otherNames"
+                    android:inputType="textCapWords"
 
                     ></com.google.android.material.textfield.TextInputEditText>
 
@@ -101,9 +101,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:hint="Occupation"
-
                     ></com.google.android.material.textfield.TextInputEditText>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -115,6 +114,7 @@
                 app:startIconDrawable="@drawable/ic_mobile"
                 android:id="@+id/mobile_layout">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"

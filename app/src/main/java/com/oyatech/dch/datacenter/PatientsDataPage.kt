@@ -1,15 +1,13 @@
-package com.oyatech.dch.tabdesign
+package com.oyatech.dch.datacenter
 
 import android.os.Bundle
 import android.view.Menu
-import androidx.core.view.MenuItemCompat
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.ActivityPatientsDataPageBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
-import com.oyatech.dch.patient.data.Particulars
 import com.oyatech.dch.ui.MainActivity
 
 class PatientsDataPage : MainActivity() {
@@ -53,6 +51,8 @@ private val title = arrayListOf("Patient","Consultation","Product")
                 .setAction("Action", null).show()
         }*/
     }
+
+
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

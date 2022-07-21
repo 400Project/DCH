@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.oyatech.dch">
+    package="com.oyatech.dch" >
 
     <application
         android:allowBackup="true"
@@ -12,36 +12,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.Material3.DayNight.NoActionBar"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar"
+            android:name=".details.DetailActivity"
+            android:exported="false"
+            android:label="Details"
+            android:parentActivityName=".datacenter.PatientsDataPage">
+        </activity>
+
         <activity
             android:name=".patient.recordforms.PatientRegistrationFormActivity"
             android:exported="false"
-            android:theme="@style/Theme.Material3.DayNight"
+            android:windowSoftInputMode="stateHidden"
             android:label="New Patient"
-            android:parentActivityName=".tabdesign.PatientsDataPage">
-
+            android:theme="@style/Theme.Material3.DayNight" >
         </activity>
         <activity
-            android:name=".tabdesign.PatientsDataPage"
+            android:name=".datacenter.PatientsDataPage"
             android:exported="false"
             android:label="@string/title_activity_patients_data_page"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar"
-            android:parentActivityName=".ui.MainActivity">
-
-
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar" >
         </activity>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar">
-
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

@@ -4,17 +4,131 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".patient.recordforms.DignosesFragment">
+    android:layout_margin="16sp"
+    tools:context=".details.DignosesFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        app:layout_editor_absoluteX="0dp"
+        app:layout_editor_absoluteY="46dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Provisional Diagnosis" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/p_diagnosis_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/provisional_diagnosis"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Provisional Diagnosis"
+                    android:inputType="textCapWords|textMultiLine"
+                    android:minHeight="100dp">
+
+                </com.google.android.material.textfield.TextInputEditText>
 
 
-    <Button
-        android:id="@+id/diagnose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="20dp">
+
+            </com.google.android.material.divider.MaterialDivider>
+
+            <TextView
+                android:id="@+id/principal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Principal Diagnosis">
+
+            </TextView>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/principal_diagnosis_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/principal_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/provisional_diagnosi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Principal Diagnosis"
+                    android:inputType="textCapWords|textMultiLine"
+                    android:minHeight="100dp">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="20dp">
+
+            </com.google.android.material.divider.MaterialDivider>
+
+            <TextView
+                android:id="@+id/additional_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Additional Diagnosis">
+
+            </TextView>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/additional_diagnosis_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/additional_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/additional_diagnosis"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Additional Diagnosis"
+                    android:inputType="textCapWords|textMultiLine"
+                    android:minHeight="100dp">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="40dp"
+                android:text="Save">
+
+            </com.google.android.material.button.MaterialButton>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

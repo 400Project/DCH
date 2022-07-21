@@ -1,19 +1,22 @@
-package com.oyatech.dch.patient.recordforms
+package com.oyatech.dch.details
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.FragmentDignosesBinding
-import com.oyatech.dch.databinding.FragmentVitalsBinding
 
 
-class BlankFragment : Fragment() {
-    private var _binding : FragmentVitalsBinding?= null
+class DignosesFragment : Fragment() {
+
+    private var _binding : FragmentDignosesBinding?= null
+
     private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,17 +27,16 @@ class BlankFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentVitalsBinding.
-        inflate(LayoutInflater.from(context),container,false)
-        return _binding!!.root
+        _binding = FragmentDignosesBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.vital.setOnClickListener{
-            findNavController().navigate(R.id.dignosesFragment)
-        }
+       /* binding.diagnose.setOnClickListener{
+            findNavController().navigate(R.id.prescriptionFragment)
+        }*/
     }
 
 

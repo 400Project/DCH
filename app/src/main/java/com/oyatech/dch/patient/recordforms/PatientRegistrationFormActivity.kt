@@ -10,17 +10,17 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.oyatech.dch.R
 import com.oyatech.dch.consultations.ConsultationViewModel
 import com.oyatech.dch.databinding.ActivityPatientRecordsBinding
-import com.oyatech.dch.databinding.ActivityPatientRegistrationFormBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
 import com.oyatech.dch.patient.data.Particulars
 
 class PatientRegistrationFormActivity : AppCompatActivity() {
     lateinit var navController: NavController
    lateinit var binding :ActivityPatientRecordsBinding
-    val queBinding  = ConsultationViewModel()
+
     val viewModel : RegisterNewPatientViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityPatientRecordsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -31,14 +31,12 @@ class PatientRegistrationFormActivity : AppCompatActivity() {
          navController = navHostFragment.navController
      setupActionBarWithNavController(navController)
 
+
+
         /*binding.register.setOnClickListener{
        //     val intent = Intent(this,PatientsDataPage::class.java)
 
-            val firstName = binding.patientFirstName.text.toString().trim()
-            val otherName = binding.patientOtherNames.text.toString().trim()
-            val patient = Particulars(firstName,otherName,viewModel.getDateAndTime())
-           viewModel.getConsultationQue(patient)
-            finish()
+
 
             Log.i("Refistration Finish", "onCreate: $viewModel")
         }*/
