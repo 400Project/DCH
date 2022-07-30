@@ -14,10 +14,6 @@ import com.oyatech.dch.databinding.FragmentVitalsBinding
 class VitalsFragment : Fragment() {
     private var _binding : FragmentVitalsBinding?= null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,14 +23,6 @@ class VitalsFragment : Fragment() {
         _binding = FragmentVitalsBinding.
         inflate(inflater,container,false)
         return _binding!!.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-      /*  binding.vital.setOnClickListener{
-            findNavController().navigate(R.id.dignosesFragment)
-        }*/
     }
 
 

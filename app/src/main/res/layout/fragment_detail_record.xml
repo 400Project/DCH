@@ -1,49 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="16dp"
-
     tools:context=".details.DetailRecordFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        tools:layout_editor_absoluteX="-161dp"
-        tools:layout_editor_absoluteY="28dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                style="@style/details_layout">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Patient Bio Data"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </TextView>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/bioInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Patient Bio Data"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/patient_bio_layout"
                 style="@style/details_layout"
-                android:minHeight="200dp">
+                android:minHeight="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bioInfo">
 
                 <ImageView
+                    android:id="@+id/imageView3"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:src="@drawable/ic_undraw_medicine_b_1_ol"
@@ -90,13 +83,23 @@
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="3dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/patient_bio_layout" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout style="@style/details_layout">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/vital_info"
+                style="@style/details_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider1">
 
                 <TextView
+                    android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Vitals"
@@ -121,11 +124,15 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/patient_vitals_layout"
                 style="@style/details_layout"
-                android:minHeight="200dp">
+                android:minHeight="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vital_info">
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="201dp"
                     android:src="@drawable/ic_vitals"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -191,11 +198,21 @@
                 android:id="@+id/divider2"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/patient_vitals_layout" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout style="@style/details_layout">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                style="@style/details_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider2">
 
                 <TextView
+                    android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Diagnosis"
@@ -220,12 +237,17 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/patient_diagnosis_layout"
                 style="@style/details_layout"
-                android:minHeight="200dp">
+                android:minHeight="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraintLayout">
 
                 <ImageView
+                    android:id="@+id/imageView5"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:src="@drawable/ic_diagnoses"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -235,11 +257,21 @@
                 android:id="@+id/divider3"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/patient_diagnosis_layout" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout style="@style/details_layout">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                style="@style/details_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider3">
 
                 <TextView
+                    android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Prescriptions"
@@ -265,13 +297,18 @@
                 android:id="@+id/patient_prescription_layout"
                 style="@style/details_layout"
                 android:layout_below="@id/divider3"
-                android:minHeight="200dp">
+                android:minHeight="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraintLayout2">
 
                 <ImageView
+                    android:id="@+id/imageView6"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="center"
                     android:src="@drawable/drug"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -280,10 +317,12 @@
                 android:id="@+id/divider4"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:layout_below="@+id/patient_diagnosis_layout"
-                android:layout_marginBottom="8dp" />
-
-        </LinearLayout>
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/patient_prescription_layout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
 

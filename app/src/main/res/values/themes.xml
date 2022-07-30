@@ -1,9 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
 
-    <style name="Theme.DCH.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.DCH.AppBarOverlay" parent="Theme.Material3.DayNight.NoActionBar">
 
-    <style name="Theme.DCH.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+</style>
+    <style name="Theme.DCH.PopupOverlay" parent="ThemeOverlay.AppCompat.DayNight" />
 
     <!--Styles for all the editText of the vital layout-->
 </resources>

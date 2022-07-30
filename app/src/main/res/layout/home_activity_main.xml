@@ -6,36 +6,39 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
     >
 
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.DCH.AppBarOverlay">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            app:title="DCH"
-            style="@style/Widget.Material3.Toolbar"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.DCH.PopupOverlay" />
+            android:layout_height="wrap_content"
+           >
 
-        <include
-            layout="@layout/content_main"></include>
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                app:title="DCH"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:elevation="4dp" />
 
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_fragment_content_main"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navGraph="@navigation/nav_graph" />
 
+        </com.google.android.material.appbar.AppBarLayout>
 
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationDrawer"
+        android:id="@+id/navigationView"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:headerLayout="@layout/nav_header_main"

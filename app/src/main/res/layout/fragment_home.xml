@@ -9,7 +9,6 @@
 <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,7 +37,7 @@
         app:layout_constraintStart_toStartOf="@id/welcome"
         app:layout_constraintTop_toBottomOf="@id/welcome">
     </com.google.android.material.textview.MaterialTextView>
-        <include layout="@layout/advert_card"></include>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +46,7 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/welcome_message"
         app:layout_constraintStart_toStartOf="parent">
-
+        <include layout="@layout/advert_card"></include>
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -55,6 +54,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/staffPortal"
         android:text="Staff Portal"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/advert_layout"
         app:layout_constraintStart_toStartOf="parent">

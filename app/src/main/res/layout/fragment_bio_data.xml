@@ -4,48 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    tools:context=".patient.recordforms.PatientRegistrationFormActivity">
-
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_regiter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+    tools:context=".recordforms.PatientRegistrationFormActivity">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content">
 
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:elevation="5dp"
             >
-
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_image_doc"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:maxWidth="110dp"
+                android:maxHeight="110dp"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></ImageView>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_medical"></ImageView>
+
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:startIconDrawable="@drawable/ic_person"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="100dp"
                 android:layout_marginBottom="10dp"
-
                 android:id="@+id/firstname_layout">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -53,18 +46,17 @@
                     android:id="@+id/patient_firstName"
                     android:inputType="textCapWords"
                     android:hint="First Name"
-
                     ></com.google.android.material.textfield.TextInputEditText>
 
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/firstname_layout"
-                android:layout_marginBottom="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/firstname_layout"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:startIconDrawable="@drawable/ic_person"
                 android:id="@+id/otherNames_layout">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/patient_otherNames"
                     android:layout_width="match_parent"
@@ -73,12 +65,15 @@
                     android:inputType="textCapWords"
 
                     ></com.google.android.material.textfield.TextInputEditText>
-
             </com.google.android.material.textfield.TextInputLayout>
+
+
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/otherNames_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/otherNames_layout"
                 android:layout_marginBottom="10dp"
                 app:startIconDrawable="@drawable/ic_location"
                 android:id="@+id/address_layout">
@@ -86,91 +81,143 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:hint="Address"
-
-                    ></com.google.android.material.textfield.TextInputEditText>
-
+                    android:hint="Address"/>
             </com.google.android.material.textfield.TextInputLayout>
+            <EditText
+                android:id="@+id/patient_DoB_layout"
+                android:layout_width="wrap_content"
+                android:editable="false"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:hint="Date Of Birth"
+                android:minHeight="50dp"
+                app:layout_constraintEnd_toStartOf="@id/patient_age"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@+id/address_layout"/>
+            <TextView
+                android:id="@+id/patient_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Age : "
+                android:minHeight="30dp"
+                android:padding="5dp"
+                app:layout_constraintEnd_toStartOf="@id/gender"
+                app:layout_constraintStart_toEndOf="@id/patient_DoB_layout"
+                app:layout_constraintBottom_toBottomOf="@id/patient_DoB_layout"
+                app:layout_constraintTop_toBottomOf="@id/address_layout"/>
+            <TextView
+                android:id="@+id/gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sex:"
+                android:textAlignment="center"
+                android:padding="5dp"
+                android:minHeight="30dp"
+                app:layout_constraintEnd_toStartOf="@id/patient_sex"
+                app:layout_constraintStart_toEndOf="@id/patient_age"
+                app:layout_constraintBottom_toBottomOf="@id/patient_age"
+                app:layout_constraintTop_toTopOf="@id/patient_age">
+
+            </TextView>
+            <Spinner
+                android:id="@+id/patient_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/gender"
+                app:layout_constraintTop_toBottomOf="@id/address_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/patient_DoB_layout"
+                android:entries="@array/sex"
+                android:tooltipText="Sex"></Spinner>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/address_layout"
+                app:layout_constraintTop_toBottomOf="@id/patient_DoB_layout"
+                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginBottom="10dp"
                 app:startIconDrawable="@drawable/ic_occupation"
                 android:id="@+id/occupation_layout">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapWords"
                     android:hint="Occupation"
-                    ></com.google.android.material.textfield.TextInputEditText>
+                    android:inputType="textCapWords"/>
 
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/occupation_layout"
+                app:layout_constraintTop_toBottomOf="@id/occupation_layout"
+                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginBottom="10dp"
                 app:startIconDrawable="@drawable/ic_mobile"
                 android:id="@+id/mobile_layout">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/patient_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"
                     android:hint="Mobile Number"
-
-                    ></com.google.android.material.textfield.TextInputEditText>
-
-
-
+                    android:inputType="phone"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/mobile_layout"
+                app:layout_constraintTop_toBottomOf="@id/mobile_layout"
+                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginBottom="10dp"
-                app:startIconDrawable="@drawable/ic_search_24"
-                android:id="@+id/date_of_birth_layout">
+                app:startIconDrawable="@drawable/ic_mobile"
+                android:id="@+id/nihs_layout">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_nhis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Date Of Birth"
-                    android:inputType="date"></com.google.android.material.textfield.TextInputEditText>
-
+                    android:hint="NHIS"
+                    android:inputType="phone"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Spinner
-                android:id="@+id/patient_sex"
-                android:layout_width="169dp"
-                android:layout_height="65dp"
-                android:layout_below="@id/mobile_layout"
-                android:layout_alignParentEnd="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="-8dp"
-                android:layout_marginBottom="100dp"
-                android:layout_toRightOf="@id/date_of_birth_layout"
-                android:entries="@array/sex"
-                android:tooltipText="Sex"></Spinner>
 
-        </RelativeLayout>
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/done"
+                style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/green"
+                app:layout_constraintEnd_toStartOf="@id/next"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nihs_layout"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="10dp"
+                android:text="Register"
+                app:layout_constraintBottom_toBottomOf="parent" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/next"
+                style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/done"
+                app:layout_constraintTop_toBottomOf="@id/nihs_layout"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="10dp"
+                android:text="Next"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         </ScrollView>
-    </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/register"
-        style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-android:layout_marginBottom="10dp"
-        android:layout_below="@id/card_regiter"
-        android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"></com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

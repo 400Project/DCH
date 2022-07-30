@@ -14,27 +14,35 @@ import java.time.format.DateTimeFormatter
 
 class RegisterNewPatientViewModel : ViewModel() {
   //  private val listOfParticulars = PatientRepository(listOfPatientPaticulars)
-  private  val _patientsList : MutableList<Particulars> = listOfPatientPaticulars
-    val patientList: LiveData<List<Particulars>> = liveData { _patientsList }
 
+  private  val patientsList : MutableLiveData<MutableList<Particulars>>? = MutableLiveData()
+  //  val patientList: LiveData<List<Particulars>> = liveData { _patientsList }
+companion object{
+    var particularsList=Particulars("","")
+}
+
+
+  val allPatient = listOfPatientPaticulars
     @RequiresApi(Build.VERSION_CODES.O)
-    public fun getDateAndTime(): String {
+    fun getDateAndTime(): String {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("M/d/y H:m:ss"))
     }
 
 
-    fun addPatients(firsName:String,otherName:String,date:String)
-    {
-            _patientsList.add(Particulars(firsName,otherName))
-
+    fun setPatient(particulars: Particulars){
+      particularsList =particulars
     }
 
-    fun removePatients(particulars: Particulars){
-        _patientsList.remove(particulars)
+
+    fun setParticulars(){
+        patientsList?.value = listOfPatientPaticulars
     }
 
     fun getConsultationQue(particulars: Particulars){
-       _patientsList.add(particulars)
+  //     _patientsList.add(particulars)
     }
 
+    fun getPatient():MutableLiveData<MutableList<Particulars>>{
+        return patientsList!!
+    }
 }

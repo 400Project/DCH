@@ -1,35 +1,35 @@
-package com.oyatech.dch.patient.data
+package com.oyatech.dch.vitals
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import android.view.LayoutInflater.from
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.oyatech.dch.databinding.PatientParticularsCardBinding
-import com.oyatech.dch.details.DetailActivity
-import com.oyatech.dch.patient.data.ParticularsAdapter.ParticularsViewHolder
 
-class ParticularsAdapter():
-    ListAdapter<Particulars,ParticularsViewHolder>(DiffUtilCallback) {
-   private lateinit var particularList:MutableList<Particulars>
-   private lateinit var context: Context
-    constructor(context: Context, particularList: MutableList<Particulars>):this(){
-        this.particularList = particularList
+import com.oyatech.dch.databinding.PatientParticularsCardBinding
+import com.oyatech.dch.patient.RegisterNewPatientViewModel
+import com.oyatech.dch.patient.data.Particulars
+
+
+class VitalsAdapter():ListAdapter<Particulars, VitalsAdapter.VitalsViewHolder>(DiffUtilCall){
+    lateinit var context: Context
+    lateinit var mutableList: MutableList<Particulars>
+    val viewModel  = RegisterNewPatientViewModel()
+    constructor(context: Context,mutableList: MutableList<Particulars>):this(){
         this.context = context
+        this.mutableList = mutableList
     }
 
+    inner class VitalsViewHolder(var vitalLayout:PatientParticularsCardBinding):RecyclerView.ViewHolder(vitalLayout.root){
 
-  inner  class ParticularsViewHolder(val binding: PatientParticularsCardBinding)
-      : RecyclerView.ViewHolder(binding.root) {
-
-        fun holderBinder(particulars: Particulars){
-            binding.firstName.text = particulars.firstName
-            binding.otherName.text = particulars.otherNames
+        fun binder(particulars: Particulars){
+            vitalLayout.firstName.text = particulars.firstName
+            vitalLayout.otherName.text = particulars.otherNames
         }
+
 
     }
 
@@ -56,12 +56,9 @@ class ParticularsAdapter():
      * @see .getItemViewType
      * @see .onBindViewHolder
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParticularsViewHolder {
-
-        //Inflating the particular layout as the View for the ViewHolder class
-
-val particularsLayout = PatientParticularsCardBinding.inflate(from(parent.context),parent,false)
-        return ParticularsViewHolder(particularsLayout)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VitalsViewHolder {
+       val vitalLayout = PatientParticularsCardBinding.inflate(LayoutInflater.from(context),parent,false)
+        return VitalsViewHolder(vitalLayout)
     }
 
     /**
@@ -85,55 +82,27 @@ val particularsLayout = PatientParticularsCardBinding.inflate(from(parent.contex
      * item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
-    override fun onBindViewHolder(holder: ParticularsViewHolder, position: Int) {
-
-        with(holder)
-        {
-            holderBinder(particularList[position])
-            /*with(particularList[position]){
-                binding.firstName.text = firstName
-                binding.otherName.text = otherNames
-               *//* binding.date.text = dateAndTime*//*
-            //    binding.initial.text = firstName[0].toString()+ otherNames[0].toString()
-            }
-*/
-
-            /**
-             * TODO: Launch a detail page when a patient data is clicked upon
-             */
+    override fun onBindViewHolder(holder: VitalsViewHolder, position: Int) {
+        with(holder){
+                binder(mutableList[position])
         }
+
         holder.itemView.setOnClickListener{
-
-            /*val intent = Intent()
-            intent.putExtra("details")*/
-            context.startActivity(
-                Intent(context.applicationContext,DetailActivity::class.java))
-
-            Log.i("Adapter", "onBindViewHolder: Particular at position:  $position")
-
+            var name = mutableList[position]
+            viewModel.setPatient(name)
+            context.startActivity(Intent(context.applicationContext, VitalsActivity::class.java))
         }
 
     }
 
-    /**
-     * Returns the total number of items in the data set held by the adapter.
-     *
-     * @return The total number of items in this adapter.
-     */
-    override fun getItemCount(): Int {
-    return particularList.size
+    override fun getItemCount():Int{
+        return mutableList.size
     }
 
 
 }
 
-/**
- * DiffUtil is a utility class that calculates the difference between two lists and outputs a list
- * of update operations that converts the first list into the second one.
- *It can be used to calculate updates for a RecyclerView Adapter
- */
-
-object DiffUtilCallback :DiffUtil.ItemCallback<Particulars>(){
+object DiffUtilCall: DiffUtil.ItemCallback<Particulars>() {
     /**
      * Called to check whether two objects represent the same item.
      *
@@ -152,8 +121,8 @@ object DiffUtilCallback :DiffUtil.ItemCallback<Particulars>(){
      * @see Callback.areItemsTheSame
      */
     override fun areItemsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
-        //I will be using the patients id or hospital number
-        return oldItem.firstName == newItem.firstName
+        //Using the id of the patient to check
+        return newItem.firstName ==oldItem.firstName
     }
 
     /**
@@ -186,7 +155,7 @@ object DiffUtilCallback :DiffUtil.ItemCallback<Particulars>(){
      * @see Callback.areContentsTheSame
      */
     override fun areContentsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
-        return oldItem.firstName==newItem.firstName
+       return newItem == oldItem
     }
 
 }

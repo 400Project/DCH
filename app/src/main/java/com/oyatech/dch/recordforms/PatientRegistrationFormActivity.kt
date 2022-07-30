@@ -1,27 +1,29 @@
-package com.oyatech.dch.patient.recordforms
+package com.oyatech.dch.recordforms
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.oyatech.dch.R
-import com.oyatech.dch.consultations.ConsultationViewModel
 import com.oyatech.dch.databinding.ActivityPatientRecordsBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
-import com.oyatech.dch.patient.data.Particulars
 
 class PatientRegistrationFormActivity : AppCompatActivity() {
     lateinit var navController: NavController
    lateinit var binding :ActivityPatientRecordsBinding
 
+   companion object{
+       val dateOfBirth =""
+   }
     val viewModel : RegisterNewPatientViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityPatientRecordsBinding.inflate(layoutInflater)
+        binding = ActivityPatientRecordsBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
 
@@ -46,5 +48,4 @@ class PatientRegistrationFormActivity : AppCompatActivity() {
 
         return navController.navigateUp()|| super.onSupportNavigateUp()
     }
-
 }

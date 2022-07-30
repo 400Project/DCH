@@ -6,7 +6,8 @@ data class Vitals(
     val weight: String,
     val bodyTemperature: String
 ) {
-    class Vitals()
+    class Vitals
+
     override fun toString(): String {
         return "Vitals Taken as Of $dateTime" +
                 "\n-------------------------\n" +

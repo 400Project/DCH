@@ -11,7 +11,7 @@
     <string name="title_activity_patients_data_page">Patients Data Page</string>
 
     <string-array name="sex">
-        <item>Sex</item>
+        <item></item>
         <item>Male</item>
         <item>Female</item>
     </string-array>

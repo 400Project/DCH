@@ -37,7 +37,7 @@ class LoginFragment : Fragment() {
 //Setting auto complete for users
         autocomplete()
 
-       binding.loginLayout.login.setOnClickListener {
+       binding.login.setOnClickListener {
             startActivity(Intent(context, PatientsDataPage::class.java))
         }
     }
@@ -51,6 +51,6 @@ class LoginFragment : Fragment() {
     private fun autocomplete(){
         val stringAuto = resources.getStringArray(R.array.autocomplete_address)
         val adapterView = ArrayAdapter<String>(requireContext(),android.R.layout.simple_list_item_1,stringAuto)
-        binding.loginLayout.userId.setAdapter(adapterView)
+        binding.userId.setAdapter(adapterView)
     }
 }

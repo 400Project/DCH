@@ -8,18 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.databinding.FragmentPatientsBinding
 import com.oyatech.dch.patient.data.ParticularsAdapter
 import com.oyatech.dch.patient.data.listOfPatientPaticulars
-import com.oyatech.dch.patient.recordforms.PatientRegistrationFormActivity
+import com.oyatech.dch.recordforms.PatientRegistrationFormActivity
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class Patients : Fragment() {
+class PatientRecords : Fragment() {
 
     private var _binding: FragmentPatientsBinding? = null
     private val viewModel : RegisterNewPatientViewModel by activityViewModels()
@@ -40,16 +38,18 @@ class Patients : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProvider(requireActivity()).get(RegisterNewPatientViewModel::class.java)
+    //    val viewModel = ViewModelProvider(requireActivity()).get(RegisterNewPatientViewModel::class.java)
         //populating patient data using recycleView
-      val adapter = ParticularsAdapter()
 
+        val adapter = ParticularsAdapter(requireContext(),viewModel.allPatient)
         with(binding.patientRecycleView){
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
+            setAdapter(adapter)
+
+        //    addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
         }
 
-        viewModel.patientList.observe(viewLifecycleOwner){
+        viewModel.getPatient().observe(viewLifecycleOwner){
             adapter.submitList(listOfPatientPaticulars)
         }
         /*binding.patientRecycleView.
@@ -60,9 +60,6 @@ class Patients : Fragment() {
                    )*/
 
 
-
-
-
         binding.addPatient.setOnClickListener{
             startActivity(Intent(context?.applicationContext, PatientRegistrationFormActivity::class.java))
             //clears the fragment from stack
@@ -71,8 +68,6 @@ class Patients : Fragment() {
 
     }
 
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -80,8 +75,8 @@ class Patients : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.patientRecycleView.adapter = ParticularsAdapter(requireContext(),
-            listOfPatientPaticulars)
+      /*  binding.patientRecycleView.adapter = ParticularsAdapter(requireContext(),
+            listOfPatientPaticulars)*/
        /* binding.patientRecycleView.adapter = ParticularsAdapter(viewModel.patientList.sortedBy {
             it.otherNames
         })*/

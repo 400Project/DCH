@@ -18,9 +18,7 @@ class ConsultationAdapter(que:MutableList<Particulars>):
 
 
         class ConsultationViewHolder(var binding: PatientParticularsCardBinding):
-            RecyclerView.ViewHolder(binding.root){
-
-        }
+            RecyclerView.ViewHolder(binding.root)
 
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent

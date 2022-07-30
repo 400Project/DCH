@@ -1,10 +1,9 @@
 package com.oyatech.dch.details
 
 import android.os.Bundle
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.FragmentDetailRecordBinding
@@ -18,12 +17,13 @@ import com.oyatech.dch.databinding.VisitsCardBinding
  */
 class VisitsFragment : Fragment() {
 
-    private var _binding :VisitsCardBinding? =null
+    private var _binding :FragmentVisitsBinding? =null
 
     private val binding get()= _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -31,7 +31,7 @@ class VisitsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = VisitsCardBinding.inflate(inflater,container,false)
+        _binding = FragmentVisitsBinding.inflate(inflater,container,false)
 
 
         return binding.root
@@ -41,13 +41,10 @@ class VisitsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       binding.doctorName.setOnClickListener {
-            findNavController().navigate(R.id.detailRecordFragment)
-        }
+       /*binding.addPatientVitals.setOnClickListener {
+           Toast.makeText(context,"Vitals Added",Toast.LENGTH_SHORT).show()
+        }*/
 
-        binding.visitDate.setOnClickListener {
-            findNavController().navigate(R.id.dignosesFragment)
-        }
     }
 
     /**
@@ -57,5 +54,19 @@ class VisitsFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        inflater.inflate(R.menu.visits,menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.vital ->  findNavController().navigate(R.id.detailRecordFragment)
+        }
+        return true
     }
 }

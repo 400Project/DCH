@@ -38,26 +38,9 @@ private val viewModel : RegisterNewPatientViewModel by viewModels()
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        //This with is a function that keeps the reference of it argument and use it
-     /*   with(binding.consultReviewer){
-            adapter = ConsultationAdapter(viewModel.patientList)
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter?.notifyDataSetChanged()
-        }*/
-
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onResume() {
-        super.onResume()
-      //  binding.consultReviewer.adapter = ConsultationAdapter(viewModel.patientList)
     }
 
 }

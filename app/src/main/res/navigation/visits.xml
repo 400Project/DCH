@@ -7,12 +7,8 @@
     <fragment
         android:id="@+id/visitsFragment"
         android:name="com.oyatech.dch.details.VisitsFragment"
-        tools:layout="@layout/visits_card"
-        android:label="Patient Visits">
-        <action
-            android:id="@+id/action_visitsFragment_to_dignosesFragment"
-            app:destination="@id/dignosesFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_visits"
+        android:label="Patient Visits"/>
     <fragment
         android:id="@+id/detailRecordFragment"
         android:name="com.oyatech.dch.details.DetailRecordFragment"

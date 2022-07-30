@@ -30,11 +30,6 @@ class DetailRecordFragment : Fragment() {
 
     private val showMore = arrayListOf(false,false,false)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,8 +61,8 @@ class DetailRecordFragment : Fragment() {
             }
         }
 
-        binding.patientBioLayout.setOnClickListener{
-            findNavController().navigate(R.id.detailRecordFragment)
+        binding.patientVitalsLayout.setOnClickListener{
+            findNavController().navigate(R.id.vitalsFragment)
         }
 
         binding.patientDiagnosisLayout.setOnClickListener{

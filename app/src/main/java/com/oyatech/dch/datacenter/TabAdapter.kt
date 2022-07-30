@@ -5,12 +5,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.oyatech.dch.patient.Patients
+import com.oyatech.dch.patient.PatientRecords
 import com.oyatech.dch.consultations.ADayConsultation
+import com.oyatech.dch.vitals.PatientVitalsFragment
 import com.oyatech.dch.pharmacy.Product
 
 
-class TabAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+
+class TabAdapter(fragmentActivity: FragmentActivity)
+    : FragmentStateAdapter(fragmentActivity) {
 
 
     /**
@@ -19,7 +22,7 @@ class TabAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(frag
      * @return The total number of items in this adapter.
      */
     override fun getItemCount(): Int {
-       return 3
+       return 4
     }
 
     /**
@@ -39,14 +42,15 @@ class TabAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(frag
 
         return when(position){
             0 -> {
-                Patients()
+                PatientRecords()
             }
             1 -> {
-                ADayConsultation()
+                PatientVitalsFragment()
             }
             2 -> {
-                Product()
+                ADayConsultation()
             }
+            3 -> Product()
             else -> {throw Resources.NotFoundException("Position not found")}
         }
 
