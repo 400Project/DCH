@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oyatech.dch.databinding.FragmentConsultationBinding
 import com.oyatech.dch.patient.data.Particulars
 import com.oyatech.dch.consultations.ConsultationAdapter.ConsultationViewHolder
-import com.oyatech.dch.databinding.PatientConsultationCardBinding
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
 import com.oyatech.dch.details.DetailActivity
 

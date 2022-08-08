@@ -59,7 +59,7 @@ private val bioList = _bioList
 
   fun setBioData(bio:Particulars){
    _bioList.add(bio)
-      _queuedForConsultation.add(bio)
+      _queueForVitals.add(bio)
   }
 
   fun getBioData():MutableList<Particulars>

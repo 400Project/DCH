@@ -24,6 +24,7 @@ class VitalsActivity : AppCompatActivity() {
         bindPatientDetials(currentPatient)
 
         binding.toConsultation.setOnClickListener {
+            viewModel.setQueuedForConsultation(currentPatient)
 
             Toast.makeText(this, "${currentPatient.firstName} Vitals", Toast.LENGTH_SHORT).show()
 
@@ -39,7 +40,7 @@ class VitalsActivity : AppCompatActivity() {
                 patientAddress.text = address
                 patientGender.text = sex
                 patientDoB.text = dob
-                insuranceText.text = insuranceNumber
+                patientNhis.text = insuranceNumber
                 patientMobile.text = mobile
 
 

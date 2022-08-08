@@ -4,26 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:elevation="2dp"
     tools:context=".vitals.VitalsActivity">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-114dp"
-        tools:layout_editor_absoluteY="-39dp">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bio_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_margin="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -31,9 +30,10 @@
                 <TextView
                     android:id="@+id/patient_full_name"
                     style="@style/TextAppearance.Material3.DisplaySmall"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Patient Nartey"
+                    android:maxEms="15"
                     app:layout_constraintEnd_toStartOf="@id/patient_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -43,8 +43,8 @@
                     android:id="@+id/patient_hospital_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="@id/patient_full_name"
-                    app:layout_constraintStart_toStartOf="@id/patient_full_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+
                     app:layout_constraintTop_toBottomOf="@id/patient_full_name"
                     tools:text="DCH/00/2000" />
 
@@ -57,7 +57,7 @@
                     app:layout_constraintEnd_toStartOf="@id/patient_age"
                     app:layout_constraintStart_toEndOf="@id/patient_full_name"
                     app:layout_constraintTop_toTopOf="@id/patient_full_name"
-                    tools:text="Aged: " />
+                    android:text="Aged: " />
 
                 <TextView
                     android:id="@+id/patient_age"
@@ -69,6 +69,13 @@
                     app:layout_constraintTop_toTopOf="@id/patient_full_name"
                     tools:text=" 34 yrs" />
 
+                <TextView
+                    android:id="@+id/hospital_no_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/patient_full_name"
+                    android:text="Hospital Number :"/>
                 <TextView
                     android:id="@+id/address_text"
                     android:layout_width="0dp"
@@ -166,7 +173,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/nOfKin_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="5dp"
                 app:layout_constraintTop_toBottomOf="@id/divider1">
@@ -193,7 +201,7 @@
                     android:id="@+id/nextOfKingName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/nOfKin_text"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/next_of_kin_text"
                     tools:text="Oyadier Olivier" />
 
@@ -258,6 +266,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_margin="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider3">
@@ -298,7 +307,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/vital_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_margin="12dp"
+                android:layout_marginBottom="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider2">
@@ -364,7 +375,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/suger_level_layout"
+                    android:id="@+id/sugar_level_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -382,17 +393,15 @@
             <Button
                 android:id="@+id/to_consultation"
                 style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_margin="40dp"
+                android:layout_marginBottom="40dp"
                 android:text="Consultation Room"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vital_layout">
-
-            </Button>
+                app:layout_constraintTop_toBottomOf="@id/vital_layout"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

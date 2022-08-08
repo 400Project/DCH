@@ -41,17 +41,11 @@ class TabAdapter(fragmentActivity: FragmentActivity)
     override fun createFragment(position: Int): Fragment {
 
         return when(position){
-            0 -> {
-                PatientRecords()
-            }
-            1 -> {
-                PatientVitalsFragment()
-            }
-            2 -> {
-                Consultations()
-            }
+            0 -> PatientRecords()
+            1 -> PatientVitalsFragment()
+            2 -> Consultations()
             3 -> Product()
-            else -> {throw Resources.NotFoundException("Position not found")}
+            else -> throw Resources.NotFoundException("Position not found")
         }
 
     }

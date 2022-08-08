@@ -152,7 +152,6 @@ binding.next.setOnClickListener {
                     occupation,date,
                     mobile,nhis,age)
                viewModel.setBioData(particulars)
-            viewModel.setQueuedForVitals(particulars)
 
             /*, address, dob, sex, occupation, date*/
         }
@@ -180,7 +179,7 @@ binding.next.setOnClickListener {
     }
 
     private fun computeDateOfBirth(yearOfBirth:Int,currentYear:Int):String{
-        val age = currentYear - yearOfBirth
+        val age =  yearOfBirth - currentYear
         return "$age yrs"
     }
 

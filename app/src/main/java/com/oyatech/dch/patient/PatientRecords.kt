@@ -21,6 +21,7 @@ class PatientRecords : Fragment() {
 
     private var _binding: FragmentPatientsBinding? = null
     val viewModel = RegisterNewPatientViewModel.viewModel
+
 //    private val viewModel : RegisterNewPatientViewModel by activityViewModels()
 // This property is only valid between onCreateView and
 // onDestroyView.
@@ -45,6 +46,7 @@ val viewM = RegisterNewPatientViewModel.viewModel
         //populating patient data using recycleView
       // viewModel.setParticulars()
         Log.i("Record", "onViewCreated: ${viewModel.getBioData().size}")
+
         val adapter = ParticularsAdapter(requireContext(), viewModel.getBioData())
         val layoutManager = LinearLayoutManager(requireContext())
         with(binding.patientRecycleView){
