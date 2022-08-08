@@ -77,7 +77,7 @@ open class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         /*  return when (item.itemId) {
               R.id.settings ->{
-                  navController.navigate(R.id.ADayConsultation)
+                  navController.navigate(R.id.Consultations)
                   Toast.makeText(this,"Setting",Toast.LENGTH_SHORT).show()
                   true
               }

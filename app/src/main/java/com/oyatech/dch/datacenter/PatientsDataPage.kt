@@ -10,11 +10,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.ActivityPatientsDataPageBinding
+import com.oyatech.dch.details.VitalsFragment
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
+import com.oyatech.dch.patient.data.listOfPatientPaticulars
 import com.oyatech.dch.ui.MainActivity
 
 class PatientsDataPage : MainActivity() {
-private val title = arrayListOf("Records","Vitals","Consultation","Product")
+private val title = arrayListOf("RECORD","VITALS","CONSULTATION","PRODUCT")
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityPatientsDataPageBinding
 
@@ -40,8 +42,8 @@ private val title = arrayListOf("Records","Vitals","Consultation","Product")
             tab, position ->
             run {
                 tab.text = title[position]
-                tablelayout.getTabAt(1)?.orCreateBadge?.number = viewModel.allPatient.size
-                tablelayout.getTabAt(2)?.orCreateBadge?.number = viewModel.allPatient.size
+                tablelayout.getTabAt(1)?.orCreateBadge?.number = listOfPatientPaticulars.size
+                tablelayout.getTabAt(2)?.orCreateBadge?.number = listOfPatientPaticulars.size
             }
         }.attach()
        // val navController = findNavController(R.id.nav_host_fragment_content_patients_data_page)
@@ -53,6 +55,7 @@ private val title = arrayListOf("Records","Vitals","Consultation","Product")
                 .setAnchorView(R.id.fab)
                 .setAction("Action", null).show()
         }*/
+
     }
 
 

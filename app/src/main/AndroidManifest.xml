@@ -14,12 +14,14 @@
         android:theme="@style/Theme.DCH.AppBarOverlay"
         tools:targetApi="31">
         <activity
+            android:name=".EditBioDataActivity"
+            android:theme="@style/Theme.Material3.DayNight"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".vitals.VitalsActivity"
             android:exported="false"
-            android:parentActivityName=".datacenter.PatientsDataPage">
-
-
-        </activity>
+            android:parentActivityName=".datacenter.PatientsDataPage"></activity>
         <activity
             android:name=".details.DetailActivity"
             android:exported="false"
@@ -27,12 +29,11 @@
             android:parentActivityName=".datacenter.PatientsDataPage"
             android:theme="@style/Theme.Material3.DayNight" />
         <activity
-            android:name="com.oyatech.dch.recordforms.PatientRegistrationFormActivity"
+            android:name=".recordforms.PatientRegistrationFormActivity"
             android:exported="false"
             android:label="New Patient"
             android:theme="@style/Theme.Material3.DayNight"
-            android:windowSoftInputMode="stateHidden" >
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".datacenter.PatientsDataPage"
             android:exported="false"

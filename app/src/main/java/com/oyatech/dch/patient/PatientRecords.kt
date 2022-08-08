@@ -2,12 +2,12 @@ package com.oyatech.dch.patient
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.databinding.FragmentPatientsBinding
 import com.oyatech.dch.patient.data.ParticularsAdapter
@@ -20,12 +20,16 @@ import com.oyatech.dch.recordforms.PatientRegistrationFormActivity
 class PatientRecords : Fragment() {
 
     private var _binding: FragmentPatientsBinding? = null
-    private val viewModel : RegisterNewPatientViewModel by activityViewModels()
+    val viewModel = RegisterNewPatientViewModel.viewModel
+//    private val viewModel : RegisterNewPatientViewModel by activityViewModels()
+// This property is only valid between onCreateView and
+// onDestroyView.
+private val binding get() = _binding!!
+   /* val viewModel by lazy {
+        ViewModelProvider(requireActivity())[RegisterNewPatientViewModel::class.java]
+    }*/
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
+val viewM = RegisterNewPatientViewModel.viewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,32 +42,23 @@ class PatientRecords : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-    //    val viewModel = ViewModelProvider(requireActivity()).get(RegisterNewPatientViewModel::class.java)
         //populating patient data using recycleView
-
-        val adapter = ParticularsAdapter(requireContext(),viewModel.allPatient)
+      // viewModel.setParticulars()
+        Log.i("Record", "onViewCreated: ${viewModel.getBioData().size}")
+        val adapter = ParticularsAdapter(requireContext(), viewModel.getBioData())
+        val layoutManager = LinearLayoutManager(requireContext())
         with(binding.patientRecycleView){
-            layoutManager = LinearLayoutManager(context)
+            setLayoutManager(layoutManager)
             setAdapter(adapter)
 
         //    addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
         }
 
-        viewModel.getPatient().observe(viewLifecycleOwner){
-            adapter.submitList(listOfPatientPaticulars)
-        }
-        /*binding.patientRecycleView.
-           binding.patientRecycleView.
-           //drawing a divider line between each data set(Patient)
-           binding.patientRecycleView.addItemDecoration(
-                   DividerItemDecoration(this.requireContext(),DividerItemDecoration.VERTICAL)
-                   )*/
-
-
         binding.addPatient.setOnClickListener{
             startActivity(Intent(context?.applicationContext, PatientRegistrationFormActivity::class.java))
             //clears the fragment from stack
             Toast.makeText(context,"Click", Toast.LENGTH_SHORT).show()
+            activity?.finish()
         }
 
     }
@@ -75,11 +70,6 @@ class PatientRecords : Fragment() {
 
     override fun onResume() {
         super.onResume()
-      /*  binding.patientRecycleView.adapter = ParticularsAdapter(requireContext(),
-            listOfPatientPaticulars)*/
-       /* binding.patientRecycleView.adapter = ParticularsAdapter(viewModel.patientList.sortedBy {
-            it.otherNames
-        })*/
     }
 
 }

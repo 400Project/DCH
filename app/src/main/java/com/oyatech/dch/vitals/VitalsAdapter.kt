@@ -15,6 +15,7 @@ import com.oyatech.dch.patient.data.Particulars
 
 
 class VitalsAdapter():ListAdapter<Particulars, VitalsAdapter.VitalsViewHolder>(DiffUtilCall){
+   val DUE_FOR_VITALS = "com.oyatech.dch.vitals"
     lateinit var context: Context
     lateinit var mutableList: MutableList<Particulars>
     val viewModel  = RegisterNewPatientViewModel()
@@ -88,9 +89,9 @@ class VitalsAdapter():ListAdapter<Particulars, VitalsAdapter.VitalsViewHolder>(D
         }
 
         holder.itemView.setOnClickListener{
-            var name = mutableList[position]
-            viewModel.setPatient(name)
-            context.startActivity(Intent(context.applicationContext, VitalsActivity::class.java))
+            val vitalsIntent = Intent(context.applicationContext,VitalsActivity::class.java)
+            vitalsIntent.putExtra(DUE_FOR_VITALS,position)
+            context.startActivity(vitalsIntent)
         }
 
     }

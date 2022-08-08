@@ -9,9 +9,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.oyatech.dch.EditBioDataActivity
+import com.oyatech.dch.databinding.ActivityEditBioDataBinding
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
 import com.oyatech.dch.details.DetailActivity
+import com.oyatech.dch.details.VitalsFragment
 import com.oyatech.dch.patient.data.ParticularsAdapter.ParticularsViewHolder
+import com.oyatech.dch.vitals.VitalsActivity
 
 class ParticularsAdapter():
     ListAdapter<Particulars,ParticularsViewHolder>(DiffUtilCallback) {
@@ -22,13 +26,18 @@ class ParticularsAdapter():
         this.context = context
     }
 
-
   inner  class ParticularsViewHolder(val binding: PatientParticularsCardBinding)
       : RecyclerView.ViewHolder(binding.root) {
 
         fun holderBinder(particulars: Particulars){
-            binding.firstName.text = particulars.firstName
-            binding.otherName.text = particulars.otherNames
+            with(binding){
+                firstName.text = particulars.firstName
+                otherName.text = particulars.otherNames
+                date.text = particulars.date
+                hospitalNumberTextView.text = particulars.hospitalNumber
+            }
+
+
         }
 
     }
@@ -87,29 +96,33 @@ val particularsLayout = PatientParticularsCardBinding.inflate(from(parent.contex
      */
     override fun onBindViewHolder(holder: ParticularsViewHolder, position: Int) {
 
-        with(holder)
+        val particulars = particularList[position]
+        if (particulars!=null){
+            holder.holderBinder(particulars)
+        }
+     /*   with(holder)
         {
-            holderBinder(particularList[position])
-            /*with(particularList[position]){
+            holderBinder(particulars)
+            *//*with(particularList[position]){
                 binding.firstName.text = firstName
                 binding.otherName.text = otherNames
-               *//* binding.date.text = dateAndTime*//*
+               *//**//* binding.date.text = dateAndTime*//**//*
             //    binding.initial.text = firstName[0].toString()+ otherNames[0].toString()
             }
-*/
+*//*
 
-            /**
+            *//**
              * TODO: Launch a detail page when a patient data is clicked upon
-             */
-        }
+             *//*
+        }*/
         holder.itemView.setOnClickListener{
 
-            /*val intent = Intent()
-            intent.putExtra("details")*/
-            context.startActivity(
-                Intent(context.applicationContext,DetailActivity::class.java))
+            val intent = Intent(context.applicationContext,EditBioDataActivity::class.java)
 
-            Log.i("Adapter", "onBindViewHolder: Particular at position:  $position")
+            context.startActivity(
+
+                intent.putExtra("details",position))
+
 
         }
 
@@ -120,12 +133,70 @@ val particularsLayout = PatientParticularsCardBinding.inflate(from(parent.contex
      *
      * @return The total number of items in this adapter.
      */
-    override fun getItemCount(): Int {
-    return particularList.size
+    override fun getItemCount() = particularList.size
+
+
+ companion object DiffUtilCallback: DiffUtil.ItemCallback<Particulars>(){
+        /**
+         * Called to check whether two objects represent the same item.
+         *
+         *
+         * For example, if your items have unique ids, this method should check their id equality.
+         *
+         *
+         * Note: `null` items in the list are assumed to be the same as another `null`
+         * item and are assumed to not be the same as a non-`null` item. This callback will
+         * not be invoked for either of those cases.
+         *
+         * @param oldItem The item in the old list.
+         * @param newItem The item in the new list.
+         * @return True if the two items represent the same object or false if they are different.
+         *
+         * @see Callback.areItemsTheSame
+         */
+        override fun areItemsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
+            //I will be using the patients id or hospital number
+            return oldItem == newItem
+        }
+
+        /**
+         * Called to check whether two items have the same data.
+         *
+         *
+         * This information is used to detect if the contents of an item have changed.
+         *
+         *
+         * This method to check equality instead of [Object.equals] so that you can
+         * change its behavior depending on your UI.
+         *
+         *
+         * For example, if you are using DiffUtil with a
+         * [RecyclerView.Adapter], you should
+         * return whether the items' visual representations are the same.
+         *
+         *
+         * This method is called only if [.areItemsTheSame] returns `true` for
+         * these items.
+         *
+         *
+         * Note: Two `null` items are assumed to represent the same contents. This callback
+         * will not be invoked for this case.
+         *
+         * @param oldItem The item in the old list.
+         * @param newItem The item in the new list.
+         * @return True if the contents of the items are the same or false if they are different.
+         *
+         * @see Callback.areContentsTheSame
+         */
+        override fun areContentsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
+            return oldItem.hospitalNumber==newItem.hospitalNumber
+        }
+
     }
 
 
 }
+
 
 /**
  * DiffUtil is a utility class that calculates the difference between two lists and outputs a list
@@ -133,60 +204,4 @@ val particularsLayout = PatientParticularsCardBinding.inflate(from(parent.contex
  *It can be used to calculate updates for a RecyclerView Adapter
  */
 
-object DiffUtilCallback :DiffUtil.ItemCallback<Particulars>(){
-    /**
-     * Called to check whether two objects represent the same item.
-     *
-     *
-     * For example, if your items have unique ids, this method should check their id equality.
-     *
-     *
-     * Note: `null` items in the list are assumed to be the same as another `null`
-     * item and are assumed to not be the same as a non-`null` item. This callback will
-     * not be invoked for either of those cases.
-     *
-     * @param oldItem The item in the old list.
-     * @param newItem The item in the new list.
-     * @return True if the two items represent the same object or false if they are different.
-     *
-     * @see Callback.areItemsTheSame
-     */
-    override fun areItemsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
-        //I will be using the patients id or hospital number
-        return oldItem.firstName == newItem.firstName
-    }
 
-    /**
-     * Called to check whether two items have the same data.
-     *
-     *
-     * This information is used to detect if the contents of an item have changed.
-     *
-     *
-     * This method to check equality instead of [Object.equals] so that you can
-     * change its behavior depending on your UI.
-     *
-     *
-     * For example, if you are using DiffUtil with a
-     * [RecyclerView.Adapter], you should
-     * return whether the items' visual representations are the same.
-     *
-     *
-     * This method is called only if [.areItemsTheSame] returns `true` for
-     * these items.
-     *
-     *
-     * Note: Two `null` items are assumed to represent the same contents. This callback
-     * will not be invoked for this case.
-     *
-     * @param oldItem The item in the old list.
-     * @param newItem The item in the new list.
-     * @return True if the contents of the items are the same or false if they are different.
-     *
-     * @see Callback.areContentsTheSame
-     */
-    override fun areContentsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
-        return oldItem.firstName==newItem.firstName
-    }
-
-}

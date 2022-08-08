@@ -16,7 +16,7 @@ import com.oyatech.dch.databinding.VisitsCardBinding
  * create an instance of this fragment.
  */
 class VisitsFragment : Fragment() {
-
+    final  val PATIENT_VISITS = "com.oyatech.dch.details"
     private var _binding :FragmentVisitsBinding? =null
 
     private val binding get()= _binding!!
@@ -41,6 +41,7 @@ class VisitsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val getInt = requireActivity().intent.getIntExtra(PATIENT_VISITS,-1)
        /*binding.addPatientVitals.setOnClickListener {
            Toast.makeText(context,"Vitals Added",Toast.LENGTH_SHORT).show()
         }*/

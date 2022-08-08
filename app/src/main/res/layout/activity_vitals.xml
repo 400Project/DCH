@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".vitals.VitalsActivity"
-    android:elevation="2dp">
+    android:elevation="2dp"
+    tools:context=".vitals.VitalsActivity">
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-114dp"
+        tools:layout_editor_absoluteY="-39dp">
+
         <androidx.constraintlayout.widget.ConstraintLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp">
@@ -20,281 +24,373 @@
                 android:id="@+id/bio_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/patient_full_name"
+                    style="@style/TextAppearance.Material3.DisplaySmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Patient Nartey"
+                    app:layout_constraintEnd_toStartOf="@id/patient_text"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    style="@style/TextAppearance.Material3.DisplaySmall"
-                    app:layout_constraintTop_toTopOf="parent">
-                </TextView>
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+
+                    android:id="@+id/patient_hospital_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@id/patient_full_name"
+                    app:layout_constraintStart_toStartOf="@id/patient_full_name"
+                    app:layout_constraintTop_toBottomOf="@id/patient_full_name"
+                    tools:text="DCH/00/2000" />
+
+
+                <TextView
+                    android:id="@+id/patient_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/patient_full_name"
+                    app:layout_constraintEnd_toStartOf="@id/patient_age"
+                    app:layout_constraintStart_toEndOf="@id/patient_full_name"
+                    app:layout_constraintTop_toTopOf="@id/patient_full_name"
+                    tools:text="Aged: " />
+
                 <TextView
                     android:id="@+id/patient_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Age: "
-                    app:layout_constraintStart_toEndOf="@id/patient_full_name"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/patient_full_name"
-
-                    app:layout_constraintTop_toTopOf="@id/patient_full_name">
-                </TextView>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/address_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:minWidth="100dp"
-                    app:layout_constraintEnd_toStartOf="@id/sex_layout"
-                    app:layout_constraintTop_toBottomOf="@id/patient_full_name"
-                    app:layout_constraintStart_toStartOf="parent">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/address"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Address"
-                        android:inputType="textPostalAddress"
-                        android:textAlignment="center"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/sex_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:minWidth="100dp"
-                    app:layout_constraintEnd_toStartOf="@id/mobile_layout"
-                    app:layout_constraintTop_toBottomOf="@id/patient_full_name"
-                    app:layout_constraintStart_toEndOf="@id/address_layout">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/patient_sex"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Sex"
-                        android:inputType="textCapWords"
-                        android:textAlignment="center"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/mobile_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:minWidth="100dp"
-                    app:layout_constraintTop_toBottomOf="@id/patient_full_name"
-                    app:layout_constraintStart_toEndOf="@id/sex_layout"
-                    app:layout_constraintEnd_toEndOf="parent">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ma_sex"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Mobile"
-                        android:inputType="phone"
-                        android:textAlignment="center"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/occupation_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:minWidth="100dp"
-                    app:layout_constraintTop_toBottomOf="@id/address_layout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/date_of_birth_layout">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/occupation"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Occupation"
-                        android:inputType="textCapWords"
-                        android:textAlignment="center"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/date_of_birth_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:minWidth="100dp"
-                    app:layout_constraintTop_toBottomOf="@id/sex_layout"
-                    app:layout_constraintStart_toEndOf="@id/occupation_layout"
-                    app:layout_constraintEnd_toStartOf="@id/nihs_layout"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/dob"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Date Of Birth"
-                        android:inputType="date"
-                        android:textAlignment="center"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/nihs_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:minWidth="100dp"
-                    app:layout_constraintTop_toBottomOf="@id/mobile_layout"
-                    app:layout_constraintStart_toEndOf="@id/date_of_birth_layout"
                     app:layout_constraintEnd_toEndOf="parent"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/nhis"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="NHIS"
-                        android:inputType="number"
-                        android:textAlignment="center"/>
+                    app:layout_constraintStart_toEndOf="@id/patient_text"
+                    app:layout_constraintTop_toTopOf="@id/patient_full_name"
+                    tools:text=" 34 yrs" />
 
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/nextOfKing"
+                <TextView
+                    android:id="@+id/address_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:minWidth="100dp"
+                    android:text="Address: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/patient_hospital_number" />
+
+                <TextView
+                    android:id="@+id/patient_Address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/patient_hospital_number"
+                    tools:text="Mangotsonya" />
+
+                <TextView
+                    android:id="@+id/gender_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Gender: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/address_text" />
+
+                <TextView
+                    android:id="@+id/patient_gender"
                     android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/gender_text"
+                    app:layout_constraintStart_toEndOf="@id/gender_text"
+                    app:layout_constraintTop_toTopOf="@id/gender_text"
+                    tools:text="Male" />
+
+                <TextView
+                    android:id="@+id/dob_text"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Next Of King"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginLeft="10dp"
+                    android:text="Date Of Birth: "
+                    app:layout_constraintBottom_toBottomOf="@id/patient_DoB"
+                    app:layout_constraintEnd_toStartOf="@id/patient_DoB"
+                    app:layout_constraintTop_toTopOf="@id/patient_DoB" />
+
+                <TextView
+                    android:id="@+id/patient_DoB"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/date_of_birth_layout">
-                </com.google.android.material.textview.MaterialTextView>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/next_of_king_layout"
+                    app:layout_constraintTop_toBottomOf="@id/patient_Address"
+                    tools:text="23/4/1900" />
+
+                <TextView
+                    android:id="@+id/insurance_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:minWidth="100dp"
-                    app:layout_constraintTop_toBottomOf="@id/nextOfKing"
+                    android:text="Insurance Number: "
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/nofK_mobile_layout"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/nextOfKingName"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Full Name"
-                        android:inputType="textCapWords"
-                        android:textAlignment="center"/>
+                    app:layout_constraintTop_toBottomOf="@id/gender_text" />
 
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/nofK_mobile_layout"
+                <TextView
+                    android:id="@+id/patient_nhis"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:minWidth="100dp"
-                    app:layout_constraintTop_toBottomOf="@id/nextOfKing"
-                    app:layout_constraintStart_toEndOf="@id/next_of_king_layout"
-                    app:layout_constraintEnd_toEndOf="@id/nofK_relationship_layout"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/nextOfKingMobile"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Mobile"
-                        android:inputType="phone"
-                        android:textAlignment="center"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/nofK_relationship_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:minWidth="100dp"
-                    app:layout_constraintTop_toBottomOf="@id/nextOfKing"
-                    app:layout_constraintStart_toEndOf="@id/nofK_mobile_layout"
                     app:layout_constraintEnd_toEndOf="parent"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/nextOfKingRelationship"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Relationship"
-                        android:inputType="textCapWords"
-                        android:textAlignment="center"/>
+                    app:layout_constraintTop_toBottomOf="@id/patient_DoB"
+                    tools:text="23427642" />
 
-                </com.google.android.material.textfield.TextInputLayout>
-
+                <TextView
+                    android:id="@+id/mobile_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:minWidth="100dp"
+                    android:text="Mobile :"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/insurance_text" />
+                <TextView
+                    android:id="@+id/patient_mobile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:minWidth="100dp"
+                    tools:text="026005055"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/patient_nhis" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/bio_layout" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/blood_layout"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/nOfKin_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintTop_toBottomOf="@id/divider1">
+
+                <TextView
+                    android:id="@+id/next_of_kin_text"
+                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Next of Kin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/nOfKin_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Full Name: "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/next_of_kin_text" />
+
+                <TextView
+                    android:id="@+id/nextOfKingName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/nOfKin_text"
+                    app:layout_constraintTop_toBottomOf="@id/next_of_kin_text"
+                    tools:text="Oyadier Olivier" />
+
+                <TextView
+                    android:id="@+id/nOfKin_Mo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile : "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nOfKin_text" />
+
+                <TextView
+                    android:id="@+id/nextOfKingMobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/nOfKin_Mo"
+                    app:layout_constraintTop_toBottomOf="@id/nextOfKingName"
+                    tools:text="0245589874" />
+
+                <TextView
+                    android:id="@+id/nOfKin_relationship"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Relationship : "
+                    app:layout_constraintEnd_toStartOf="@id/nextOfKingRelationship"
+                    app:layout_constraintTop_toTopOf="@id/nextOfKingRelationship" />
+
+                <TextView
+                    android:id="@+id/nextOfKingRelationship"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nextOfKingName"
+                    tools:text="Wife" />
+
+                <TextView
+                    android:id="@+id/nOfKin_occupa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Occupation : "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nextOfKingMobile" />
+
+                <TextView
+                    android:id="@+id/nextOfKinOccupation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/nOfKin_occupa"
+                    app:layout_constraintTop_toBottomOf="@id/nextOfKingMobile"
+                    tools:text="Teaching" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/nOfKin_layout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/allergies_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/bio_layout">
+                app:layout_constraintTop_toBottomOf="@id/divider3">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/blood_pressure"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/allergies_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Blood Pressure (mmHg)"
-                    android:inputType="number"
-                    android:textAlignment="center" />
+                    android:layout_marginLeft="30dp"
+                    android:text="Allergies :"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/allergies1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* Penicillin"
+                    app:layout_constraintStart_toStartOf="@id/allergies_text"
+                    app:layout_constraintTop_toBottomOf="@id/allergies_text"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/weight_layout"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="* Efpac"
+                    app:layout_constraintStart_toStartOf="@id/allergies_text"
+                    app:layout_constraintTop_toBottomOf="@id/allergies1"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/blood_layout">
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/allergies_layout" />
 
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/patient_weight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Weight (kg)" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/temperature_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weight_layout">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/temperature"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Temperature 0c" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/suger_level_layout"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/vital_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/temperature_layout">
+                app:layout_constraintTop_toBottomOf="@id/divider2">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/suger_level"
+                <TextView
+                    android:id="@+id/patient_vitals_layout"
+                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Vitals"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/blood_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Sugar Level" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/patient_vitals_layout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/blood_pressure"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Blood Pressure (mmHg)"
+                        android:inputType="number"
+                        android:textAlignment="center" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/weight_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/blood_layout">
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/patient_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Weight (kg)" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/temperature_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/weight_layout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/temperature"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Temperature 0c" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/suger_level_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/temperature_layout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/suger_level"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Sugar Level" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
-                android:id="@+id/vital"
+                android:id="@+id/to_consultation"
                 style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:text="Consultation Room"
-                android:layout_marginTop="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/suger_level_layout">
+                app:layout_constraintTop_toBottomOf="@+id/vital_layout">
 
             </Button>
         </androidx.constraintlayout.widget.ConstraintLayout>

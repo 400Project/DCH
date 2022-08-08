@@ -5,14 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.firestore.auth.User
 import com.oyatech.dch.databinding.FragmentPatientVitalsBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
-import com.oyatech.dch.patient.data.listOfPatientPaticulars
 
 
 class PatientVitalsFragment : Fragment() {
@@ -20,7 +15,7 @@ private  var _binding :FragmentPatientVitalsBinding?=null
     private val binding get() = _binding!!
 
 
-  private  val viewModel : RegisterNewPatientViewModel by activityViewModels()
+  private  val viewModel =RegisterNewPatientViewModel.viewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +32,17 @@ private  var _binding :FragmentPatientVitalsBinding?=null
   // val     viewModel = ViewModelProvider(requireActivity()).get(RegisterNewPatientViewModel::class.java)
 
 
-        val adapter = VitalsAdapter(requireContext(),viewModel.allPatient)
+        val adapter = VitalsAdapter(requireContext(), viewModel.getQueuedForVitals())
         with(binding.vitalsRecycleView){
             layoutManager = LinearLayoutManager(requireContext())
             setAdapter(adapter)
         }
 
 
+        binding.clear.setOnClickListener{
+            viewModel.clearVitalsList()
+            binding.vitalsRecycleView.adapter?.notifyDataSetChanged()
+        }
 
 
     }
@@ -54,4 +53,9 @@ private  var _binding :FragmentPatientVitalsBinding?=null
         super.onDestroy()
         _binding = null
     }
+
+   /* fun clearQue(view: View) {
+        viewModel.clearVitalsList()
+    }
+*/
 }

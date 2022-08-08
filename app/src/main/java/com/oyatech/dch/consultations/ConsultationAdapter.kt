@@ -1,24 +1,32 @@
 package com.oyatech.dch.consultations
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.LayoutInflater.from
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.oyatech.dch.databinding.FragmentConsultationBinding
 import com.oyatech.dch.patient.data.Particulars
 import com.oyatech.dch.consultations.ConsultationAdapter.ConsultationViewHolder
 import com.oyatech.dch.databinding.PatientConsultationCardBinding
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
+import com.oyatech.dch.details.DetailActivity
 
-class ConsultationAdapter(que:MutableList<Particulars>):
-    RecyclerView.Adapter<ConsultationViewHolder>(){
-    private    val queList =que
+class ConsultationAdapter(context: Context, que:MutableList<Particulars>):
+    RecyclerView.Adapter<ConsultationViewHolder>() {
+    private val queList = que
+    private val context = context;
 
 
-
-        class ConsultationViewHolder(var binding: PatientParticularsCardBinding):
-            RecyclerView.ViewHolder(binding.root)
+    class ConsultationViewHolder(var binding: PatientParticularsCardBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bindAllQues(particulars: Particulars) {
+            binding.firstName.text = particulars.firstName
+            binding.otherName.text = particulars.otherNames
+        }
+    }
 
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
@@ -44,8 +52,8 @@ class ConsultationAdapter(que:MutableList<Particulars>):
      * @see .onBindViewHolder
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConsultationViewHolder {
-        val consultLayoutBinder = PatientParticularsCardBinding.
-        inflate(LayoutInflater.from(parent.context),parent,false)
+        val consultLayoutBinder =
+            PatientParticularsCardBinding.inflate(from(parent.context), parent, false)
         return ConsultationViewHolder(consultLayoutBinder)
     }
 
@@ -71,15 +79,18 @@ class ConsultationAdapter(que:MutableList<Particulars>):
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: ConsultationViewHolder, position: Int) {
-        with(holder){
-            with(queList[position]){
-                binding.firstName.text = this.firstName
-                binding.otherName.text = this.otherNames
-            }
+        val particulars = queList[position]
+        with(holder) {
+            bindAllQues(particulars)
+
         }
 
+        holder.itemView.setOnClickListener{
+            context.startActivity(Intent(context,DetailActivity::class.java))
 
+        }
     }
+
 
     /**
      * Returns the total number of items in the data set held by the adapter.
@@ -87,13 +98,68 @@ class ConsultationAdapter(que:MutableList<Particulars>):
      * @return The total number of items in this adapter.
      */
     override fun getItemCount(): Int {
-        return if(queList.isNotEmpty()){
+        return if (queList.isNotEmpty()) {
             queList.size
-        }else -1
-
-
+        } else -1
 
     }
+}
 
+
+object Diff : DiffUtil.ItemCallback<Particulars>(){
+    /**
+     * Called to check whether two objects represent the same item.
+     *
+     *
+     * For example, if your items have unique ids, this method should check their id equality.
+     *
+     *
+     * Note: `null` items in the list are assumed to be the same as another `null`
+     * item and are assumed to not be the same as a non-`null` item. This callback will
+     * not be invoked for either of those cases.
+     *
+     * @param oldItem The item in the old list.
+     * @param newItem The item in the new list.
+     * @return True if the two items represent the same object or false if they are different.
+     *
+     * @see Callback.areItemsTheSame
+     */
+    override fun areItemsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
+        return oldItem==newItem
+    }
+
+    /**
+     * Called to check whether two items have the same data.
+     *
+     *
+     * This information is used to detect if the contents of an item have changed.
+     *
+     *
+     * This method to check equality instead of [Object.equals] so that you can
+     * change its behavior depending on your UI.
+     *
+     *
+     * For example, if you are using DiffUtil with a
+     * [RecyclerView.Adapter], you should
+     * return whether the items' visual representations are the same.
+     *
+     *
+     * This method is called only if [.areItemsTheSame] returns `true` for
+     * these items.
+     *
+     *
+     * Note: Two `null` items are assumed to represent the same contents. This callback
+     * will not be invoked for this case.
+     *
+     * @param oldItem The item in the old list.
+     * @param newItem The item in the new list.
+     * @return True if the contents of the items are the same or false if they are different.
+     *
+     * @see Callback.areContentsTheSame
+     */
+    override fun areContentsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
+       return oldItem.firstName == newItem.firstName
+    }
 
 }
+

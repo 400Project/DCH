@@ -5,22 +5,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".patient.PatientRecords">
+<androidx.appcompat.widget.AppCompatEditText
+    android:layout_marginTop="3dp"
+    android:id="@+id/search"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Search by name,hospital number or nhis"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"/>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/patientRecycleView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/patient_particulars_card">
-    </androidx.recyclerview.widget.RecyclerView>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/patientRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintTop_toBottomOf="@id/search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:listitem="@layout/patient_particulars_card" />
 
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
