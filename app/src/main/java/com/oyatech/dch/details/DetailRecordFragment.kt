@@ -44,33 +44,11 @@ class DetailRecordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.patientVitalsLayout.isVisible = false
-        binding.patientDiagnosisLayout.isVisible = false
-        binding.patientPrescriptionLayout.isVisible = false
-
-        with(binding){
-            vitalsLayoutController.setOnClickListener {
-                lessMoreDetailsLayout(patientVitalsLayout,vitalsLayoutController, showMore,isVitals)
-            }
-
-            diagnosisLayoutController.setOnClickListener {
-                lessMoreDetailsLayout(patientDiagnosisLayout,diagnosisLayoutController,showMore,isDiagnose)
-            }
-            prescriptionLayoutController.setOnClickListener {
-                lessMoreDetailsLayout(patientPrescriptionLayout,prescriptionLayoutController,showMore,isPres)
-            }
-        }
-
-        binding.patientVitalsLayout.setOnClickListener{
-            findNavController().navigate(R.id.vitalsFragment)
-        }
 
         binding.patientDiagnosisLayout.setOnClickListener{
             findNavController().navigate(R.id.dignosesFragment)
         }
-        binding.patientPrescriptionLayout.setOnClickListener{
-            findNavController().navigate(R.id.prescriptionFragment)
-        }
+
 
     }
 

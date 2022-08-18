@@ -2,28 +2,26 @@ package com.oyatech.dch.consultations
 
 import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
 import android.view.LayoutInflater.from
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.oyatech.dch.databinding.FragmentConsultationBinding
-import com.oyatech.dch.patient.data.Particulars
+import com.oyatech.dch.model.PatientBioData
 import com.oyatech.dch.consultations.ConsultationAdapter.ConsultationViewHolder
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
 import com.oyatech.dch.details.DetailActivity
 
-class ConsultationAdapter(context: Context, que:MutableList<Particulars>):
+class ConsultationAdapter(context: Context, que:MutableList<PatientBioData>):
     RecyclerView.Adapter<ConsultationViewHolder>() {
     private val queList = que
     private val context = context;
-
+    final  val PATIENT_VISITS = "com.oyatech.dch.details"
 
     class ConsultationViewHolder(var binding: PatientParticularsCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindAllQues(particulars: Particulars) {
-            binding.firstName.text = particulars.firstName
-            binding.otherName.text = particulars.otherNames
+        fun bindAllQues(patientBioData: PatientBioData) {
+            binding.firstName.text = patientBioData.first_Name
+            binding.otherName.text = patientBioData.otherNames
         }
     }
 
@@ -85,7 +83,9 @@ class ConsultationAdapter(context: Context, que:MutableList<Particulars>):
         }
 
         holder.itemView.setOnClickListener{
-            context.startActivity(Intent(context,DetailActivity::class.java))
+            val visits = Intent(context,DetailActivity::class.java)
+            visits.putExtra(PATIENT_VISITS,position)
+            context.startActivity(visits)
 
         }
     }
@@ -105,7 +105,7 @@ class ConsultationAdapter(context: Context, que:MutableList<Particulars>):
 }
 
 
-object Diff : DiffUtil.ItemCallback<Particulars>(){
+object Diff : DiffUtil.ItemCallback<PatientBioData>(){
     /**
      * Called to check whether two objects represent the same item.
      *
@@ -123,7 +123,7 @@ object Diff : DiffUtil.ItemCallback<Particulars>(){
      *
      * @see Callback.areItemsTheSame
      */
-    override fun areItemsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
+    override fun areItemsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
         return oldItem==newItem
     }
 
@@ -156,8 +156,8 @@ object Diff : DiffUtil.ItemCallback<Particulars>(){
      *
      * @see Callback.areContentsTheSame
      */
-    override fun areContentsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
-       return oldItem.firstName == newItem.firstName
+    override fun areContentsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
+       return oldItem.first_Name == newItem.first_Name
     }
 
 }

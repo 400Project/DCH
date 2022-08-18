@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/bioDataFragment"
-        android:name="com.oyatech.dch.recordforms.BioDataFragment"
+        android:name="com.oyatech.dch.recordforms.PatientRegistrationFragment"
         android:label="Patient's Bio Data"
         tools:layout="@layout/fragment_bio_data" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/nextOfFragment"
-        android:name="com.oyatech.dch.recordforms.NextOfFragment"
+        android:name="com.oyatech.dch.recordforms.PatientNextOfFragment"
         android:label="Next Of King"
         tools:layout="@layout/fragment_next_of_king" />
 

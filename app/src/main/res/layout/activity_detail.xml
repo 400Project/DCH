@@ -7,21 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".details.DetailActivity">
-   <!-- <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       >
-
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/detail_toolbar"
-            android:background="@color/purple_500"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:title="@string/app_name" />
-
-     &lt;!&ndash;   </include>&ndash;&gt;
-    </com.google.android.material.appbar.AppBarLayout>-->
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_visit"

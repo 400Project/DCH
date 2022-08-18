@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.oyatech.dch.databinding.ActivityVitalsBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
-import com.oyatech.dch.patient.data.Particulars
+import com.oyatech.dch.model.PatientBioData
 
 
 class VitalsActivity : AppCompatActivity() {
@@ -21,20 +21,20 @@ class VitalsActivity : AppCompatActivity() {
         val getVitalIntent = intent.getIntExtra(DUE_FOR_VITALS,-1)
         val currentPatient = viewModel.getCurrentVitalQueue(getVitalIntent)
 
-        bindPatientDetials(currentPatient)
+        bindPatientDetails(currentPatient)
 
         binding.toConsultation.setOnClickListener {
             viewModel.setQueuedForConsultation(currentPatient)
 
-            Toast.makeText(this, "${currentPatient.firstName} Vitals", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${currentPatient.first_Name} Vitals", Toast.LENGTH_SHORT).show()
 
         }
     }
 
-    fun bindPatientDetials(patient:Particulars){
+    private fun bindPatientDetails(patient: PatientBioData){
         with(binding){
             with(patient){
-                patientFullName.text = "$firstName $otherNames"
+                patientFullName.text = "$first_Name $otherNames"
                 patientAge.text = age
                 patientHospitalNumber.text = hospitalNumber
                 patientAddress.text = address

@@ -14,26 +14,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.DatePicker
 import android.widget.Toast
-import androidx.core.graphics.toColorInt
+import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.oyatech.dch.Department
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.FragmentBioDataBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
-import com.oyatech.dch.datacenter.PatientsDataPage
-import com.oyatech.dch.patient.data.Particulars
-import kotlinx.coroutines.processNextEventInCurrentThread
-import java.time.Month
+import com.oyatech.dch.datacenter.PatientsDataPageActivity
+import com.oyatech.dch.model.PatientBioData
 import java.util.*
 
 
-class BioDataFragment : Fragment() {
+class PatientRegistrationFragment : Fragment() {
 //View Binding
  private   var _binding:  FragmentBioDataBinding? = null
 val viewModel = RegisterNewPatientViewModel.viewModel
@@ -63,6 +57,7 @@ val viewModel = RegisterNewPatientViewModel.viewModel
         return binding.root.rootView
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     //    viewModel = RegisterNewPatientViewModel().getViewModel()
@@ -129,7 +124,8 @@ binding.next.setOnClickListener {
         }
     }
 
-    //Creating new particulars object
+    //Creating new patientBioData object
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun addNewPatient() {
         with(binding){
             Toast.makeText(requireContext(),"Patient Added",Toast.LENGTH_SHORT).show()
@@ -146,16 +142,16 @@ binding.next.setOnClickListener {
             val nhis =patientNhis.text.toString().trim()
 
 
-                val particulars = Particulars(hospitalNumber,
+                val patientBioData = PatientBioData(hospitalNumber,
                     firstName, otherName,
                     address,dob,sex,
                     occupation,date,
-                    mobile,nhis,age)
-               viewModel.setBioData(particulars)
+                    mobile,nhis,age,Department.NURSING.toString())
+               viewModel.setBioData(patientBioData)
 
             /*, address, dob, sex, occupation, date*/
         }
-        startActivity(Intent(this.context,PatientsDataPage::class.java))
+        startActivity(Intent(this.context,PatientsDataPageActivity::class.java))
         activity?.finish()
     }
 

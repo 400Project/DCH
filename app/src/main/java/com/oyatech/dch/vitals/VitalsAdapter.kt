@@ -11,24 +11,24 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
-import com.oyatech.dch.patient.data.Particulars
+import com.oyatech.dch.model.PatientBioData
 
 
-class VitalsAdapter():ListAdapter<Particulars, VitalsAdapter.VitalsViewHolder>(DiffUtilCall){
+class VitalsAdapter():ListAdapter<PatientBioData, VitalsAdapter.VitalsViewHolder>(DiffUtilCall){
    val DUE_FOR_VITALS = "com.oyatech.dch.vitals"
     lateinit var context: Context
-    lateinit var mutableList: MutableList<Particulars>
+    lateinit var mutableList: MutableList<PatientBioData>
     val viewModel  = RegisterNewPatientViewModel()
-    constructor(context: Context,mutableList: MutableList<Particulars>):this(){
+    constructor(context: Context,mutableList: MutableList<PatientBioData>):this(){
         this.context = context
         this.mutableList = mutableList
     }
 
     inner class VitalsViewHolder(var vitalLayout:PatientParticularsCardBinding):RecyclerView.ViewHolder(vitalLayout.root){
 
-        fun binder(particulars: Particulars){
-            vitalLayout.firstName.text = particulars.firstName
-            vitalLayout.otherName.text = particulars.otherNames
+        fun binder(patientBioData: PatientBioData){
+            vitalLayout.firstName.text = patientBioData.first_Name
+            vitalLayout.otherName.text = patientBioData.otherNames
         }
 
 
@@ -103,7 +103,7 @@ class VitalsAdapter():ListAdapter<Particulars, VitalsAdapter.VitalsViewHolder>(D
 
 }
 
-object DiffUtilCall: DiffUtil.ItemCallback<Particulars>() {
+object DiffUtilCall: DiffUtil.ItemCallback<PatientBioData>() {
     /**
      * Called to check whether two objects represent the same item.
      *
@@ -121,9 +121,9 @@ object DiffUtilCall: DiffUtil.ItemCallback<Particulars>() {
      *
      * @see Callback.areItemsTheSame
      */
-    override fun areItemsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
+    override fun areItemsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
         //Using the id of the patient to check
-        return newItem.firstName ==oldItem.firstName
+        return newItem.first_Name ==oldItem.first_Name
     }
 
     /**
@@ -155,7 +155,7 @@ object DiffUtilCall: DiffUtil.ItemCallback<Particulars>() {
      *
      * @see Callback.areContentsTheSame
      */
-    override fun areContentsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
+    override fun areContentsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
        return newItem == oldItem
     }
 

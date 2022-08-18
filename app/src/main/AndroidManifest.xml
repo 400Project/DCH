@@ -21,21 +21,22 @@
         <activity
             android:name=".vitals.VitalsActivity"
             android:exported="false"
-            android:parentActivityName=".datacenter.PatientsDataPage"></activity>
+            android:parentActivityName=".datacenter.PatientsDataPageActivity"/>
         <activity
             android:name=".details.DetailActivity"
             android:exported="false"
             android:label="Details"
-            android:parentActivityName=".datacenter.PatientsDataPage"
-            android:theme="@style/Theme.Material3.DayNight" />
+            android:parentActivityName=".datacenter.PatientsDataPageActivity"
+            android:theme="@style/Theme.Material3.DayNight">
+        </activity>
         <activity
             android:name=".recordforms.PatientRegistrationFormActivity"
             android:exported="false"
             android:label="New Patient"
             android:theme="@style/Theme.Material3.DayNight"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".datacenter.PatientsDataPage"
+            android:name=".datacenter.PatientsDataPageActivity"
             android:exported="false"
             android:label="@string/title_activity_patients_data_page"
             android:parentActivityName=".ui.MainActivity" />

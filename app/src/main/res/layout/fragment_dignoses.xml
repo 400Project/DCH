@@ -5,152 +5,871 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16sp"
-    tools:context=".details.DignosesFragment">
-
-    <androidx.core.widget.NestedScrollView
+    tools:context=".details.DiagnosesFragment">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        app:layout_editor_absoluteX="30dp"
-        app:layout_editor_absoluteY="46dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:scrollbars="none"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:backgroundTint="@color/light_orange"
+                app:cardElevation="@dimen/cardview_compat_inset_shadow"
+                android:id="@+id/vital_card"
+
+                android:layout_marginBottom="20dp"
                 app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Provisional Diagnosis" />
+                android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/patient_vitals_layout"
+                style="@style/details_layout"
+                android:minHeight="150dp"
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/p_diagnosis_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView2">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/provisional_diagnosis"
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Patient's Vitals Details"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Patient Temperature :"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView4">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/patient_temperature"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView4"
+                    tools:text="34.2F">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/text4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Body Weight:"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView3">
+
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/patient_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/patient_temperature"
+                    tools:text="50.4Kg" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blood Pressure :"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text4" />
+
+                <TextView
+                    android:id="@+id/patient_heart_beat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/patient_weight"
+                    tools:text="45mmHg" />
+
+                <TextView
+                    android:id="@+id/patient_blood_pressure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/patient_weight"
+                    tools:text="45mmHg" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sugar Level :"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView7" />
+
+                <TextView
+                    android:id="@+id/patient_sugar_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/patient_blood_pressure"
+                    tools:text="45mmHg" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:backgroundTint="@color/light_purple"
+                android:elevation="2dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintTop_toBottomOf="@id/vital_card"
+                android:id="@+id/provisional_card"
+                android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/p_diagnosis_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/show_hide_test"
+                   >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/provisional_diagnosis"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Provisional Diagnosis"
+                        android:inputType="textCapWords|textMultiLine"
+                        android:minHeight="100dp">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:id="@+id/show_hide_test"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Show All Test(s)"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/p_diagnosis_layout" />
+
+                <ImageView
+                    android:id="@+id/show_hide_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Show or Hide Icon"
+                    android:minWidth="100dp"
+                    android:src="@drawable/ic_arrow_down_24"
+                    app:layout_constraintEnd_toEndOf="@+id/show_hide_test"
+                    app:layout_constraintStart_toStartOf="@+id/show_hide_test"
+                    app:layout_constraintTop_toBottomOf="@+id/show_hide_test" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/test_layout"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/show_hide_icon"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:id="@+id/add_test"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Test"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/add"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="100dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:src="@drawable/ic_pen"
+                        android:layout_marginRight="20dp"
+                        app:layout_constraintTop_toBottomOf="@id/add_test"
+                        app:layout_constraintTop_toTopOf="@id/add_test"
+                        android:contentDescription="Add test">
+
+                    </ImageView>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/test1"
+                        app:layout_constraintTop_toBottomOf="@id/add_test"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/first_testtype_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:hint="Test Type"
+                            android:minWidth="150dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/first_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/first_testresult_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Result"
+                            android:minWidth="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/first_testtype_layout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/first_test_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/test2"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toBottomOf="@id/test1">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/second_testtype_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="2Test Type"
+                            android:minWidth="150dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/second_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/second_testresult_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Result"
+                            android:minWidth="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/second_testtype_layout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/second_test_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/test3"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toBottomOf="@id/test2">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/third_testtype_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Type"
+                            android:minWidth="150dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/third_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/fourth_testresult_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Result"
+                            android:minWidth="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/third_testtype_layout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/fourth_test_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/test4"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toBottomOf="@id/test3">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/fifth_testtype_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Type"
+                            android:minWidth="150dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/fifth_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/fifth_testresult_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Result"
+                            android:minWidth="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/fifth_testtype_layout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/fifth_test_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/test5"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toBottomOf="@id/test4">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/six_testtype_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="6Test Type"
+                            android:minWidth="150dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/six_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/six_testresult_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Result"
+                            android:minWidth="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/six_testtype_layout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/six_test_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:backgroundTint="@color/light_green"
+        android:elevation="2dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/principal_card"
+        app:layout_constraintTop_toBottomOf="@id/provisional_card"
+        android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:id="@+id/principal_diagnosis_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/provisional_diagnosi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Principal Diagnosis"
+                        android:inputType="textCapWords|textMultiLine"
+                        android:minHeight="100dp">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/p_show_hide_test"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Show All Test(s)"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/principal_diagnosis_layout" />
+
+                <ImageView
+                    android:id="@+id/principal_show_hide_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Show or Hide Icon"
+                    android:minWidth="100dp"
+                    android:src="@drawable/ic_arrow_down_24"
+                    app:layout_constraintEnd_toEndOf="@+id/p_show_hide_test"
+                    app:layout_constraintStart_toStartOf="@+id/p_show_hide_test"
+                    app:layout_constraintTop_toBottomOf="@+id/p_show_hide_test" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/principal_test_layout"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/principal_show_hide_icon"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:id="@+id/pri_add_test"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Test"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/principal_add"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/principal_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="100dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:src="@drawable/ic_pen"
+                        android:layout_marginRight="20dp"
+                        app:layout_constraintTop_toBottomOf="@id/pri_add_test"
+                        app:layout_constraintTop_toTopOf="@id/pri_add_test"
+                        android:contentDescription="Add test">
+
+                    </ImageView>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/principal_test1"
+                        app:layout_constraintTop_toBottomOf="@id/pri_add_test"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/principal_first_testtype_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:hint="Test Type"
+                            android:minWidth="150dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/principal_first_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/principal_first_testresult_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Result"
+                            android:minWidth="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/principal_first_testtype_layout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/pfirst_test_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ptest2"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toBottomOf="@id/principal_test1">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/psecond_testtype_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Type"
+                            android:minWidth="150dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/psecond_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/psecond_testresult_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Result"
+                            android:minWidth="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/psecond_testtype_layout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/psecond_test_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ptest3"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toBottomOf="@id/ptest2">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/pthird_testtype_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Type"
+                            android:minWidth="150dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/pthird_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/pfourth_testresult_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Result"
+                            android:minWidth="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/pthird_testtype_layout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/pfourth_test_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ptest4"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toBottomOf="@id/ptest3">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/pfifth_testtype_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Type"
+                            android:minWidth="150dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/pfifth_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/pfifth_testresult_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Result"
+                            android:minWidth="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/pfifth_testtype_layout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/pfifth_test_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ptest5"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toBottomOf="@id/ptest4">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/psix_testtype_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="6Test Type"
+                            android:minWidth="150dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/psix_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/psix_testresult_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Test Result"
+                            android:minWidth="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/psix_testtype_layout">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/psix_test_result"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textCapWords|textMultiLine" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:elevation="2dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/light_orange"
+        app:layout_constraintTop_toBottomOf="@id/principal_card"
+        android:id="@+id/additional_card"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:id="@+id/additional_diagnosis_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Provisional Diagnosis"
-                    android:inputType="textCapWords|textMultiLine"
-                    android:minHeight="100dp">
+                    android:textColorHint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                </com.google.android.material.textfield.TextInputEditText>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/additional_diagnosis"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Additional Diagnosis"
+                        android:minHeight="100dp"
+                        android:inputType="textCapWords|textMultiLine"
+                        >
 
+                    </com.google.android.material.textfield.TextInputEditText>
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/p_diagnosis_layout"
-                android:layout_width="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_height="5dp"
-                android:layout_marginTop="20dp">
-
-            </com.google.android.material.divider.MaterialDivider>
-
-            <TextView
-                android:id="@+id/principal_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider1"
-                android:layout_marginTop="20dp"
-                android:text="Principal Diagnosis">
-
-            </TextView>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-
-                android:id="@+id/principal_diagnosis_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/principal_text">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/provisional_diagnosi"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Principal Diagnosis"
-                    android:inputType="textCapWords|textMultiLine"
-                    android:minHeight="100dp">
-
-                </com.google.android.material.textfield.TextInputEditText>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/principal_diagnosis_layout"
-                android:layout_height="5dp"
-                android:layout_marginTop="20dp">
-
-            </com.google.android.material.divider.MaterialDivider>
-
-            <TextView
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider2"
-                android:id="@+id/additional_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Additional Diagnosis">
-
-            </TextView>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-
-                android:id="@+id/additional_diagnosis_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/additional_text">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/additional_diagnosis"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Additional Diagnosis"
-                    android:inputType="textCapWords|textMultiLine"
-                    android:minHeight="100dp">
-
-                </com.google.android.material.textfield.TextInputEditText>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="40dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/additional_diagnosis_layout"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="Save">
-            </com.google.android.material.button.MaterialButton>
-
+                </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:backgroundTint="@color/light_green"
+        android:elevation="2dp"
+        android:padding="10dp"
+        android:id="@+id/prescription_card"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/additional_card"
+        android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/prescription_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                   >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Patient Prescription"
+                        android:minHeight="100dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nurse_note_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/nurse_note"
+                    android:hint="Nurse Instruction"
+                    android:minHeight="100dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                >
+                <TextView
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Treatment Status"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/patient_status"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:tooltipText="Patient Treatment Status"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="40dp"
+                    android:text="Submit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/prescription_card" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

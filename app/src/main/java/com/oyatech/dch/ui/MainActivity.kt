@@ -59,7 +59,7 @@ open class MainActivity : AppCompatActivity() {
 
 
               }
-                val intent = Intent(this, PatientsDataPage::class.java)
+                val intent = Intent(this, PatientsDataPageActivity::class.java)
                   startActivity(intent)
              Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
                 drawerLayout.closeDrawer(Gravity.LEFT)
@@ -77,7 +77,7 @@ open class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         /*  return when (item.itemId) {
               R.id.settings ->{
-                  navController.navigate(R.id.Consultations)
+                  navController.navigate(R.id.ConsultationsFragment)
                   Toast.makeText(this,"Setting",Toast.LENGTH_SHORT).show()
                   true
               }

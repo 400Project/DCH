@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/visitsFragment">
+    app:startDestination="@id/dignosesFragment">
 
     <fragment
         android:id="@+id/visitsFragment"
@@ -15,20 +15,13 @@
         tools:layout="@layout/fragment_detail_record"
         android:label="Patient Detail"/>
     <fragment
-        android:id="@+id/vitalsFragment"
-        android:name="com.oyatech.dch.details.VitalsFragment"
-        android:label="Patient Vitals"
-        tools:layout="@layout/fragment_vitals" >
-
-    </fragment>
-    <fragment
         android:id="@+id/prescriptionFragment"
         android:name="com.oyatech.dch.details.PrescriptionFragment"
         android:label="Prescriptions"
         tools:layout="@layout/fragment_prescription" />
     <fragment
         android:id="@+id/dignosesFragment"
-        android:name="com.oyatech.dch.details.DignosesFragment"
+        android:name="com.oyatech.dch.details.DiagnosesFragment"
         android:label="Diagnoses"
         tools:layout="@layout/fragment_dignoses" />
 

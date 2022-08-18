@@ -1,12 +1,12 @@
-package com.oyatech.dch.patient.data
+package com.oyatech.dch.model
 
 import androidx.annotation.Nullable
 import java.io.Serializable
 import java.util.*
 
-data class Particulars(
-val hospitalNumber:String,
-    var firstName: String,
+data class PatientBioData(
+    val hospitalNumber:String,
+    var first_Name: String,
     var otherNames: String,
     var address:String,
     val dob: String,
@@ -15,7 +15,8 @@ val hospitalNumber:String,
     var date: String,
     var mobile:String,
     var insuranceNumber:String,
-var age:String
+    var age:String,
+    val recordedBys: String
 )
 {
     constructor():this(
@@ -29,5 +30,6 @@ var age:String
         "1/8/2022",
     "0244344443",
     "22324456",
-    "1year")
+    "1year",
+    "Mercy")
 }

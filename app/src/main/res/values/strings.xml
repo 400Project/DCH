@@ -5,18 +5,35 @@
     <string name="first_fragment_label">D C H</string>
     <string name="second_fragment_label">Staff Login</string>
 
-    <string name="sample">"Lorem Ipsum is simply dummy text of the printing and typesettingindustry.Lorem Ipsum has been the industry's standard dummy text ever since the1500s, when an unknown printer took a galley of type and scrambled it to make a typespecimen book. It has survived not only five centuries, "</string>
+    <string name="sample">"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        Lorem Ipsum has been the industry's standard dummy text ever since the1500s, when an unknown
+        printer took a galley of type and scrambled it to make a typespecimen book. It has survived not
+        only five centuries, "</string>
 
     <!--For ActionBarToggle-->
     <string name="title_activity_patients_data_page">Patients Data Page</string>
+    <string name="diag">Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry.Lorem Ipsum has been the
+        industry\'s standard dummy text ever since the 1500s, when an unknown
+        printer took a galley of type and scramble edit to make a type specimen book.</string>
 
     <string-array name="sex">
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Patient Treatment Status-->
+    <string-array name="patient_status">
+        <item>Admitted</item>
+        <item>Absconded</item>
+        <item>Discharged</item>
+        <item>Detained</item>
+        <item>Discharge on M.C.</item>
+        <item>Died</item>
+        <item>Lab</item>
+        <item>Transferred</item>
+    </string-array>
 
     <string-array name="autocomplete_address">
         <item>Ahwiam</item>
@@ -25,5 +42,7 @@
         <item>Tsopoli</item>
         <item>Prampram</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">No patient currently</string>
 
 </resources>

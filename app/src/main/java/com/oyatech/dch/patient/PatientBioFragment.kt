@@ -10,14 +10,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.databinding.FragmentPatientsBinding
-import com.oyatech.dch.patient.data.ParticularsAdapter
-import com.oyatech.dch.patient.data.listOfPatientPaticulars
 import com.oyatech.dch.recordforms.PatientRegistrationFormActivity
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class PatientRecords : Fragment() {
+class PatientBioFragment : Fragment() {
 
     private var _binding: FragmentPatientsBinding? = null
     val viewModel = RegisterNewPatientViewModel.viewModel
@@ -44,10 +42,10 @@ val viewM = RegisterNewPatientViewModel.viewModel
         super.onViewCreated(view, savedInstanceState)
 
         //populating patient data using recycleView
-      // viewModel.setParticulars()
+      // viewModel.setPatientBioData()
         Log.i("Record", "onViewCreated: ${viewModel.getBioData().size}")
 
-        val adapter = ParticularsAdapter(requireContext(), viewModel.getBioData())
+        val adapter = BioDataAdapter(requireContext(), viewModel.getBioData())
         val layoutManager = LinearLayoutManager(requireContext())
         with(binding.patientRecycleView){
             setLayoutManager(layoutManager)

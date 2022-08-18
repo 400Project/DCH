@@ -4,7 +4,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 
 import androidx.lifecycle.ViewModel
-import com.oyatech.dch.patient.data.Particulars
+import com.oyatech.dch.model.PatientBioData
+import com.oyatech.dch.model.listOfPatientPaticulars
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -13,23 +14,23 @@ class RegisterNewPatientViewModel : ViewModel() {
 
     companion object{
         val viewModel = RegisterNewPatientViewModel()
-        private val patientsList : MutableList<Particulars> = mutableListOf()
+        private val patientsList : MutableList<PatientBioData> = mutableListOf()
 
     }
 
-private  var _bioList :MutableList<Particulars> = mutableListOf()
+private  var _bioList :MutableList<PatientBioData> = listOfPatientPaticulars
 private val bioList = _bioList
 
-    private var _queuedForConsultation:MutableList<Particulars> = mutableListOf()
+    private var _queuedForConsultation:MutableList<PatientBioData> = mutableListOf()
     private  val queuedForConsultation = _queuedForConsultation
 
-    private var _queueForVitals :MutableList<Particulars> = mutableListOf()
+    private var _queueForVitals :MutableList<PatientBioData> = mutableListOf()
     private val queuedForVitals = _queueForVitals
 
     var registerViewMode :RegisterNewPatientViewModel? =null
 
 
-  //  val patientList: LiveData<List<Particulars>> = liveData { _patientsList }
+  //  val patientList: LiveData<List<PatientBioData>> = liveData { _patientsList }
 
     //val allPatient = listOfPatientPaticulars
     @RequiresApi(Build.VERSION_CODES.O)
@@ -40,64 +41,67 @@ private val bioList = _bioList
     }
 
 
-    fun setPatient(particulars: Particulars){
-  //    particularsList =particulars
+    fun setPatient(patientBioData: PatientBioData){
+  //    particularsList =patientBioData
     }
 
 
-    /*fun setParticulars(){
+    /*fun setPatientBioData(){
         patientsList?.value = listOfPatientPaticulars
     }*/
 
-    fun getConsultationQue(particulars: Particulars){
-  //     _patientsList.add(particulars)
+    fun getConsultationQue(patientBioData: PatientBioData){
+  //     _patientsList.add(patientBioData)
     }
 
-    fun getPatient():MutableList<Particulars>{
+    fun getPatient():MutableList<PatientBioData>{
         return patientsList
     }
 
-  fun setBioData(bio:Particulars){
+  fun setBioData(bio: PatientBioData){
    _bioList.add(bio)
       _queueForVitals.add(bio)
   }
 
-  fun getBioData():MutableList<Particulars>
+  fun getBioData():MutableList<PatientBioData>
   {
     return bioList
   }
 
-    fun setQueuedForConsultation (particulars: Particulars){
-        _queuedForConsultation.add(particulars)
+    fun setQueuedForConsultation (patientBioData: PatientBioData){
+        _queuedForConsultation.add(patientBioData)
     }
-    fun getQueuedForConsultation():MutableList<Particulars>
+    fun getQueuedForConsultation():MutableList<PatientBioData>
     {
         return queuedForConsultation
     }
-    fun removeFromQue(particulars: Particulars){
-        _queuedForConsultation.remove(particulars)
+    fun getCurrentQueuedForConsultation(position:Int): PatientBioData {
+        return queuedForConsultation[position]
+    }
+    fun removeFromQue(patientBioData: PatientBioData){
+        _queuedForConsultation.remove(patientBioData)
     }
     fun clearConsultationQue(){
         _queuedForConsultation.clear()
     }
 
-    fun setQueuedForVitals(particulars: Particulars){
-        _queueForVitals.add(particulars)
+    fun setQueuedForVitals(patientBioData: PatientBioData){
+        _queueForVitals.add(patientBioData)
     }
-    fun getQueuedForVitals():MutableList<Particulars>{
+    fun getQueuedForVitals():MutableList<PatientBioData>{
         return queuedForVitals
     }
-    fun getCurrentVitalQueue(position: Int): Particulars {
+    fun getCurrentVitalQueue(position: Int): PatientBioData {
         return getQueuedForVitals()[position]
     }
-    fun removeFromVitalsQue(particular:Particulars){
+    fun removeFromVitalsQue(particular: PatientBioData){
         _queueForVitals.remove(particular)
     }
     fun clearVitalsList(){
         _queueForVitals.clear()
     }
 
-    fun getPatientDetails(patientNumber: Int): Particulars {
+    fun getPatientDetails(patientNumber: Int): PatientBioData {
         return getBioData()[patientNumber]
     }
 

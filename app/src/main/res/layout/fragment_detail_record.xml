@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,128 +13,29 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:layout_marginBottom="30dp"
             android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/bioInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Patient Bio Data"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/patient_bio_layout"
-                style="@style/details_layout"
-                android:minHeight="200dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/bioInfo">
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:src="@drawable/ic_undraw_medicine_b_1_ol"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Patient Name: "
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/patient_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Micheal Achiapong">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Home Town: "
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView1" />
-
-                <TextView
-                    android:id="@+id/patient_hometown"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/patient_name"
-                    tools:text="Kwadaso-Kumasi" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider1"
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/patient_bio_layout" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/vital_info"
-                style="@style/details_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider1">
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Vitals"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/vitals_layout_controller"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="0dp"
-                    android:text="More Details..."
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/patient_vitals_layout"
                 style="@style/details_layout"
                 android:minHeight="200dp"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/vital_info">
+                tools:layout_editor_absoluteY="16dp">
 
-                <ImageView
-                    android:id="@+id/imageView4"
+                <TextView
+                    android:id="@+id/textView4"
                     android:layout_width="wrap_content"
-                    android:layout_height="201dp"
-                    android:src="@drawable/ic_vitals"
+                    android:layout_height="wrap_content"
+                    android:text="Vitals Details"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </TextView>
 
                 <TextView
                     android:id="@+id/textView3"
@@ -143,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:text="Patient Temperature :"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/textView4">
 
                 </TextView>
 
@@ -152,7 +52,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView4"
                     tools:text="34.2F">
 
                 </TextView>
@@ -186,6 +86,14 @@
 
                 <TextView
                     android:id="@+id/patient_heart_beat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/patient_weight"
+                    tools:text="45mmHg" />
+
+                <TextView
+                    android:id="@+id/patient_blood_pressure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -237,91 +145,123 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/patient_diagnosis_layout"
                 style="@style/details_layout"
+                android:layout_marginBottom="18dp"
                 android:minHeight="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/constraintLayout">
 
-                <ImageView
-                    android:id="@+id/imageView5"
+
+                <TextView
+                    android:id="@+id/provisional_diagnosis2"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:src="@drawable/ic_diagnoses"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/show_hide_test"
+                    app:layout_constraintStart_toStartOf="@+id/show_hide_test"
+                    app:layout_constraintTop_toBottomOf="@+id/show_hide_test"
+                    android:text="@string/diag" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Provisional Diagnosis"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@+id/textView8"
+                    app:layout_constraintStart_toStartOf="@id/textView8"
+                    app:layout_constraintTop_toBottomOf="@id/textView8"
+                    tools:layout_editor_absoluteY="65dp" />
 
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider3"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/patient_diagnosis_layout" />
+                <TextView
+                    android:id="@+id/provisional_diagnosis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/textView8"
+                    app:layout_constraintHorizontal_bias="0.486"
+                    app:layout_constraintStart_toStartOf="@+id/textView8"
+                    app:layout_constraintTop_toBottomOf="@id/divider"
+                    android:text="@string/diag" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout2"
-                style="@style/details_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider3">
+                <TextView
+                    android:id="@+id/show_hide_test"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@id/textView8"
+                    app:layout_constraintStart_toStartOf="@id/textView8"
+                    app:layout_constraintTop_toBottomOf="@+id/provisional_diagnosis"
+                    android:text="Principal Diagnosis" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider1"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="@+id/show_hide_test"
+                    app:layout_constraintStart_toStartOf="@id/show_hide_test"
+                    app:layout_constraintTop_toBottomOf="@id/show_hide_test"
+                    tools:layout_editor_absoluteY="65dp" />
 
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Prescriptions"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </TextView>
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@id/textView8"
+                    app:layout_constraintStart_toStartOf="@id/textView8"
+                    app:layout_constraintTop_toBottomOf="@+id/provisional_diagnosis2"
+                    android:text="Additional Diagnosis" />
 
                 <TextView
-                    android:id="@+id/prescription_layout_controller"
+                    android:id="@+id/additional_diagnosis_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/diag"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/textView6"
+                    app:layout_constraintStart_toStartOf="@+id/textView6"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+                <TextView
+                    android:id="@+id/patient_prescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/diag"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/textView10"
+                    app:layout_constraintStart_toStartOf="@+id/textView10"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+                <TextView
+                    android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="0dp"
-                    android:text="More Details..."
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                    android:layout_marginTop="10dp"
+                    android:text="Prescription"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@id/textView8"
+                    app:layout_constraintStart_toStartOf="@id/textView8"
+                    app:layout_constraintTop_toBottomOf="@+id/additional_diagnosis_layout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/patient_prescription_layout"
-                style="@style/details_layout"
-                android:layout_below="@id/divider3"
-                android:minHeight="200dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/constraintLayout2">
-
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="center"
-                    android:src="@drawable/drug"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider4"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/patient_prescription_layout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

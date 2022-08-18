@@ -5,24 +5,36 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.oyatech.dch.patient.PatientRecords
-import com.oyatech.dch.consultations.Consultations
+import com.oyatech.dch.Department
+import com.oyatech.dch.Department.*
+import com.oyatech.dch.consultations.ConsultationsFragment
+import com.oyatech.dch.dispensary.DispensaryFragment
+import com.oyatech.dch.patient.PatientBioFragment
+import com.oyatech.dch.pharmacy.PharmacyFragment
 import com.oyatech.dch.vitals.PatientVitalsFragment
-import com.oyatech.dch.pharmacy.Product
+import com.oyatech.dch.ward.WardsFragment
 
-
-
-class TabAdapter(fragmentActivity: FragmentActivity)
+class TabAdapter(fragmentActivity: FragmentActivity, department: Department)
     : FragmentStateAdapter(fragmentActivity) {
-
+var department = department
 
     /**
      * Returns the total number of items in the data set held by the adapter.
      *
-     * @return The total number of items in this adapter.
+     * @return The total number of items in this adapter base on the department.
      */
+
     override fun getItemCount(): Int {
-       return 4
+      return  when(department)
+        {
+
+         RECORDS ->  1
+            OPD ->  1
+          NURSING -> 3
+
+          else -> Department.values().size
+      }
+
     }
 
     /**
@@ -40,14 +52,43 @@ class TabAdapter(fragmentActivity: FragmentActivity)
      */
     override fun createFragment(position: Int): Fragment {
 
-        return when(position){
-            0 -> PatientRecords()
-            1 -> PatientVitalsFragment()
-            2 -> Consultations()
-            3 -> Product()
-            else -> throw Resources.NotFoundException("Position not found")
-        }
-
+        return fragmentFactory(position, department)
     }
 
+
+
+
+
+    @Suppress("UNREACHABLE_CODE")
+    private fun fragmentFactory(position:Int, privilege: Department):Fragment{
+
+        if(privilege == RECORDS){
+            return when(position){
+                0 -> PatientBioFragment()
+                else -> {throw Resources.NotFoundException("Position not found")}
+            }
+        }else if (privilege ==OPD){
+            return when(position){
+                0 -> PatientVitalsFragment()
+                else -> {throw Resources.NotFoundException("Position not found")}
+            }
+        }else if (privilege == NURSING){
+            return when(position){
+                0 -> WardsFragment()
+                1 -> ConsultationsFragment()
+                2 -> PharmacyFragment()
+                else -> {throw Resources.NotFoundException("Position not found")}
+            }
+        }else {
+            return when(position){
+                0 -> PatientBioFragment()
+                1-> PatientVitalsFragment()
+                2 -> ConsultationsFragment()
+                3 -> WardsFragment()
+                4 -> DispensaryFragment()
+                5 -> PharmacyFragment()
+                else -> {throw Resources.NotFoundException("Position not found")}
+            }
+        }
+    }
 }

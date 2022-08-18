@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
-import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayoutMediator
+import com.oyatech.dch.Department
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.ActivityPatientsDataPageBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
 import com.oyatech.dch.ui.MainActivity
 
-class PatientsDataPage : MainActivity() {
+class PatientsDataPageActivity : MainActivity() {
     val viewModel = RegisterNewPatientViewModel.viewModel
-    private val title = arrayListOf("RECORD", "VITALS", "CONSULTATION", "PRODUCT")
+    private val title = arrayListOf( "RECORDS","VITALS","CONSULTATION", "WARDS", "DISPENSARY", "PHARMACY")
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityPatientsDataPageBinding
 
@@ -28,16 +28,15 @@ class PatientsDataPage : MainActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         /**
-         * Create a tab layout with PatientFragment, Consultation, Product etc
+         * Create a tab layout with PatientBioFragment, Consultation, PharmacyFragment etc
          */
 
         val tablelayout = binding.tabLayout
 
 
         val viewPager2 = binding.viewPager
-        viewPager2.adapter = TabAdapter(this)
-        TabLayoutMediator(tablelayout, viewPager2) {
-                tab, position ->
+        viewPager2.adapter = TabAdapter(this, Department.WARD)
+        TabLayoutMediator(tablelayout, viewPager2) { tab, position ->
             run {
 
                 tab.text = title[position]
@@ -63,17 +62,18 @@ class PatientsDataPage : MainActivity() {
 
         return true
     }
-
+//Setting the badges for the tabs due to the number of patients in the que
     private fun setTabBadges() {
 
 
         with(binding.tabLayout) {
-                    getTabAt(0)?.orCreateBadge?.number = viewModel.getBioData().size
+            with(viewModel) {
+                getBioData().size.also { getTabAt(0)?.orCreateBadge?.number = it }
 
-                    getTabAt(1)?.orCreateBadge?.number = viewModel.getQueuedForVitals().size
+                getQueuedForVitals().size.also { getTabAt(1)?.orCreateBadge?.number = it }
+                getQueuedForConsultation().size.also { getTabAt(1)?.orCreateBadge?.number = it }
+            }
 
-                    getTabAt(2)?.orCreateBadge?.number =
-                        viewModel.getQueuedForConsultation().size
 
         }
 

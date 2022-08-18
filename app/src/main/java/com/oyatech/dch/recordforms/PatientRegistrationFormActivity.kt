@@ -36,7 +36,7 @@ class PatientRegistrationFormActivity : AppCompatActivity() {
 
 
         /*binding.register.setOnClickListener{
-       //     val intent = Intent(this,PatientsDataPage::class.java)
+       //     val intent = Intent(this,PatientsDataPageActivity::class.java)
 
 
 

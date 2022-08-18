@@ -1,18 +1,16 @@
 package com.oyatech.dch.consultations
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.oyatech.dch.patient.RegisterNewPatientViewModel
-import com.oyatech.dch.patient.data.Particulars
+import com.oyatech.dch.model.PatientBioData
 
 class ConsultationViewModel: ViewModel() {
 
-  private  var _queForConsultation = ArrayList<Particulars> ()
-    val queForConsultation: List<Particulars> = _queForConsultation
+  private  var _queForConsultation = ArrayList<PatientBioData> ()
+    val queForConsultation: List<PatientBioData> = _queForConsultation
 
 
 
-    fun getConsultationQue(particulars: Particulars){
-         _queForConsultation.add(particulars)
+    fun getConsultationQue(patientBioData: PatientBioData){
+         _queForConsultation.add(patientBioData)
     }
 }

@@ -14,7 +14,7 @@ import com.oyatech.dch.patient.RegisterNewPatientViewModel
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class Consultations : Fragment() {
+class ConsultationsFragment : Fragment() {
 
     private  val viewModel =RegisterNewPatientViewModel.viewModel
     private var _binding:FragmentConsultationBinding? = null

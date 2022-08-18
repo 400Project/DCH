@@ -1,8 +1,7 @@
-package com.oyatech.dch.patient.data
+package com.oyatech.dch.patient
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater.from
 import android.view.View
 import android.view.ViewGroup
@@ -10,31 +9,33 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oyatech.dch.EditBioDataActivity
-import com.oyatech.dch.databinding.ActivityEditBioDataBinding
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
-import com.oyatech.dch.details.DetailActivity
-import com.oyatech.dch.details.VitalsFragment
-import com.oyatech.dch.patient.data.ParticularsAdapter.ParticularsViewHolder
-import com.oyatech.dch.vitals.VitalsActivity
+import com.oyatech.dch.model.PatientBioData
+import com.oyatech.dch.patient.BioDataAdapter.ParticularsViewHolder
 
-class ParticularsAdapter():
-    ListAdapter<Particulars,ParticularsViewHolder>(DiffUtilCallback) {
-   private lateinit var particularList:MutableList<Particulars>
-   private lateinit var context: Context
-    constructor(context: Context, particularList: MutableList<Particulars>):this(){
+class BioDataAdapter() :
+    ListAdapter<PatientBioData, ParticularsViewHolder>(DiffUtilCallback) {
+    private lateinit var particularList: MutableList<PatientBioData>
+    private lateinit var context: Context
+
+    constructor(context: Context, particularList: MutableList<PatientBioData>) : this() {
         this.particularList = particularList
         this.context = context
     }
 
-  inner  class ParticularsViewHolder(val binding: PatientParticularsCardBinding)
-      : RecyclerView.ViewHolder(binding.root) {
+    inner class ParticularsViewHolder(val binding: PatientParticularsCardBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun holderBinder(particulars: Particulars){
-            with(binding){
-                firstName.text = particulars.firstName
-                otherName.text = particulars.otherNames
-                date.text = particulars.date
-                hospitalNumberTextView.text = particulars.hospitalNumber
+        fun holderBinder(patientBioData: PatientBioData) {
+            with(patientBioData)
+            {
+                with(binding) {
+                    firstName.text = first_Name
+                    otherName.text = otherNames
+                    recordedBy.text ="By: $recordedBys"
+                    date.text = patientBioData.date
+                    hospitalNumberTextView.text = patientBioData.hospitalNumber
+                }
             }
 
 
@@ -69,7 +70,8 @@ class ParticularsAdapter():
 
         //Inflating the particular layout as the View for the ViewHolder class
 
-val particularsLayout = PatientParticularsCardBinding.inflate(from(parent.context),parent,false)
+        val particularsLayout =
+            PatientParticularsCardBinding.inflate(from(parent.context), parent, false)
         return ParticularsViewHolder(particularsLayout)
     }
 
@@ -97,13 +99,13 @@ val particularsLayout = PatientParticularsCardBinding.inflate(from(parent.contex
     override fun onBindViewHolder(holder: ParticularsViewHolder, position: Int) {
 
         val particulars = particularList[position]
-        if (particulars!=null){
+        if (particulars != null) {
             holder.holderBinder(particulars)
         }
-     /*   with(holder)
-        {
-            holderBinder(particulars)
-            *//*with(particularList[position]){
+        /*   with(holder)
+           {
+               holderBinder(patientBioData)
+               *//*with(particularList[position]){
                 binding.firstName.text = firstName
                 binding.otherName.text = otherNames
                *//**//* binding.date.text = dateAndTime*//**//*
@@ -111,17 +113,19 @@ val particularsLayout = PatientParticularsCardBinding.inflate(from(parent.contex
             }
 *//*
 
-            *//**
-             * TODO: Launch a detail page when a patient data is clicked upon
-             *//*
+            */
+        /**
+         * TODO: Launch a detail page when a patient data is clicked upon
+         *//*
         }*/
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
 
-            val intent = Intent(context.applicationContext,EditBioDataActivity::class.java)
+            val intent = Intent(context.applicationContext, EditBioDataActivity::class.java)
 
             context.startActivity(
 
-                intent.putExtra("details",position))
+                intent.putExtra("details", position)
+            )
 
 
         }
@@ -136,7 +140,7 @@ val particularsLayout = PatientParticularsCardBinding.inflate(from(parent.contex
     override fun getItemCount() = particularList.size
 
 
- companion object DiffUtilCallback: DiffUtil.ItemCallback<Particulars>(){
+    companion object DiffUtilCallback : DiffUtil.ItemCallback<PatientBioData>() {
         /**
          * Called to check whether two objects represent the same item.
          *
@@ -154,7 +158,7 @@ val particularsLayout = PatientParticularsCardBinding.inflate(from(parent.contex
          *
          * @see Callback.areItemsTheSame
          */
-        override fun areItemsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
+        override fun areItemsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
             //I will be using the patients id or hospital number
             return oldItem == newItem
         }
@@ -188,8 +192,8 @@ val particularsLayout = PatientParticularsCardBinding.inflate(from(parent.contex
          *
          * @see Callback.areContentsTheSame
          */
-        override fun areContentsTheSame(oldItem: Particulars, newItem: Particulars): Boolean {
-            return oldItem.hospitalNumber==newItem.hospitalNumber
+        override fun areContentsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
+            return oldItem.hospitalNumber == newItem.hospitalNumber
         }
 
     }

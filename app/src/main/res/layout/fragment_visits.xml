@@ -9,7 +9,8 @@
     tools:context=".details.VisitsFragment">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="20dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/patient_bio_layout"
         android:layout_width="match_parent"
@@ -21,55 +22,147 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/visitsRecycleView">
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/ic_undraw_medicine_b_1_ol"
+        <TextView
+            android:id="@+id/patient_full_name"
+            style="@style/TextAppearance.Material3.DisplaySmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Patient Nartey"
+            android:maxEms="15"
+            app:layout_constraintEnd_toStartOf="@id/patient_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/patient_bio_layout" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView1"
+
+            android:id="@+id/patient_hospital_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Patient Name: "
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
 
-        </TextView>
+            app:layout_constraintTop_toBottomOf="@id/patient_full_name"
+            tools:text="DCH/00/2000" />
+
 
         <TextView
-            android:id="@+id/patient_name"
+            android:id="@+id/patient_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/patient_full_name"
+            app:layout_constraintEnd_toStartOf="@id/patient_age"
+            app:layout_constraintStart_toEndOf="@id/patient_full_name"
+            app:layout_constraintTop_toTopOf="@id/patient_full_name"
+            android:text="Aged: " />
+
+        <TextView
+            android:id="@+id/patient_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/patient_full_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/patient_text"
+            app:layout_constraintTop_toTopOf="@id/patient_full_name"
+            tools:text=" 34 yrs" />
+
+        <TextView
+            android:id="@+id/hospital_no_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/patient_full_name"
+            android:text="Hospital Number :"/>
+        <TextView
+            android:id="@+id/address_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:text="Address: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/patient_hospital_number" />
+
+        <TextView
+            android:id="@+id/patient_Address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Micheal Achiapong">
-
-        </TextView>
+            app:layout_constraintTop_toBottomOf="@id/patient_hospital_number"
+            tools:text="Mangotsonya" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:id="@+id/gender_text"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Home Town: "
+            android:text="Gender: "
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView1" />
+            app:layout_constraintTop_toBottomOf="@id/address_text" />
 
         <TextView
-            android:id="@+id/patient_hometown"
+            android:id="@+id/patient_gender"
             android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/gender_text"
+            app:layout_constraintStart_toEndOf="@id/gender_text"
+            app:layout_constraintTop_toTopOf="@id/gender_text"
+            tools:text="Male" />
+
+        <TextView
+            android:id="@+id/dob_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Date Of Birth: "
+            app:layout_constraintBottom_toBottomOf="@id/patient_DoB"
+            app:layout_constraintEnd_toStartOf="@id/patient_DoB"
+            app:layout_constraintTop_toTopOf="@id/patient_DoB" />
+
+        <TextView
+            android:id="@+id/patient_DoB"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/patient_name"
-            tools:text="Kwadaso-Kumasi" />
+            app:layout_constraintTop_toBottomOf="@id/patient_Address"
+            tools:text="23/4/1900" />
+
+        <TextView
+            android:id="@+id/insurance_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Insurance Number: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gender_text" />
+
+        <TextView
+            android:id="@+id/patient_nhis"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/patient_DoB"
+            tools:text="23427642" />
+
+        <TextView
+            android:id="@+id/mobile_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:text="Mobile :"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/insurance_text" />
+        <TextView
+            android:id="@+id/patient_mobile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            tools:text="026005055"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/patient_nhis" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider1"
         android:layout_width="0dp"
         android:layout_height="3dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,10 +172,11 @@
         android:id="@+id/visitsRecycleView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         android:minHeight="400dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/divider1"
         tools:listitem="@layout/visits_card">
 
@@ -95,7 +189,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
-        android:text="Add Vitals"
+        android:text="Diagnose"
         app:icon="@drawable/ic_pen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -104,7 +198,7 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/show_hide_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No visits yet!!"

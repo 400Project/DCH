@@ -5,16 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.oyatech.dch.R
 import com.oyatech.dch.databinding.FragmentNextOfKingBinding
 
 
 /**
  * A simple [Fragment] subclass.
- * Use the [NextOfFragment.newInstance] factory method to
+ * Use the [PatientNextOfFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class NextOfFragment : Fragment() {
+class PatientNextOfFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var _binding:FragmentNextOfKingBinding?=null
 

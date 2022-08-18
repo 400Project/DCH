@@ -1,10 +1,11 @@
-package com.oyatech.dch.patient.data
+package com.oyatech.dch.model
 
 data class Vitals(
     val dateTime: String,
     val bloodPressure: String,
     val weight: String,
-    val bodyTemperature: String
+    val bodyTemperature: String,
+    val recordedBy: String
 ) {
     class Vitals
 
@@ -15,6 +16,7 @@ data class Vitals(
                 "Body Weight:     $weight\n" +
                 "Body Temperature:$bodyTemperature"
     }
+
 
 }
 

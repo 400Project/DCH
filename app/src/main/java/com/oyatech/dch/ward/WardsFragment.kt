@@ -1,18 +1,15 @@
-package com.oyatech.dch.details
+package com.oyatech.dch.ward
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.oyatech.dch.R
-import com.oyatech.dch.databinding.FragmentDignosesBinding
-import com.oyatech.dch.databinding.FragmentVitalsBinding
+import com.oyatech.dch.databinding.FragmentWardsBinding
 
 
-class VitalsFragment : Fragment() {
-    private var _binding : FragmentVitalsBinding?= null
+class WardsFragment : Fragment() {
+    private var _binding : FragmentWardsBinding?= null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -20,7 +17,7 @@ class VitalsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentVitalsBinding.
+        _binding = FragmentWardsBinding.
         inflate(inflater,container,false)
         return _binding!!.root
     }

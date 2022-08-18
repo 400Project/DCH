@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.FragmentLoginBinding
-import com.oyatech.dch.datacenter.PatientsDataPage
+import com.oyatech.dch.datacenter.PatientsDataPageActivity
 
 
 /**
@@ -38,7 +38,7 @@ class LoginFragment : Fragment() {
         autocomplete()
 
        binding.login.setOnClickListener {
-            startActivity(Intent(context, PatientsDataPage::class.java))
+            startActivity(Intent(context, PatientsDataPageActivity::class.java))
         }
     }
 
