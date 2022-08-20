@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.databinding.FragmentConsultationBinding
@@ -16,7 +17,12 @@ import com.oyatech.dch.patient.RegisterNewPatientViewModel
  */
 class ConsultationsFragment : Fragment() {
 
-    private  val viewModel =RegisterNewPatientViewModel.viewModel
+    private val consultAdapter by lazy {
+        ConsultationAdapter(requireContext())
+    }
+    private val viewModel by lazy {
+        ViewModelProvider(requireActivity())[ConsultationViewModel::class.java]
+    }
     private var _binding:FragmentConsultationBinding? = null
 
     // This property is only valid between onCreateView and
@@ -41,8 +47,12 @@ class ConsultationsFragment : Fragment() {
     }
 
     private fun createRecyclerView() {
-        val adapter = ConsultationAdapter(requireContext(),viewModel.getQueuedForConsultation())
-        with(binding.consultReviewer){
+        val adapter = consultAdapter
+        val viewModel = viewModel
+        viewModel.queuedForConsultation.observe(viewLifecycleOwner){
+            adapter.submitList(it)
+        }
+     binding.consultReviewer.apply{
         layoutManager =   LinearLayoutManager(requireContext())
                setAdapter(adapter)
         }

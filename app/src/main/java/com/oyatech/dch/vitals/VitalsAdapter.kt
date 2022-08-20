@@ -14,14 +14,13 @@ import com.oyatech.dch.patient.RegisterNewPatientViewModel
 import com.oyatech.dch.model.PatientBioData
 
 
-class VitalsAdapter():ListAdapter<PatientBioData, VitalsAdapter.VitalsViewHolder>(DiffUtilCall){
-   val DUE_FOR_VITALS = "com.oyatech.dch.vitals"
+class VitalsAdapter():ListAdapter<PatientBioData,
+        VitalsAdapter.VitalsViewHolder>(DiffUtilCall){
+  private val DUE_FOR_VITALS = "com.oyatech.dch.vitals"
     lateinit var context: Context
-    lateinit var mutableList: MutableList<PatientBioData>
-    val viewModel  = RegisterNewPatientViewModel()
-    constructor(context: Context,mutableList: MutableList<PatientBioData>):this(){
+
+    constructor(context: Context):this(){
         this.context = context
-        this.mutableList = mutableList
     }
 
     inner class VitalsViewHolder(var vitalLayout:PatientParticularsCardBinding):RecyclerView.ViewHolder(vitalLayout.root){
@@ -85,7 +84,7 @@ class VitalsAdapter():ListAdapter<PatientBioData, VitalsAdapter.VitalsViewHolder
      */
     override fun onBindViewHolder(holder: VitalsViewHolder, position: Int) {
         with(holder){
-                binder(mutableList[position])
+                binder(getItem(position))
         }
 
         holder.itemView.setOnClickListener{
@@ -97,7 +96,7 @@ class VitalsAdapter():ListAdapter<PatientBioData, VitalsAdapter.VitalsViewHolder
     }
 
     override fun getItemCount():Int{
-        return mutableList.size
+        return currentList.size
     }
 
 
@@ -123,7 +122,7 @@ object DiffUtilCall: DiffUtil.ItemCallback<PatientBioData>() {
      */
     override fun areItemsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
         //Using the id of the patient to check
-        return newItem.first_Name ==oldItem.first_Name
+        return newItem.hashCode() ==oldItem.hashCode()
     }
 
     /**

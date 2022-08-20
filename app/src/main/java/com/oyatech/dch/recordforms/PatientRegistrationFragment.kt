@@ -17,22 +17,27 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.Department
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.FragmentBioDataBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
 import com.oyatech.dch.datacenter.PatientsDataPageActivity
+import com.oyatech.dch.model.DataSource
 import com.oyatech.dch.model.PatientBioData
+import com.oyatech.dch.vitals.VitalsViewModel
 import java.util.*
 
 
 class PatientRegistrationFragment : Fragment() {
 //View Binding
  private   var _binding:  FragmentBioDataBinding? = null
-val viewModel = RegisterNewPatientViewModel.viewModel
    private val binding get() = _binding!!
 
+    private  val viewModel by lazy {
+        ViewModelProvider(requireActivity())[RegisterNewPatientViewModel::class.java]
+    }
 
    private val calender: Calendar = Calendar.getInstance()
    private var patientYear:Int = 0
@@ -41,10 +46,6 @@ val viewModel = RegisterNewPatientViewModel.viewModel
        private  var hospitalNumber:Int = 0
    }
 
-
-  /* val viewModel by lazy {
-       ViewModelProvider(requireActivity())[RegisterNewPatientViewModel::class.java]
-   }*/
  //   private val viewModel : RegisterNewPatientViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -63,7 +64,7 @@ val viewModel = RegisterNewPatientViewModel.viewModel
     //    viewModel = RegisterNewPatientViewModel().getViewModel()
         //Phone number formatter according to Ghana local
        formatPhoneNumber()
-
+val myViewModel = viewModel
         binding.patientDoB.setOnClickListener{
             //getting the calender by using the DatePickerDialog
        pickDate()
@@ -141,14 +142,13 @@ binding.next.setOnClickListener {
             val mobile =patientMobile.text.toString().trim()
             val nhis =patientNhis.text.toString().trim()
 
-
                 val patientBioData = PatientBioData(hospitalNumber,
                     firstName, otherName,
                     address,dob,sex,
                     occupation,date,
                     mobile,nhis,age,Department.NURSING.toString())
-               viewModel.setBioData(patientBioData)
-
+            viewModel.setBioData(patientBioData)
+            DataSource.addVitalQue(patientBioData)
             /*, address, dob, sex, occupation, date*/
         }
         startActivity(Intent(this.context,PatientsDataPageActivity::class.java))

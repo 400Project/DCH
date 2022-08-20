@@ -27,7 +27,8 @@ import java.time.format.DateTimeFormatter
             PatientBioData("DCH/2/2021","Rebecca","Teye","Accra","02/3/1987","M","Teaching","1/08/2022","0232234322","11233233","34yrs","Bright Narh")
      )
 
-  fun  getInstance(){
+  fun  addVitalQue(bioData: PatientBioData){
+      listOfPatientPaticulars.add(bioData)
 
  }
 

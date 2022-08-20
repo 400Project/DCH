@@ -15,7 +15,7 @@ import com.oyatech.dch.model.PatientBioData
  * create an instance of this fragment.
  */
 class VisitsFragment : Fragment() {
-    final val PATIENT_VISITS = "com.oyatech.dch.details"
+    private final val PATIENT_VISITS = "com.oyatech.dch.details"
     val viewModel = RegisterNewPatientViewModel.viewModel
     private var _binding: FragmentVisitsBinding? = null
 

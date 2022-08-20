@@ -2,24 +2,31 @@ package com.oyatech.dch.patient
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 import androidx.lifecycle.ViewModel
+import com.oyatech.dch.model.DataSource.listOfPatientPaticulars
 import com.oyatech.dch.model.PatientBioData
-import com.oyatech.dch.model.listOfPatientPaticulars
+import com.oyatech.dch.observer.IOObservable
+import com.oyatech.dch.observer.IOObserver
+import com.oyatech.dch.vitals.VitalsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RegisterNewPatientViewModel : ViewModel() {
+class RegisterNewPatientViewModel : ViewModel(),IOObservable {
   //  private val listOfParticulars = PatientRepository(listOfPatientPaticulars)
 
     companion object{
         val viewModel = RegisterNewPatientViewModel()
-        private val patientsList : MutableList<PatientBioData> = mutableListOf()
+    //    private val patientsList : MutableList<PatientBioData> = mutableListOf()
 
     }
 
-private  var _bioList :MutableList<PatientBioData> = listOfPatientPaticulars
-private val bioList = _bioList
+
+private  var _bioList  = MutableLiveData<MutableList<PatientBioData>>()
+
+ val bioList:LiveData<MutableList<PatientBioData>> get() = _bioList
 
     private var _queuedForConsultation:MutableList<PatientBioData> = mutableListOf()
     private  val queuedForConsultation = _queuedForConsultation
@@ -27,10 +34,9 @@ private val bioList = _bioList
     private var _queueForVitals :MutableList<PatientBioData> = mutableListOf()
     private val queuedForVitals = _queueForVitals
 
+
+
     var registerViewMode :RegisterNewPatientViewModel? =null
-
-
-  //  val patientList: LiveData<List<PatientBioData>> = liveData { _patientsList }
 
     //val allPatient = listOfPatientPaticulars
     @RequiresApi(Build.VERSION_CODES.O)
@@ -40,32 +46,21 @@ private val bioList = _bioList
         return sdf.format(calender.time)
     }
 
-
-    fun setPatient(patientBioData: PatientBioData){
-  //    particularsList =patientBioData
+    public fun dataInitializer(){
+        _bioList.value = listOfPatientPaticulars
     }
-
-
-    /*fun setPatientBioData(){
-        patientsList?.value = listOfPatientPaticulars
-    }*/
 
     fun getConsultationQue(patientBioData: PatientBioData){
   //     _patientsList.add(patientBioData)
     }
 
-    fun getPatient():MutableList<PatientBioData>{
-        return patientsList
-    }
-
   fun setBioData(bio: PatientBioData){
-   _bioList.add(bio)
-      _queueForVitals.add(bio)
+   listOfPatientPaticulars.add(bio)
   }
 
   fun getBioData():MutableList<PatientBioData>
   {
-    return bioList
+    return listOfPatientPaticulars
   }
 
     fun setQueuedForConsultation (patientBioData: PatientBioData){
@@ -109,5 +104,20 @@ private val bioList = _bioList
 
         return (10000000..999999999).random()
     }
+    fun searchForPatient(query: String):LiveData<MutableList<PatientBioData>> {
+        val list = MutableLiveData<MutableList<PatientBioData>>()
+        val arrLis = mutableListOf<PatientBioData>()
+       listOfPatientPaticulars.forEach {
+         if (it.first_Name.contains(query,true)){
+             arrLis.add(it)
+             list.value =arrLis
+         }
+     }
+      return list
+    }
+
+    override val vitalOpd: MutableList<VitalsViewModel>
+        get() = TODO("Not yet implemented")
+
 
 }

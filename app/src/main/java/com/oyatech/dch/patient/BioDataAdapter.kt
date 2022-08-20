@@ -10,23 +10,19 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oyatech.dch.EditBioDataActivity
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
+import com.oyatech.dch.model.DataSource
 import com.oyatech.dch.model.PatientBioData
 import com.oyatech.dch.patient.BioDataAdapter.ParticularsViewHolder
 
-class BioDataAdapter() :
+class BioDataAdapter(context: Context) :
     ListAdapter<PatientBioData, ParticularsViewHolder>(DiffUtilCallback) {
-    private lateinit var particularList: MutableList<PatientBioData>
-    private lateinit var context: Context
-
-    constructor(context: Context, particularList: MutableList<PatientBioData>) : this() {
-        this.particularList = particularList
-        this.context = context
-    }
+    private var context = context
 
     inner class ParticularsViewHolder(val binding: PatientParticularsCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun holderBinder(patientBioData: PatientBioData) {
+
             with(patientBioData)
             {
                 with(binding) {
@@ -97,10 +93,12 @@ class BioDataAdapter() :
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: ParticularsViewHolder, position: Int) {
-
-        val particulars = particularList[position]
+        val particulars = getItem(position)
         if (particulars != null) {
-            holder.holderBinder(particulars)
+            holder.apply {
+                holderBinder(particulars)
+            }
+
         }
         /*   with(holder)
            {
@@ -137,7 +135,7 @@ class BioDataAdapter() :
      *
      * @return The total number of items in this adapter.
      */
-    override fun getItemCount() = particularList.size
+    override fun getItemCount() = currentList.size
 
 
     companion object DiffUtilCallback : DiffUtil.ItemCallback<PatientBioData>() {
@@ -160,7 +158,7 @@ class BioDataAdapter() :
          */
         override fun areItemsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
             //I will be using the patients id or hospital number
-            return oldItem == newItem
+            return oldItem.hospitalNumber == newItem.hospitalNumber
         }
 
         /**
@@ -193,7 +191,7 @@ class BioDataAdapter() :
          * @see Callback.areContentsTheSame
          */
         override fun areContentsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
-            return oldItem.hospitalNumber == newItem.hospitalNumber
+            return oldItem == newItem
         }
 
     }

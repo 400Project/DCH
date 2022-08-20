@@ -5,15 +5,15 @@ import android.content.Intent
 import android.view.LayoutInflater.from
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oyatech.dch.model.PatientBioData
 import com.oyatech.dch.consultations.ConsultationAdapter.ConsultationViewHolder
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
 import com.oyatech.dch.details.DetailActivity
 
-class ConsultationAdapter(context: Context, que:MutableList<PatientBioData>):
-    RecyclerView.Adapter<ConsultationViewHolder>() {
-    private val queList = que
+class ConsultationAdapter(context: Context):
+    ListAdapter<PatientBioData,ConsultationViewHolder>(Diff) {
     private val context = context;
     final  val PATIENT_VISITS = "com.oyatech.dch.details"
 
@@ -76,7 +76,7 @@ class ConsultationAdapter(context: Context, que:MutableList<PatientBioData>):
      * @param position The position of the item within the adapter's data set.
      */
     override fun onBindViewHolder(holder: ConsultationViewHolder, position: Int) {
-        val particulars = queList[position]
+        val particulars = getItem(position)
         with(holder) {
             bindAllQues(particulars)
 
@@ -96,12 +96,7 @@ class ConsultationAdapter(context: Context, que:MutableList<PatientBioData>):
      *
      * @return The total number of items in this adapter.
      */
-    override fun getItemCount(): Int {
-        return if (queList.isNotEmpty()) {
-            queList.size
-        } else -1
-
-    }
+    override fun getItemCount() = currentList.size
 }
 
 
@@ -124,7 +119,7 @@ object Diff : DiffUtil.ItemCallback<PatientBioData>(){
      * @see Callback.areItemsTheSame
      */
     override fun areItemsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
-        return oldItem==newItem
+        return oldItem.hashCode()==newItem.hashCode()
     }
 
     /**
@@ -157,7 +152,7 @@ object Diff : DiffUtil.ItemCallback<PatientBioData>(){
      * @see Callback.areContentsTheSame
      */
     override fun areContentsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
-       return oldItem.first_Name == newItem.first_Name
+       return oldItem== newItem
     }
 
 }

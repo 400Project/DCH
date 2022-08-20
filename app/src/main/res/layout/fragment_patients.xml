@@ -16,7 +16,6 @@
     app:layout_constraintEnd_toEndOf="parent"
     android:id="@+id/search"
     app:iconifiedByDefault="false">
-
 </androidx.appcompat.widget.SearchView>
 
         <androidx.recyclerview.widget.RecyclerView
