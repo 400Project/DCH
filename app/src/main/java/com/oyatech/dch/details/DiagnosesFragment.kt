@@ -94,4 +94,6 @@ class DiagnosesFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+    //TODO: populate ward and dispensary page with patient
 }
