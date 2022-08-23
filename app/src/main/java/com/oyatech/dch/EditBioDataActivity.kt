@@ -22,11 +22,15 @@ class EditBioDataActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+
+
+        //Getting the selected patient details
         val patientNumber = intent.getIntExtra("details", -1)
-        patientBioData = viewModel.getPatientDetails(patientNumber)
+        patientBioData = DataSource.searchPatient(patientNumber)
         details(patientBioData)
 
         binding.vitalQue.setOnClickListener {
+            //Adding patient to the vital queue
             DataSource.addVitalQue(patientBioData)
             Toast.makeText(this, "Vital List Updated", Toast.LENGTH_SHORT).show()
             finish()

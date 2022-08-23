@@ -17,7 +17,7 @@ init {
     _queueForVitals.value = DataSource.allPatient()
 }
     fun setQueuedForVitals(patientBioData: PatientBioData){
-     listOfPatientPaticulars.add(patientBioData)
+
     }
    /*fun getQueuedForVitals():MutableList<PatientBioData>{
         return queuedForVitals

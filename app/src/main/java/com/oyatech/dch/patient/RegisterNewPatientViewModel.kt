@@ -4,39 +4,32 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-
 import androidx.lifecycle.ViewModel
+import com.oyatech.dch.model.DataSource
 import com.oyatech.dch.model.DataSource.listOfPatientPaticulars
 import com.oyatech.dch.model.PatientBioData
 import com.oyatech.dch.observer.IOObservable
-import com.oyatech.dch.observer.IOObserver
 import com.oyatech.dch.vitals.VitalsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RegisterNewPatientViewModel : ViewModel(),IOObservable {
-  //  private val listOfParticulars = PatientRepository(listOfPatientPaticulars)
-
-    companion object{
+class RegisterNewPatientViewModel : ViewModel(), IOObservable {
+    companion object {
         val viewModel = RegisterNewPatientViewModel()
-    //    private val patientsList : MutableList<PatientBioData> = mutableListOf()
-
     }
 
 
-private  var _bioList  = MutableLiveData<MutableList<PatientBioData>>()
+    private var _bioList = MutableLiveData<MutableList<PatientBioData>>()
 
- val bioList:LiveData<MutableList<PatientBioData>> get() = _bioList
+    val bioList: LiveData<MutableList<PatientBioData>> get() = _bioList
 
-    private var _queuedForConsultation:MutableList<PatientBioData> = mutableListOf()
-    private  val queuedForConsultation = _queuedForConsultation
+    var patient = mutableListOf<PatientBioData>()
 
-    private var _queueForVitals :MutableList<PatientBioData> = mutableListOf()
+    private var _queuedForConsultation: MutableList<PatientBioData> = mutableListOf()
+    private val queuedForConsultation = _queuedForConsultation
+
+    private var _queueForVitals: MutableList<PatientBioData> = mutableListOf()
     private val queuedForVitals = _queueForVitals
-
-
-
-    var registerViewMode :RegisterNewPatientViewModel? =null
 
     //val allPatient = listOfPatientPaticulars
     @RequiresApi(Build.VERSION_CODES.O)
@@ -46,75 +39,47 @@ private  var _bioList  = MutableLiveData<MutableList<PatientBioData>>()
         return sdf.format(calender.time)
     }
 
-    public fun dataInitializer(){
+    public fun dataInitializer() {
         _bioList.value = listOfPatientPaticulars
     }
 
-    fun getConsultationQue(patientBioData: PatientBioData){
-  //     _patientsList.add(patientBioData)
+    fun setBioData(bio: PatientBioData) {
+        listOfPatientPaticulars.add(bio)
     }
 
-  fun setBioData(bio: PatientBioData){
-   listOfPatientPaticulars.add(bio)
-  }
-
-  fun getBioData():MutableList<PatientBioData>
-  {
-    return listOfPatientPaticulars
-  }
-
-    fun setQueuedForConsultation (patientBioData: PatientBioData){
-        _queuedForConsultation.add(patientBioData)
+    fun getBioData(): MutableList<PatientBioData> {
+        return listOfPatientPaticulars
     }
-    fun getQueuedForConsultation():MutableList<PatientBioData>
-    {
+
+    fun getQueuedForConsultation(): MutableList<PatientBioData> {
         return queuedForConsultation
     }
-    fun getCurrentQueuedForConsultation(position:Int): PatientBioData {
+
+    fun getCurrentQueuedForConsultation(position: Int): PatientBioData {
         return queuedForConsultation[position]
     }
-    fun removeFromQue(patientBioData: PatientBioData){
-        _queuedForConsultation.remove(patientBioData)
-    }
-    fun clearConsultationQue(){
-        _queuedForConsultation.clear()
-    }
 
-    fun setQueuedForVitals(patientBioData: PatientBioData){
-        _queueForVitals.add(patientBioData)
-    }
-    fun getQueuedForVitals():MutableList<PatientBioData>{
+    fun getQueuedForVitals(): MutableList<PatientBioData> {
         return queuedForVitals
     }
-    fun getCurrentVitalQueue(position: Int): PatientBioData {
-        return getQueuedForVitals()[position]
-    }
-    fun removeFromVitalsQue(particular: PatientBioData){
-        _queueForVitals.remove(particular)
-    }
-    fun clearVitalsList(){
-        _queueForVitals.clear()
-    }
 
-    fun getPatientDetails(patientNumber: Int): PatientBioData {
-        return getBioData()[patientNumber]
-    }
-
-    fun generateSerial(): Int{
-
-        return (10000000..999999999).random()
-    }
-    fun searchForPatient(query: String):LiveData<MutableList<PatientBioData>> {
+    fun searchForPatient(query: String): LiveData<MutableList<PatientBioData>> {
         val list = MutableLiveData<MutableList<PatientBioData>>()
         val arrLis = mutableListOf<PatientBioData>()
-       listOfPatientPaticulars.forEach {
-         if (it.first_Name.contains(query,true)){
-             arrLis.add(it)
-             list.value =arrLis
-         }
-     }
-      return list
+        //Clearing the exiting list of patients
+        DataSource.patient.clear()
+        listOfPatientPaticulars.forEach {
+            if (it.first_Name.contains(query, true)) {
+                arrLis.add(it)
+                //Assigning a list to live data object
+                list.value = arrLis
+                //adding the found list to the data source
+                DataSource.patient.add(it)
+            }
+        }
+        return list
     }
+
 
     override val vitalOpd: MutableList<VitalsViewModel>
         get() = TODO("Not yet implemented")

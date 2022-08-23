@@ -100,24 +100,14 @@ class BioDataAdapter(context: Context) :
             }
 
         }
-        /*   with(holder)
-           {
-               holderBinder(patientBioData)
-               *//*with(particularList[position]){
-                binding.firstName.text = firstName
-                binding.otherName.text = otherNames
-               *//**//* binding.date.text = dateAndTime*//**//*
-            //    binding.initial.text = firstName[0].toString()+ otherNames[0].toString()
-            }
-*//*
 
-            */
         /**
          * TODO: Launch a detail page when a patient data is clicked upon
-         *//*
+         *
         }*/
-        holder.itemView.setOnClickListener {
 
+        holder.itemView.apply {  setOnClickListener {
+            val adapterPos = holder.adapterPosition
             val intent = Intent(context.applicationContext, EditBioDataActivity::class.java)
 
             context.startActivity(
@@ -125,7 +115,7 @@ class BioDataAdapter(context: Context) :
                 intent.putExtra("details", position)
             )
 
-
+        }
         }
 
     }

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.databinding.FragmentPatientsBinding
+import com.oyatech.dch.model.DataSource
 import com.oyatech.dch.recordforms.PatientRegistrationFormActivity
 
 /**
@@ -77,6 +78,7 @@ val viewM = RegisterNewPatientViewModel.viewModel
 
             override fun onQueryTextChange(query: String?): Boolean {
                searching(query!!)
+
                 return true
             }
 
@@ -104,8 +106,10 @@ val viewM = RegisterNewPatientViewModel.viewModel
 
 
     fun searching(query:String){
+
       viewModel.searchForPatient(query).observe(viewLifecycleOwner){ bioData ->
-            bioData.let { myAdapter.submitList(it)
+            bioData.let {
+                myAdapter.submitList(it)
           }
         }
     }

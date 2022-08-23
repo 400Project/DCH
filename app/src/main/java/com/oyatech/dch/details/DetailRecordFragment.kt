@@ -23,11 +23,6 @@ class DetailRecordFragment : Fragment() {
     val binding get() = _binding!!
 
 
-    private val isVitals = 0
-    private val isDiagnose = 1
-  private val isPres = 2
-
-
     private val showMore = arrayListOf(false,false,false)
 
     override fun onCreateView(

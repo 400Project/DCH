@@ -463,13 +463,14 @@ object DataSource {
         )
     )
 
+
     private val vitalQueue  = mutableListOf<PatientBioData>()
     private val consultation = mutableListOf<PatientBioData>()
+   var patient = mutableListOf<PatientBioData>()
 
     fun addVitalQue(bioData: PatientBioData) {
         vitalQueue.add(bioData)
         Log.i(TAG, "addPatientBioData: ${vitalQueue.size}")
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -488,6 +489,14 @@ object DataSource {
 
     fun addConsultation(patientBioData: PatientBioData){
         consultation.add(patientBioData)
+    }
+
+    fun searchPatient(index: Int):PatientBioData
+    {
+        if (patient.isEmpty()){
+            patient.addAll(listOfPatientPaticulars)
+        }
+        return patient[index]
     }
 
 }
