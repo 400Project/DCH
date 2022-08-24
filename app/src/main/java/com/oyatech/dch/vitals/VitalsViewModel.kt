@@ -16,12 +16,6 @@ class VitalsViewModel : ViewModel(),IOObserver{
 init {
     _queueForVitals.value = DataSource.allPatient()
 }
-    fun setQueuedForVitals(patientBioData: PatientBioData){
-
-    }
-   /*fun getQueuedForVitals():MutableList<PatientBioData>{
-        return queuedForVitals
-    }*/
     fun getCurrentVitalQueue(position: Int): PatientBioData {
         return _queueForVitals.value!![position]
     }

@@ -2,6 +2,10 @@ package com.oyatech.dch.datacenter
 
 import android.os.Bundle
 import android.view.Menu
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.tabs.TabLayoutMediator
@@ -10,9 +14,11 @@ import com.oyatech.dch.R
 import com.oyatech.dch.databinding.ActivityPatientsDataPageBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
 import com.oyatech.dch.ui.MainActivity
+import com.oyatech.dch.vitals.VitalsViewModel
 
 class PatientsDataPageActivity : MainActivity() {
-    val viewModel = RegisterNewPatientViewModel.viewModel
+    val bioViewModel by lazy {  ViewModelProvider(this)[RegisterNewPatientViewModel::class.java] }
+    val vitalsViewModel by lazy { ViewModelProvider(this)[VitalsViewModel::class.java] }
     private val title = arrayListOf( "RECORDS","VITALS","CONSULTATION", "WARDS", "DISPENSARY", "PHARMACY")
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityPatientsDataPageBinding
@@ -40,7 +46,7 @@ class PatientsDataPageActivity : MainActivity() {
             run {
 
                 tab.text = title[position]
-                setTabBadges()
+                setTabBadges(this)
             }
         }.attach()
         // val navController = findNavController(R.id.nav_host_fragment_content_patients_data_page)
@@ -63,18 +69,16 @@ class PatientsDataPageActivity : MainActivity() {
         return true
     }
 //Setting the badges for the tabs due to the number of patients in the que
-    private fun setTabBadges() {
+    private fun setTabBadges(lifecycleOwner: LifecycleOwner) {
 
 
+    lifecycle
         with(binding.tabLayout) {
-            with(viewModel) {
-                getBioData().size.also { getTabAt(0)?.orCreateBadge?.number = it }
 
-                getQueuedForVitals().size.also { getTabAt(1)?.orCreateBadge?.number = it }
-                getQueuedForConsultation().size.also { getTabAt(1)?.orCreateBadge?.number = it }
+                bioViewModel.getBioData().size.also { getTabAt(0)?.orCreateBadge?.number = it }
+            vitalsViewModel.queuedForVitals.observe(lifecycleOwner){
+                getTabAt(1)?.orCreateBadge?.number = it.size
             }
-
-
         }
 
     }
