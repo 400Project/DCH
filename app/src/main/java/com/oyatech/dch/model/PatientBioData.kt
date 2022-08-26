@@ -5,7 +5,7 @@ import androidx.room.Entity
 import java.io.Serializable
 import java.util.*
 
-@Entity
+
 data class PatientBioData(
     val hospitalNumber:String,
     var first_Name: String,

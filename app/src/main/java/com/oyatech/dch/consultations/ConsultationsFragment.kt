@@ -21,7 +21,12 @@ class ConsultationsFragment : Fragment() {
         ConsultationAdapter(requireContext())
     }
     private val viewModel by lazy {
-        ViewModelProvider(requireActivity())[ConsultationViewModel::class.java]
+        //correct syntax to create a ViewModel that lives until the fragment goes away permanently
+
+        /*
+        *TODO: communication and data sharing between Fragments and Activities in an Android application IS Shared ViewModel
+        * */
+        ViewModelProvider(this@ConsultationsFragment)[ConsultationViewModel::class.java]
     }
     private var _binding:FragmentConsultationBinding? = null
 

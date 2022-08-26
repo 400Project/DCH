@@ -18,7 +18,7 @@ private  var _binding :FragmentPatientVitalsBinding?=null
 
 
   private  val viewModel by lazy {
-      ViewModelProvider(requireActivity())[VitalsViewModel::class.java]
+      ViewModelProvider(this@PatientVitalsFragment)[VitalsViewModel::class.java]
   }
 
     private val myAdapter by lazy {

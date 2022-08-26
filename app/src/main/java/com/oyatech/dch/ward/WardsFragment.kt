@@ -20,7 +20,7 @@ class WardsFragment : Fragment(),IRecyclatesCreator {
         WardAdapter(requireContext())
     }
     private val viewModel by lazy {
-        ViewModelProvider(requireActivity())[WarViewModel::class.java]
+        ViewModelProvider(this@WardsFragment)[WarViewModel::class.java]
     }
 
     override fun onCreateView(

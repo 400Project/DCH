@@ -33,10 +33,9 @@ private val binding get() = _binding!!
         BioDataAdapter(requireContext())
     }
     val viewModel by lazy {
-        ViewModelProvider(requireActivity())[RegisterNewPatientViewModel::class.java]
+        ViewModelProvider(this@PatientBioFragment)[RegisterNewPatientViewModel::class.java]
     }
-
-val viewM = RegisterNewPatientViewModel.viewModel
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
