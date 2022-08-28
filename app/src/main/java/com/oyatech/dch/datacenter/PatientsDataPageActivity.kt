@@ -76,9 +76,9 @@ class PatientsDataPageActivity : MainActivity() {
         with(binding.tabLayout) {
 
                 bioViewModel.getBioData().size.also { getTabAt(0)?.orCreateBadge?.number = it }
-            vitalsViewModel.queuedForVitals.observe(lifecycleOwner){
+          /*  vitalsViewModel.queuedForVitals.observe(lifecycleOwner){
                 getTabAt(1)?.orCreateBadge?.number = it.size
-            }
+            }*/
         }
 
     }

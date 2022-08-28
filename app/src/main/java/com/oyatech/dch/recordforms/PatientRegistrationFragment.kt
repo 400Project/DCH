@@ -130,7 +130,7 @@ binding.next.setOnClickListener {
 
         with(binding){
             Toast.makeText(requireContext(),"Patient Added",Toast.LENGTH_SHORT).show()
-            val date = "12/54/2022"
+            val date = viewModel.getDateAndTime()
            val sex = sex
             val hospitalNumber = generateHospitalNumber()
             val firstName = patientFirstName.text.toString().trim()
@@ -147,7 +147,7 @@ binding.next.setOnClickListener {
                     address,dob,sex,
                     occupation,date,
                     mobile,nhis,age)
-   viewModel?.insertBioData(patientBioData)
+   viewModel?.insertPatientBio(patientBioData)
 
         }
         startActivity(Intent(this.context,PatientsDataPageActivity::class.java))

@@ -16,11 +16,14 @@
         <activity
             android:name=".EditBioDataActivity"
             android:theme="@style/Theme.Material3.DayNight"
+            android:parentActivityName=".datacenter.PatientsDataPageActivity"
             android:exported="true">
         </activity>
         <activity
             android:name=".vitals.VitalsActivity"
-            android:exported="false"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.DayNight"
+            android:launchMode="singleInstance"
             android:parentActivityName=".datacenter.PatientsDataPageActivity"/>
         <activity
             android:name=".details.DetailActivity"
@@ -33,22 +36,27 @@
             android:name=".recordforms.PatientRegistrationFormActivity"
             android:exported="false"
             android:label="New Patient"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.Material3.DayNight"
+            android:parentActivityName=".datacenter.PatientsDataPageActivity"
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".datacenter.PatientsDataPageActivity"
-            android:exported="false"
-            android:label="@string/title_activity_patients_data_page"
-            android:parentActivityName=".ui.MainActivity" />
-        <activity
-            android:name=".ui.MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/title_activity_patients_data_page"
+            android:launchMode="singleInstance"
+            android:parentActivityName=".ui.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+
         </activity>
     </application>
 

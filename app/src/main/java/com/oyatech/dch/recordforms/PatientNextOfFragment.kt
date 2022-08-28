@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import com.oyatech.dch.database.entities.NextOfKin
+import com.oyatech.dch.database.entities.PatientBioViewModel
+import com.oyatech.dch.database.entities.Vitals
 import com.oyatech.dch.databinding.FragmentNextOfKingBinding
 
 
@@ -16,9 +20,12 @@ import com.oyatech.dch.databinding.FragmentNextOfKingBinding
 class PatientNextOfFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var _binding:FragmentNextOfKingBinding?=null
-
+private var primaryKey = 0
     private val binding get() = _binding!!
 
+    val viewModel by lazy {
+        ViewModelProvider(this@PatientNextOfFragment)[PatientBioViewModel::class.java]
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,12 +39,23 @@ class PatientNextOfFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val viewModel = viewModel
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+
+    private fun getNextOfKingDetails()
+    {
+       /* with(binding) {
+            var nxtKFullName = nextOfKingName.text.toString().trim()
+            var
+            val vitals = NextOfKin(primaryKey,"4/12/2022",bloo)
+        }*/
     }
 
 }

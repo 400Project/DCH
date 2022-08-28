@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.oyatech.dch.database.entities.PatientBioViewModel
 import com.oyatech.dch.databinding.FragmentPatientsBinding
 import com.oyatech.dch.model.DataSource
 import com.oyatech.dch.recordforms.PatientRegistrationFormActivity
@@ -33,7 +34,7 @@ private val binding get() = _binding!!
         BioDataAdapter(requireContext())
     }
     val viewModel by lazy {
-        ViewModelProvider(this@PatientBioFragment)[RegisterNewPatientViewModel::class.java]
+        ViewModelProvider(this@PatientBioFragment)[PatientBioViewModel::class.java]
     }
     
     override fun onCreateView(
@@ -51,23 +52,22 @@ private val binding get() = _binding!!
 
         //populating patient data using recycleView
       // viewModel.setPatientBioData()
-        viewModel.dataInitializer()
+      //  viewModel.dataInitializer()
         val searchView = binding.search
-        Log.i("Record", "onViewCreated: ${viewModel.getBioData().size}")
+        Log.i("Record", "onViewCreated: ${viewModel.getAllBioData().value?.size}")
 
 
  val myAdapter = myAdapter
         val layoutManager = LinearLayoutManager(requireContext())
         binding.patientRecycleView.apply {
             setLayoutManager(layoutManager)
-            viewModel.bioList.observe(viewLifecycleOwner){ bioData ->
+
+            viewModel.getAllBioData().observe(viewLifecycleOwner){ bioData ->
 
                myAdapter.submitList(bioData)
                 adapter= myAdapter
         }}
         //    addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
-
-
 
 
         searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
@@ -89,7 +89,6 @@ private val binding get() = _binding!!
             startActivity(Intent(context?.applicationContext, PatientRegistrationFormActivity::class.java))
             //clears the fragment from stack
             Toast.makeText(context,"Click", Toast.LENGTH_SHORT).show()
-            activity?.finish()
         }
 
     }
@@ -106,10 +105,10 @@ private val binding get() = _binding!!
 
     fun searching(query:String){
 
-      viewModel.searchForPatient(query).observe(viewLifecycleOwner){ bioData ->
+      /*viewModel.searchForPatient(query).observe(viewLifecycleOwner){ bioData ->
             bioData.let {
                 myAdapter.submitList(it)
           }
-        }
+        }*/
     }
     }

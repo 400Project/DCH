@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class PatientBioData(
-    @PrimaryKey(autoGenerate = true) val patientId: Int,
+    @PrimaryKey(autoGenerate = true)
+    val patientId: Int,
   /*  //Foreign Key
     val nextOfKin:Int,
 
@@ -28,4 +29,8 @@ data class PatientBioData(
     var insuranceNumber: String,
     var age: String,
 ) {
+
+    override fun toString(): String {
+        return super.toString()
+    }
 }

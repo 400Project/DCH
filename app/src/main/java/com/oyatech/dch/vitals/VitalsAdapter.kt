@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.oyatech.dch.database.entities.PatientBioData
 
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
-import com.oyatech.dch.model.PatientBioData
+
 
 
 class VitalsAdapter():ListAdapter<PatientBioData,
@@ -87,9 +88,11 @@ class VitalsAdapter():ListAdapter<PatientBioData,
                 binder(getItem(position))
         }
 
+        val currentPatientPos = position +1
         holder.itemView.setOnClickListener{
             val vitalsIntent = Intent(context.applicationContext,VitalsActivity::class.java)
-            vitalsIntent.putExtra(DUE_FOR_VITALS,position)
+
+            vitalsIntent.putExtra(DUE_FOR_VITALS,currentPatientPos)
             context.startActivity(vitalsIntent)
         }
 

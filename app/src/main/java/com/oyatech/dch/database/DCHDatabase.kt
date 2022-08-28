@@ -5,10 +5,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.oyatech.dch.database.entities.DailyVitals
 import com.oyatech.dch.database.entities.PatientBioData
+import com.oyatech.dch.database.entities.Vitals
 
 @Database(
-    entities = [PatientBioData::class], version = 1
+    entities = [PatientBioData::class,Vitals::class,DailyVitals::class], version = 1
 )
 abstract class DCHDatabase : RoomDatabase() {
 

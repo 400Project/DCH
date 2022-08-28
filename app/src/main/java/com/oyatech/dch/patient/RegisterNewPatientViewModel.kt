@@ -31,17 +31,6 @@ class RegisterNewPatientViewModel : ViewModel(), IOObservable {
     private var _queueForVitals: MutableList<PatientBioData> = mutableListOf()
     private val queuedForVitals = _queueForVitals
 
-    //val allPatient = listOfPatientPaticulars
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getDateAndTime(): String {
-        val sdf = SimpleDateFormat("dd/M/y hh:m aa")
-        val calender = Calendar.getInstance()
-        return sdf.format(calender.time)
-    }
-
-    public fun dataInitializer() {
-        _bioList.value = listOfPatientPaticulars
-    }
 
     fun setBioData(bio: PatientBioData) {
         listOfPatientPaticulars.add(bio)
