@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oyatech.dch.EditBioDataActivity
 import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
-import com.oyatech.dch.model.DataSource
 import com.oyatech.dch.patient.BioDataAdapter.ParticularsViewHolder
 
 class BioDataAdapter(context: Context) :
@@ -22,7 +21,7 @@ class BioDataAdapter(context: Context) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun holderBinder(patientBioData: PatientBioData) {
-
+val id = patientBioData.patientId
             with(patientBioData)
             {
                 with(binding) {
@@ -108,11 +107,12 @@ class BioDataAdapter(context: Context) :
 
         holder.itemView.apply {  setOnClickListener {
             val adapterPos = holder.adapterPosition
+            val v = getItem(adapterPos).patientId
             val intent = Intent(context.applicationContext, EditBioDataActivity::class.java)
 
             context.startActivity(
 
-                intent.putExtra("details", adapterPos)
+                intent.putExtra("details", v)
             )
 
         }

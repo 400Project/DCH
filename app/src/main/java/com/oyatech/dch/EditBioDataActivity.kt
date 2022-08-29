@@ -31,7 +31,7 @@ class EditBioDataActivity : AppCompatActivity() {
 val viewModel= viewModel
         //Getting the selected patient details
         var patientNumber = intent.getIntExtra("details", -1)
-        patientNumber += 1
+        //patientNumber += 1
        _patientBioData= viewModel.currentBio(patientNumber)
         details(patientBioData)
 

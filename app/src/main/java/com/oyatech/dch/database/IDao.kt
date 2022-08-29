@@ -5,26 +5,25 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.oyatech.dch.database.entities.DailyVitals
-import com.oyatech.dch.database.entities.PatientBioData
-import com.oyatech.dch.database.entities.PatientVitals
-import com.oyatech.dch.database.entities.Vitals
+import com.oyatech.dch.database.entities.*
 
 @Dao
 interface IDao {
     @Insert
     fun insertBioData(bioData: PatientBioData)
 
-    @Query ("SELECT * from PatientBioData")
+    @Query ("SELECT * from PatientBioData ORDER BY patientId DESC")
     fun getAllBioData():LiveData<MutableList<PatientBioData>>
 
     @Query ("SELECT * from PatientBioData WHERE patientId = :id")
     fun allPatients(id:Int):PatientBioData
 
+    @Query("SELECT * FROM PatientBioData WHERE first_name LIKE :search||'%'")
+fun searchForPatient(search:String):LiveData<MutableList<PatientBioData>>
+
     @Insert
     fun queueForVitals(bioData: DailyVitals )
 
-    @Transaction
         @Query("SELECT * FROM DailyVitals")
     fun getPatientBioAndId():LiveData<MutableList<DailyVitals>>
 
@@ -33,8 +32,14 @@ interface IDao {
     @Insert
     fun insertVitals(vitals: Vitals)
 
-    //Selecting all the vitals of each user in the db
-   /* @Transaction
-    @Query("SELECT * FROM PatientBioData")
-    fun patientAndVitals():MutableList<PatientBioData>*/
+    @Insert
+    fun bookForConsultation(bioData: DailyConsultation )
+
+    @Query("SELECT * FROM DailyConsultation")
+    fun getAllBookedForConsultation():LiveData<MutableList<DailyConsultation>>
+
+    @Query ("SELECT * from  DailyConsultation WHERE consultID = :id")
+    fun getCurrentPatientForConsult(id:Int):PatientBioData
+
+
 }

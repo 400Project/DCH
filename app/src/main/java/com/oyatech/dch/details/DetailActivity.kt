@@ -15,7 +15,7 @@ class DetailActivity : AppCompatActivity() {
 
   lateinit  var binding :ActivityDetailBinding
   lateinit var navController: NavController
-
+    final val PATIENT_VISITS = "com.oyatech.dch.details"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,9 @@ class DetailActivity : AppCompatActivity() {
       // setSupportActionBar(binding.detailToolbar)
 
         //this help the fragment with back stack symbol
-        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_visit) as NavHostFragment
+
+        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_visit)
+                as NavHostFragment
         navController  = navHost.navController
         setupActionBarWithNavController(navController)
 

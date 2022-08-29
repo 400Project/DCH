@@ -24,6 +24,7 @@ import com.oyatech.dch.database.entities.PatientBioViewModel
 import com.oyatech.dch.databinding.FragmentBioDataBinding
 import com.oyatech.dch.datacenter.PatientsDataPageActivity
 import com.oyatech.dch.database.entities.PatientBioData
+import com.oyatech.dch.util.Utils
 import java.util.*
 
 
@@ -130,7 +131,7 @@ binding.next.setOnClickListener {
 
         with(binding){
             Toast.makeText(requireContext(),"Patient Added",Toast.LENGTH_SHORT).show()
-            val date = viewModel.getDateAndTime()
+            val date = Utils.getDateAndTime()
            val sex = sex
             val hospitalNumber = generateHospitalNumber()
             val firstName = patientFirstName.text.toString().trim()

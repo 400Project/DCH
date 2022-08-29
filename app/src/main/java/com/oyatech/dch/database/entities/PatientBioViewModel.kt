@@ -22,7 +22,7 @@ class PatientBioViewModel(application: Application) :
     private var _repository :Repository? = null
     private val repository get()=_repository!!
 
-
+var number = 0
 
     init {
         _repository = Repository(application)
@@ -31,13 +31,6 @@ class PatientBioViewModel(application: Application) :
   override  fun insertPatientBio(patientBioData: PatientBioData){
         viewModelScope.launch { Dispatchers.IO
             repository.insertPatientBio(patientBioData)
-        }
-    }
-
-   override fun insertVitals(vitals: Vitals){
-        viewModelScope.launch {
-            Dispatchers.IO
-            repository.insertVitals(vitals)
         }
     }
 
@@ -51,15 +44,13 @@ class PatientBioViewModel(application: Application) :
    }
 
     //val allPatient = listOfPatientPaticulars
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getDateAndTime(): String {
-        val sdf = SimpleDateFormat("dd/M/y hh:m aa")
-        val calender = Calendar.getInstance()
-        return sdf.format(calender.time)
-    }
 
     override    fun currentBio(int:Int):PatientBioData{
       return  repository.currentBio(int)
+    }
+
+    override fun searchForPatient(search: String): LiveData<MutableList<PatientBioData>> {
+        return repository.searchForPatient(search)
     }
 
     override fun queueForVitals(dailyVitals: DailyVitals) {

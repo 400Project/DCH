@@ -3,11 +3,13 @@ package com.oyatech.dch.details
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
+import com.oyatech.dch.consultations.ConsultationViewModel
 import com.oyatech.dch.databinding.FragmentVisitsBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
-import com.oyatech.dch.model.PatientBioData
+import com.oyatech.dch.database.entities.PatientBioData
 
 /**
  * A simple [Fragment] subclass.
@@ -16,7 +18,7 @@ import com.oyatech.dch.model.PatientBioData
  */
 class VisitsFragment : Fragment() {
     private final val PATIENT_VISITS = "com.oyatech.dch.details"
-    val viewModel = RegisterNewPatientViewModel.viewModel
+
     private var _binding: FragmentVisitsBinding? = null
 
     private val binding get() = _binding!!
@@ -24,6 +26,10 @@ class VisitsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    val viewModel by lazy {
+        ViewModelProvider(this@VisitsFragment)[ConsultationViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -42,10 +48,11 @@ class VisitsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val viewModel = viewModel
         //getting the position of the patient in the consultation room
         val pPosition = requireActivity().intent.getIntExtra(PATIENT_VISITS, -1)
         //getting he/her medical history
-        val patient = viewModel.getCurrentQueuedForConsultation(pPosition)
+        val patient = viewModel.getCurrentPatientForConsult(pPosition)
         //setting all views with his/her details
         bindPatientDetails(patient)
 
@@ -79,7 +86,7 @@ class VisitsFragment : Fragment() {
         return true
     }
 
-    fun bindPatientDetails(patient: PatientBioData) {
+    private fun bindPatientDetails(patient: PatientBioData) {
         with(binding) {
             with(patient) {
                 patientFullName.text = "$first_Name $otherNames"

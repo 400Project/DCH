@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.oyatech.dch.database.Repository
+import com.oyatech.dch.database.entities.DailyConsultation
 import com.oyatech.dch.database.entities.DailyVitals
 import com.oyatech.dch.database.entities.PatientBioData
+import com.oyatech.dch.database.entities.Vitals
 import com.oyatech.dch.model.DataSource
 
 
@@ -36,7 +38,13 @@ class VitalsViewModel(application: Application) :  AndroidViewModel(application)
        DataSource.allPatient().clear()
     }
 
+    fun insertVitals( vitals: Vitals){
+        repository.insertVitals(vitals)
+    }
      fun patientAndVitals(): LiveData<MutableList<DailyVitals>>{
         return repository.getQueueForVitals()
+    }
+    fun bookForConsultation(bioData: DailyConsultation){
+        return repository.bookForConsultation(bioData)
     }
 }

@@ -11,11 +11,10 @@ interface IRepository {
     fun insertPatientBio(patientBioData: PatientBioData)
     fun getAllBioData():LiveData<MutableList<PatientBioData>>
     fun currentBio(int:Int):PatientBioData
+    fun searchForPatient(search:String):LiveData<MutableList<PatientBioData>>
 
     fun queueForVitals(dailyVitals: DailyVitals)
     fun getQueueForVitals(): LiveData<MutableList<DailyVitals>>
 
 
-
-    fun insertVitals(vitals: Vitals)
 }

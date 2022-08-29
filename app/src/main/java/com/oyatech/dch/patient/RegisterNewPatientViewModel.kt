@@ -8,12 +8,11 @@ import androidx.lifecycle.ViewModel
 import com.oyatech.dch.model.DataSource
 import com.oyatech.dch.model.DataSource.listOfPatientPaticulars
 import com.oyatech.dch.model.PatientBioData
-import com.oyatech.dch.observer.IOObservable
 import com.oyatech.dch.vitals.VitalsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RegisterNewPatientViewModel : ViewModel(), IOObservable {
+class RegisterNewPatientViewModel : ViewModel() {
     companion object {
         val viewModel = RegisterNewPatientViewModel()
     }
@@ -44,10 +43,6 @@ class RegisterNewPatientViewModel : ViewModel(), IOObservable {
         return queuedForConsultation
     }
 
-    fun getCurrentQueuedForConsultation(position: Int): PatientBioData {
-        return queuedForConsultation[position]
-    }
-
     fun getQueuedForVitals(): MutableList<PatientBioData> {
         return queuedForVitals
     }
@@ -68,10 +63,5 @@ class RegisterNewPatientViewModel : ViewModel(), IOObservable {
         }
         return list
     }
-
-
-    override val vitalOpd: MutableList<VitalsViewModel>
-        get() = TODO("Not yet implemented")
-
 
 }

@@ -11,18 +11,18 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oyatech.dch.Department
 import com.oyatech.dch.R
+import com.oyatech.dch.database.entities.PatientBioViewModel
 import com.oyatech.dch.databinding.ActivityPatientsDataPageBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
 import com.oyatech.dch.ui.MainActivity
 import com.oyatech.dch.vitals.VitalsViewModel
 
 class PatientsDataPageActivity : MainActivity() {
-    val bioViewModel by lazy {  ViewModelProvider(this)[RegisterNewPatientViewModel::class.java] }
+    val bioViewModel by lazy {  ViewModelProvider(this)[PatientBioViewModel::class.java] }
     val vitalsViewModel by lazy { ViewModelProvider(this)[VitalsViewModel::class.java] }
     private val title = arrayListOf( "RECORDS","VITALS","CONSULTATION", "WARDS", "DISPENSARY", "PHARMACY")
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityPatientsDataPageBinding
-
 
     //   private val viewModel: RegisterNewPatientViewModel by viewModels()
     private lateinit var navController: NavController
@@ -38,7 +38,7 @@ class PatientsDataPageActivity : MainActivity() {
          */
 
         val tablelayout = binding.tabLayout
-
+val viewModel = bioViewModel
 
         val viewPager2 = binding.viewPager
         viewPager2.adapter = TabAdapter(this, Department.WARD)
@@ -75,10 +75,16 @@ class PatientsDataPageActivity : MainActivity() {
     lifecycle
         with(binding.tabLayout) {
 
-                bioViewModel.getBioData().size.also { getTabAt(0)?.orCreateBadge?.number = it }
-          /*  vitalsViewModel.queuedForVitals.observe(lifecycleOwner){
-                getTabAt(1)?.orCreateBadge?.number = it.size
-            }*/
+            bioViewModel.getAllBioData().observe(this@PatientsDataPageActivity){totalRecord ->
+                totalRecord.size.also {
+                    getTabAt(0)?.orCreateBadge?.number = it
+                }
+            }
+            vitalsViewModel.patientAndVitals().observe(this@PatientsDataPageActivity){ waitingForVital ->
+                waitingForVital.size.also {
+                    getTabAt(1)?.orCreateBadge?.number = it
+                }
+            }
         }
 
     }

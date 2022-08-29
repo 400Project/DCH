@@ -2,6 +2,7 @@ package com.oyatech.dch.database.entities
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.oyatech.dch.util.Utils
 
 @Entity
 data class Vitals(
@@ -10,11 +11,11 @@ data class Vitals(
     val foreignKyePatient: Int,
 
     @ColumnInfo(name = "date_recorded")
-    val dateTime: String,
     val bloodPressure: String,
     val weight: String,
     val bodyTemperature: String,
-    val sugarLevel:String
+    val sugarLevel:String,
+    val dateTime: String = Utils.getDateAndTime()
 )
 
 //Modeling one-to-many relationship between patient and vitals

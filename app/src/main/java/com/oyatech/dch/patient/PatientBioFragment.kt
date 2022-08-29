@@ -51,8 +51,6 @@ private val binding get() = _binding!!
         super.onViewCreated(view, savedInstanceState)
 
         //populating patient data using recycleView
-      // viewModel.setPatientBioData()
-      //  viewModel.dataInitializer()
         val searchView = binding.search
         Log.i("Record", "onViewCreated: ${viewModel.getAllBioData().value?.size}")
 
@@ -103,12 +101,13 @@ private val binding get() = _binding!!
     }
 
 
-    fun searching(query:String){
+    fun searching(search:String){
 
-      /*viewModel.searchForPatient(query).observe(viewLifecycleOwner){ bioData ->
+      viewModel.searchForPatient(search).observe(viewLifecycleOwner){ bioData ->
             bioData.let {
                 myAdapter.submitList(it)
+
           }
-        }*/
+        }
     }
     }
