@@ -23,7 +23,7 @@
             android:name=".vitals.VitalsActivity"
             android:exported="true"
             android:theme="@style/Theme.Material3.DayNight"
-            android:launchMode="singleInstance"
+            android:launchMode="standard"
             android:parentActivityName=".datacenter.PatientsDataPageActivity"/>
         <activity
             android:name=".details.DetailActivity"
@@ -36,7 +36,6 @@
             android:name=".recordforms.PatientRegistrationFormActivity"
             android:exported="false"
             android:label="New Patient"
-            android:launchMode="singleInstance"
             android:theme="@style/Theme.Material3.DayNight"
             android:parentActivityName=".datacenter.PatientsDataPageActivity"
             android:windowSoftInputMode="stateHidden"/>
@@ -44,19 +43,19 @@
             android:name=".datacenter.PatientsDataPageActivity"
             android:exported="true"
             android:label="@string/title_activity_patients_data_page"
-            android:launchMode="singleInstance"
+            android:launchMode="standard"
             android:parentActivityName=".ui.MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
