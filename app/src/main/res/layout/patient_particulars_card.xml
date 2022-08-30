@@ -78,6 +78,17 @@ android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@id/firstName"
                 tools:text="Visit: 1"
                 />
+<TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="10dp"
+                app:layout_constraintTop_toBottomOf="@id/firstName"
+    app:layout_constraintEnd_toStartOf="@id/recordedBy"
+                app:layout_constraintStart_toEndOf="@id/visits"
+                tools:text="Admitted"
+                />
 
             <TextView
                 android:id="@+id/recordedBy"
@@ -85,7 +96,7 @@ android:textSize="18sp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:textSize="10dp"
-                app:layout_constraintStart_toEndOf="@id/visits"
+                app:layout_constraintStart_toEndOf="@id/status"
                 app:layout_constraintEnd_toStartOf="@id/date"
                 app:layout_constraintTop_toBottomOf="@id/otherName"
                 tools:text="By: Francisca Noah" />

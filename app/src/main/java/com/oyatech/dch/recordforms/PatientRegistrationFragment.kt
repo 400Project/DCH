@@ -19,14 +19,12 @@ import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.oyatech.dch.Department
 import com.oyatech.dch.R
+import com.oyatech.dch.database.entities.PatientBioViewModel
 import com.oyatech.dch.databinding.FragmentBioDataBinding
-import com.oyatech.dch.patient.RegisterNewPatientViewModel
 import com.oyatech.dch.datacenter.PatientsDataPageActivity
-import com.oyatech.dch.model.DataSource
-import com.oyatech.dch.model.PatientBioData
-import com.oyatech.dch.vitals.VitalsViewModel
+import com.oyatech.dch.database.entities.PatientBioData
+import com.oyatech.dch.util.Utils
 import java.util.*
 
 
@@ -35,9 +33,11 @@ class PatientRegistrationFragment : Fragment() {
  private   var _binding:  FragmentBioDataBinding? = null
    private val binding get() = _binding!!
 
-    private  val viewModel by lazy {
-        ViewModelProvider(requireActivity())[RegisterNewPatientViewModel::class.java]
-    }
+  val viewModel by lazy {
+      ViewModelProvider(this)[PatientBioViewModel::class.java]
+  }
+
+    var primaryKay =0
 
    private val calender: Calendar = Calendar.getInstance()
    private var patientYear:Int = 0
@@ -61,7 +61,7 @@ class PatientRegistrationFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    //    viewModel = RegisterNewPatientViewModel().getViewModel()
+
         //Phone number formatter according to Ghana local
        formatPhoneNumber()
 val myViewModel = viewModel
@@ -74,7 +74,7 @@ val myViewModel = viewModel
             val currentYear = calender.get(Calendar.YEAR)
             val age = currentYear - patientYear
             if (age>100){
-                binding.patientDoB.setError("Selec Date of Birth")
+                binding.patientDoB.setError("Select Date of Birth")
                 binding.patientAge.text = " yrs"
             }else
             binding.patientAge.text = age.toString()+"yrs"
@@ -128,9 +128,10 @@ binding.next.setOnClickListener {
     //Creating new patientBioData object
     @RequiresApi(Build.VERSION_CODES.O)
     private fun addNewPatient() {
+
         with(binding){
             Toast.makeText(requireContext(),"Patient Added",Toast.LENGTH_SHORT).show()
-            val date = viewModel.getDateAndTime()
+            val date = Utils.getDateAndTime()
            val sex = sex
             val hospitalNumber = generateHospitalNumber()
             val firstName = patientFirstName.text.toString().trim()
@@ -142,14 +143,13 @@ binding.next.setOnClickListener {
             val mobile =patientMobile.text.toString().trim()
             val nhis =patientNhis.text.toString().trim()
 
-                val patientBioData = PatientBioData(hospitalNumber,
+                val patientBioData = PatientBioData(primaryKay,hospitalNumber,
                     firstName, otherName,
                     address,dob,sex,
                     occupation,date,
-                    mobile,nhis,age,Department.NURSING.toString())
-            viewModel.setBioData(patientBioData)
-            DataSource.addVitalQue(patientBioData)
-            /*, address, dob, sex, occupation, date*/
+                    mobile,nhis,age)
+   viewModel?.insertPatientBio(patientBioData)
+
         }
         startActivity(Intent(this.context,PatientsDataPageActivity::class.java))
         activity?.finish()

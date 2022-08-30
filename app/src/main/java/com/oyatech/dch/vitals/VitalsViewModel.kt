@@ -1,30 +1,36 @@
 package com.oyatech.dch.vitals
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.oyatech.dch.database.Repository
+import com.oyatech.dch.database.entities.DailyConsultation
+import com.oyatech.dch.database.entities.DailyVitals
+import com.oyatech.dch.database.entities.PatientBioData
+import com.oyatech.dch.database.entities.Vitals
 import com.oyatech.dch.model.DataSource
-import com.oyatech.dch.model.PatientBioData
-import com.oyatech.dch.model.listOfPatientPaticulars
-import com.oyatech.dch.observer.IOObserver
 
-class VitalsViewModel : ViewModel(),IOObserver{
+
+
+class VitalsViewModel(application: Application) :  AndroidViewModel(application){
     // TODO: Implement the ViewModel
-    private var _queueForVitals :MutableLiveData<MutableList<PatientBioData>> = MutableLiveData<MutableList<PatientBioData>>()
-         val queuedForVitals :LiveData<MutableList<PatientBioData>> = _queueForVitals
+    private var _repository : Repository? = null
+     private val repository get()=_repository!!
 
-init {
-    _queueForVitals.value = DataSource.allPatient()
-}
-    fun setQueuedForVitals(patientBioData: PatientBioData){
+    /*private var _queueForVitals :LiveData<MutableList<PatientBioData>> = LiveData<MutableList<PatientBioData>>()
+    val queuedForVitals :LiveData<MutableList<PatientBioData>> = _queueForVitals*/
+    init {
+        _repository = Repository(application)
+
+        }
+
+
+
+     fun getCurrentPatientForVitals(id: Int): PatientBioData {
+        return repository.getCurrentPatientForVitals(id)
 
     }
-   /*fun getQueuedForVitals():MutableList<PatientBioData>{
-        return queuedForVitals
-    }*/
-    fun getCurrentVitalQueue(position: Int): PatientBioData {
-        return _queueForVitals.value!![position]
-    }
+
     fun removeFromVitalsQue(particular: PatientBioData){
        // _queueForVitals.remove(particular)
     }
@@ -32,7 +38,13 @@ init {
        DataSource.allPatient().clear()
     }
 
-    override fun opdUpdate() {
-        TODO("Not yet implemented")
+    fun insertVitals( vitals: Vitals){
+        repository.insertVitals(vitals)
+    }
+     fun patientAndVitals(): LiveData<MutableList<DailyVitals>>{
+        return repository.getQueueForVitals()
+    }
+    fun bookForConsultation(bioData: DailyConsultation){
+        return repository.bookForConsultation(bioData)
     }
 }

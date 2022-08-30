@@ -6,21 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.oyatech.dch.database.entities.PatientBioData
+import com.oyatech.dch.database.entities.PatientBioViewModel
 import com.oyatech.dch.databinding.FragmentPatientVitalsBinding
 import com.oyatech.dch.patient.RegisterNewPatientViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class PatientVitalsFragment : Fragment() {
 private  var _binding :FragmentPatientVitalsBinding?=null
     private val binding get() = _binding!!
-
+    private val v = mutableListOf<PatientBioData>()
 
   private  val viewModel by lazy {
-      ViewModelProvider(requireActivity())[VitalsViewModel::class.java]
+      ViewModelProvider(this@PatientVitalsFragment)[VitalsViewModel::class.java]
   }
-
     private val myAdapter by lazy {
         VitalsAdapter(requireContext())
     }
@@ -38,12 +43,24 @@ private  var _binding :FragmentPatientVitalsBinding?=null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val adapter = myAdapter
         val viewModel = viewModel
 
-        viewModel.queuedForVitals.observe(viewLifecycleOwner){
-            adapter.submitList(it)
+        viewModel.patientAndVitals().observe(viewLifecycleOwner){ it ->
+            val  v = mutableListOf<PatientBioData>()
+            lifecycleScope.launch { Dispatchers.IO
+                it.forEach {
+                    v.add(it.patientBioData)
+                }
+            }
+
+            adapter.submitList(v)
+
         }
+
+
+
        binding.vitalsRecycleView.apply{
             layoutManager = LinearLayoutManager(requireContext())
             setAdapter(adapter)
@@ -51,7 +68,7 @@ private  var _binding :FragmentPatientVitalsBinding?=null
 
 
         binding.clear.setOnClickListener{
-            viewModel.clearVitalsList()
+    //        viewModel.clearVitalsList()
             binding.vitalsRecycleView.adapter?.notifyDataSetChanged()
         }
 

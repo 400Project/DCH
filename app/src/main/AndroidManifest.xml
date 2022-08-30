@@ -16,11 +16,14 @@
         <activity
             android:name=".EditBioDataActivity"
             android:theme="@style/Theme.Material3.DayNight"
+            android:parentActivityName=".datacenter.PatientsDataPageActivity"
             android:exported="true">
         </activity>
         <activity
             android:name=".vitals.VitalsActivity"
-            android:exported="false"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.DayNight"
+            android:launchMode="standard"
             android:parentActivityName=".datacenter.PatientsDataPageActivity"/>
         <activity
             android:name=".details.DetailActivity"
@@ -34,12 +37,16 @@
             android:exported="false"
             android:label="New Patient"
             android:theme="@style/Theme.Material3.DayNight"
+            android:parentActivityName=".datacenter.PatientsDataPageActivity"
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".datacenter.PatientsDataPageActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_patients_data_page"
-            android:parentActivityName=".ui.MainActivity" />
+            android:launchMode="standard"
+            android:parentActivityName=".ui.MainActivity" >
+
+        </activity>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"

@@ -466,6 +466,20 @@ object DataSource {
 
     private val vitalQueue  = mutableListOf<PatientBioData>()
     private val consultation = mutableListOf<PatientBioData>()
+    private val wardList = mutableListOf(PatientBioData(
+        "DCH/2/2021",
+        "Robert",
+        "Oyadier",
+        "Accra",
+        "02/3/1987",
+        "M",
+        "Teaching",
+        "1/08/2022",
+        "0232234322",
+        "11233233",
+        "34yrs",
+        "Suleman Mohammed"
+    ))
    var patient = mutableListOf<PatientBioData>()
 
     fun addVitalQue(bioData: PatientBioData) {
@@ -480,6 +494,9 @@ object DataSource {
 
     fun allPatient(): MutableList<PatientBioData> {
         return vitalQueue
+    }
+    fun allWardPatient(): MutableList<PatientBioData> {
+        return wardList
     }
 
     fun consultQueue(): MutableList<PatientBioData> {

@@ -1,5 +1,7 @@
 package com.oyatech.dch.model
 
+import androidx.room.Entity
+
 data class Vitals(
     val dateTime: String,
     val bloodPressure: String,

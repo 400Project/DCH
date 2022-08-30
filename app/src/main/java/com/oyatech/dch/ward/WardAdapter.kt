@@ -1,37 +1,33 @@
-package com.oyatech.dch.vitals
+package com.oyatech.dch.ward
 
 import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
-import android.view.View
+import android.view.LayoutInflater.from
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.oyatech.dch.database.entities.PatientBioData
-
+import com.oyatech.dch.model.PatientBioData
+import com.oyatech.dch.ward.WardAdapter.WardViewHolder
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
-import com.oyatech.dch.patient.RegisterNewPatientViewModel
+import com.oyatech.dch.details.DetailActivity
 
+class WardAdapter(context: Context): ListAdapter<PatientBioData,WardViewHolder>(Diff) {
+    private val context = context;
+    final  val PATIENT_AT_WARD = "com.oyatech.dch.details"
 
+    class WardViewHolder(var binding: PatientParticularsCardBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bindAllQues(patientBioData: PatientBioData) {
 
-class VitalsAdapter():ListAdapter<PatientBioData,
-        VitalsAdapter.VitalsViewHolder>(DiffUtilCall){
-  private val DUE_FOR_VITALS = "com.oyatech.dch.vitals"
-    lateinit var context: Context
+            binding.apply {
+                patientBioData.apply {
+                    firstName.text = first_Name
+                    otherName.text = otherNames
+                }
 
-    constructor(context: Context):this(){
-        this.context = context
-    }
-
-    inner class VitalsViewHolder(var vitalLayout:PatientParticularsCardBinding):RecyclerView.ViewHolder(vitalLayout.root){
-
-        fun binder(patientBioData: PatientBioData){
-            vitalLayout.firstName.text = patientBioData.first_Name
-            vitalLayout.otherName.text = patientBioData.otherNames
+            }
         }
-
-
     }
 
     /**
@@ -57,9 +53,10 @@ class VitalsAdapter():ListAdapter<PatientBioData,
      * @see .getItemViewType
      * @see .onBindViewHolder
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VitalsViewHolder {
-       val vitalLayout = PatientParticularsCardBinding.inflate(LayoutInflater.from(context),parent,false)
-        return VitalsViewHolder(vitalLayout)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WardViewHolder {
+        val consultLayoutBinder =
+            PatientParticularsCardBinding.inflate(from(parent.context), parent, false)
+        return WardViewHolder(consultLayoutBinder)
     }
 
     /**
@@ -83,29 +80,32 @@ class VitalsAdapter():ListAdapter<PatientBioData,
      * item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
-    override fun onBindViewHolder(holder: VitalsViewHolder, position: Int) {
-        with(holder){
-                binder(getItem(position))
+    override fun onBindViewHolder(holder: WardViewHolder, position: Int) {
+        val particulars = getItem(position)
+        with(holder) {
+            bindAllQues(particulars)
+
         }
 
-        val currentPatientPos = position +1
         holder.itemView.setOnClickListener{
-            val vitalsIntent = Intent(context.applicationContext,VitalsActivity::class.java)
+            val visits = Intent(context,DetailActivity::class.java)
+            visits.putExtra(PATIENT_AT_WARD,position)
+            context.startActivity(visits)
 
-            vitalsIntent.putExtra(DUE_FOR_VITALS,currentPatientPos)
-            context.startActivity(vitalsIntent)
         }
-
-    }
-
-    override fun getItemCount():Int{
-        return currentList.size
     }
 
 
+    /**
+     * Returns the total number of items in the data set held by the adapter.
+     *
+     * @return The total number of items in this adapter.
+     */
+    override fun getItemCount() = currentList.size
 }
 
-object DiffUtilCall: DiffUtil.ItemCallback<PatientBioData>() {
+
+object Diff : DiffUtil.ItemCallback<PatientBioData>(){
     /**
      * Called to check whether two objects represent the same item.
      *
@@ -124,8 +124,7 @@ object DiffUtilCall: DiffUtil.ItemCallback<PatientBioData>() {
      * @see Callback.areItemsTheSame
      */
     override fun areItemsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
-        //Using the id of the patient to check
-        return newItem.hashCode() ==oldItem.hashCode()
+        return oldItem.hashCode()==newItem.hashCode()
     }
 
     /**
@@ -158,7 +157,8 @@ object DiffUtilCall: DiffUtil.ItemCallback<PatientBioData>() {
      * @see Callback.areContentsTheSame
      */
     override fun areContentsTheSame(oldItem: PatientBioData, newItem: PatientBioData): Boolean {
-       return newItem == oldItem
+        return oldItem== newItem
     }
 
 }
+

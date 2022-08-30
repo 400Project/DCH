@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.oyatech.dch.database.entities.PatientBioViewModel
 import com.oyatech.dch.databinding.FragmentPatientsBinding
 import com.oyatech.dch.model.DataSource
 import com.oyatech.dch.recordforms.PatientRegistrationFormActivity
@@ -33,10 +34,9 @@ private val binding get() = _binding!!
         BioDataAdapter(requireContext())
     }
     val viewModel by lazy {
-        ViewModelProvider(requireActivity())[RegisterNewPatientViewModel::class.java]
+        ViewModelProvider(this@PatientBioFragment)[PatientBioViewModel::class.java]
     }
-
-val viewM = RegisterNewPatientViewModel.viewModel
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,24 +51,21 @@ val viewM = RegisterNewPatientViewModel.viewModel
         super.onViewCreated(view, savedInstanceState)
 
         //populating patient data using recycleView
-      // viewModel.setPatientBioData()
-        viewModel.dataInitializer()
         val searchView = binding.search
-        Log.i("Record", "onViewCreated: ${viewModel.getBioData().size}")
+        Log.i("Record", "onViewCreated: ${viewModel.getAllBioData().value?.size}")
 
 
  val myAdapter = myAdapter
         val layoutManager = LinearLayoutManager(requireContext())
         binding.patientRecycleView.apply {
             setLayoutManager(layoutManager)
-            viewModel.bioList.observe(viewLifecycleOwner){ bioData ->
+
+            viewModel.getAllBioData().observe(viewLifecycleOwner){ bioData ->
 
                myAdapter.submitList(bioData)
                 adapter= myAdapter
         }}
         //    addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
-
-
 
 
         searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
@@ -90,7 +87,6 @@ val viewM = RegisterNewPatientViewModel.viewModel
             startActivity(Intent(context?.applicationContext, PatientRegistrationFormActivity::class.java))
             //clears the fragment from stack
             Toast.makeText(context,"Click", Toast.LENGTH_SHORT).show()
-            activity?.finish()
         }
 
     }
@@ -105,11 +101,12 @@ val viewM = RegisterNewPatientViewModel.viewModel
     }
 
 
-    fun searching(query:String){
+    fun searching(search:String){
 
-      viewModel.searchForPatient(query).observe(viewLifecycleOwner){ bioData ->
+      viewModel.searchForPatient(search).observe(viewLifecycleOwner){ bioData ->
             bioData.let {
                 myAdapter.submitList(it)
+
           }
         }
     }

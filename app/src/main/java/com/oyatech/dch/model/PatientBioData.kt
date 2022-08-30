@@ -1,8 +1,10 @@
 package com.oyatech.dch.model
 
 import androidx.annotation.Nullable
+import androidx.room.Entity
 import java.io.Serializable
 import java.util.*
+
 
 data class PatientBioData(
     val hospitalNumber:String,
