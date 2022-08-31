@@ -3,11 +3,7 @@ package com.oyatech.dch.database
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.oyatech.dch.database.entities.DailyConsultation
-import com.oyatech.dch.database.entities.DailyVitals
-import com.oyatech.dch.database.entities.PatientBioData
-import com.oyatech.dch.database.entities.Vitals
+import com.oyatech.dch.database.entities.*
 
 class Repository(application: Application):IRepository,IConsult {
     private var _mao : IDao? = null
@@ -19,7 +15,9 @@ class Repository(application: Application):IRepository,IConsult {
 
     }
 
-
+    /**
+     * The Patient Bio data table for all records
+     */
     override fun insertPatientBio(patientBioData: PatientBioData) {
         mDao.insertBioData(patientBioData)
     }
@@ -27,19 +25,6 @@ class Repository(application: Application):IRepository,IConsult {
     override fun getAllBioData(): LiveData<MutableList<PatientBioData>> {
 
        return mDao.getAllBioData()
-    }
-
-    fun insertVitals(vitals: Vitals){
-        mDao.insertVitals(vitals)
-    }
-
- override  fun getQueueForVitals(): LiveData<MutableList<DailyVitals>>{
-
-       return mDao.getPatientBioAndId()
-    }
-
-   fun getCurrentPatientForVitals(id: Int): PatientBioData {
-     return mDao.getCurrentPatientForVitals(id)
     }
 
     override fun currentBio(int:Int):PatientBioData{
@@ -50,10 +35,45 @@ class Repository(application: Application):IRepository,IConsult {
         return mDao.searchForPatient(search)
     }
 
+    /**
+     * The Whole Vitals table that contains all vitals of the patient records
+     */
+    fun insertVitals(vitals: Vitals){
+        mDao.insertVitals(vitals)
+    }
+
+    override fun getCurrentVitals(id: Int): Vitals {
+
+        return mDao.getCurrentVitals(id).last()  }
+
+    fun getCurrentPatientForVitals(id: Int): PatientBioData {
+     return mDao.getCurrentPatientForVitals(id).patientBioData
+    }
+
+
+
+
+    /**
+     * Daily Vitals list.
+     */
     override fun queueForVitals(dailyVitals: DailyVitals){
         mDao.queueForVitals(dailyVitals)
     }
+    override  fun getQueueForVitals(): LiveData<MutableList<DailyVitals>>{
 
+        return mDao.getQueueForVitals()
+    }
+    fun getCurrentQueVitals(id: Int): DailyVitals {
+        return mDao.getCurrentPatientForVitals(id)
+    }
+    fun removePatientFromVitalsQue(dialVitals: DailyVitals){
+        mDao.removePatientFromVitalsQue(dialVitals)
+    }
+
+
+    /**
+     * Daily Consultation table
+     */
   override  fun bookForConsultation(bioData: DailyConsultation){
         mDao.bookForConsultation(bioData)
     }
@@ -63,7 +83,18 @@ class Repository(application: Application):IRepository,IConsult {
         return mDao.getAllBookedForConsultation()
     }
 
-    override   fun getCurrentPatientForConsult(id:Int):PatientBioData{
-        return mDao.getCurrentPatientForConsult(id)
+    override   fun getDailConsultationByID(id:Int):DailyConsultation{
+        return mDao.getDailConsultationByID(id)
+    }
+    override fun getCurrentPatientAtConsultation(id: Int): PatientBioData {
+        return mDao.getDailConsultationByID(id).bios
+    }
+
+
+    /**
+     * The Diagnoses table for all diagnoses of all records
+     */
+    override fun getAllPatientDiagnoses(foreignKey: Int): LiveData<MutableList<Diagnose>> {
+        return mDao.getAllPatientDiagnoses(foreignKey)
     }
 }

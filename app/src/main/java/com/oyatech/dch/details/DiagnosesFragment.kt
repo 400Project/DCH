@@ -8,19 +8,29 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import com.oyatech.dch.R
 import com.oyatech.dch.Tests
 import com.oyatech.dch.Tests.*
+import com.oyatech.dch.consultations.ConsultationViewModel
+import com.oyatech.dch.database.entities.Vitals
 import com.oyatech.dch.databinding.FragmentDignosesBinding
 
 
 class DiagnosesFragment : Fragment() {
 
     private var _binding: FragmentDignosesBinding? = null
-    private var isTestLayoutVisible = true
-    var numberOfTest = SECOND
 
     private val binding get() = _binding!!
+
+    val viewModel : ConsultationViewModel by activityViewModels()
+    /*val viewModel by lazy {
+        ViewModelProvider(this@DiagnosesFragment)[ConsultationViewModel::class.java]
+    }*/
+
+    private var isTestLayoutVisible = true
+    var numberOfTest = SECOND
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +44,12 @@ class DiagnosesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val viewModel = viewModel
+        viewModel.apply {
+            val v = getCurrentVitals(position)
+            bindVitalViews(v)
+        }
+    //    val vitals = viewModel.getCurrentVitals(viewModel.position)
         with(binding) {
             showHideIcon.setOnClickListener {
                 with(testLayout) {
@@ -59,6 +75,8 @@ class DiagnosesFragment : Fragment() {
 
             }
         }
+
+
 
     }
 
@@ -93,6 +111,17 @@ class DiagnosesFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    fun bindVitalViews(vitals: Vitals){
+        with(binding){
+            vitals.apply {
+                patientTemperature.text = bodyTemperature
+                patientWeight.text = weight
+                patientBloodPressure.text = bloodPressure
+                patientSugarLevel.text = sugarLevel
+            }
+        }
     }
 
     //TODO: populate ward and dispensary page with patient

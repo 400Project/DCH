@@ -6,14 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.database.entities.PatientBioData
-import com.oyatech.dch.database.entities.PatientBioViewModel
 import com.oyatech.dch.databinding.FragmentPatientVitalsBinding
-import com.oyatech.dch.patient.RegisterNewPatientViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

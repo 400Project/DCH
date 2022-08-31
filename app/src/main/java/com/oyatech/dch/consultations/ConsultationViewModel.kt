@@ -5,18 +5,20 @@ import androidx.lifecycle.*
 import com.oyatech.dch.database.IConsult
 import com.oyatech.dch.database.Repository
 import com.oyatech.dch.database.entities.DailyConsultation
-import com.oyatech.dch.model.DataSource
-import com.oyatech.dch.model.DataSource.consultQueue
+import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.database.entities.PatientBioData
+import com.oyatech.dch.database.entities.Vitals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ConsultationViewModel(application: Application): AndroidViewModel(application),IConsult {
+class ConsultationViewModel(application: Application): AndroidViewModel(application)
+    ,IConsult {
 
     private var _repository : Repository? = null
     private val repository get()=_repository!!
 
-
+private var _position = 0
+    val position get() = _position
 
     init {
         _repository = Repository(application)
@@ -30,10 +32,39 @@ class ConsultationViewModel(application: Application): AndroidViewModel(applicat
     }
 
     override   fun getAllBookedForConsultation():LiveData<MutableList<DailyConsultation>>{
+
         return repository.getAllBookedForConsultation()
     }
 
-    override fun getCurrentPatientForConsult(id: Int): PatientBioData {
-        return repository.getCurrentPatientForVitals(id)
+    override fun getDailConsultationByID(id: Int): DailyConsultation {
+        return repository.getDailConsultationByID(id)
     }
+    override fun getCurrentPatientAtConsultation(id: Int): PatientBioData {
+        return repository.getCurrentPatientAtConsultation(id)
+    }
+
+    override fun getCurrentVitals(id: Int): Vitals {
+        return repository.getCurrentVitals(id)
+    }
+
+
+
+    override fun getAllPatientDiagnoses(foreignKey: Int): LiveData<MutableList<Diagnose>> {
+        var diagnose:LiveData<MutableList<Diagnose>> = MutableLiveData()
+        viewModelScope.launch {
+            Dispatchers.Default
+            diagnose = repository.getAllPatientDiagnoses(foreignKey)
+        }
+        return diagnose
+
+    }
+
+
+    fun setPosition(position:Int)
+    {
+        _position = position
+
+    }
+
+
 }

@@ -1,10 +1,12 @@
 package com.oyatech.dch.consultations
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,7 @@ class ConsultationsFragment : Fragment() {
     private val consultAdapter by lazy {
         ConsultationAdapter(requireContext())
     }
+
     private val viewModel by lazy {
         //correct syntax to create a ViewModel that lives until the fragment goes away permanently
 
@@ -72,9 +75,16 @@ class ConsultationsFragment : Fragment() {
         }
     }
 
+    override fun onPause()
+    {
+        Log.i("Consulta", "onPause: $viewModel is paused")
+        super.onPause()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
+        Log.i("Consultation", "onDestroyView: $viewModel ")
 
     }
 

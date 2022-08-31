@@ -3,16 +3,11 @@ package com.oyatech.dch.recordforms
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.oyatech.dch.R
-import com.oyatech.dch.database.entities.PatientBioViewModel
 import com.oyatech.dch.databinding.ActivityPatientRecordsBinding
-import com.oyatech.dch.patient.RegisterNewPatientViewModel
 
 class PatientRegistrationFormActivity : AppCompatActivity() {
     lateinit var navController: NavController

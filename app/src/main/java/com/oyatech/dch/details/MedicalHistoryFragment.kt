@@ -3,41 +3,49 @@ package com.oyatech.dch.details
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
 import com.oyatech.dch.consultations.ConsultationViewModel
-import com.oyatech.dch.databinding.FragmentVisitsBinding
-import com.oyatech.dch.patient.RegisterNewPatientViewModel
+import com.oyatech.dch.database.entities.DailyConsultation
 import com.oyatech.dch.database.entities.PatientBioData
+import com.oyatech.dch.databinding.FragmentMedicalHistoryBinding
+
 
 /**
  * A simple [Fragment] subclass.
- * Use the [VisitsFragment.newInstance] factory method to
+ * Use the [MedicalHistoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class VisitsFragment : Fragment() {
+class MedicalHistoryFragment : Fragment() {
     private final val PATIENT_VISITS = "com.oyatech.dch.details"
 
-    private var _binding: FragmentVisitsBinding? = null
+    private var _binding: FragmentMedicalHistoryBinding? = null
 
     private val binding get() = _binding!!
+
+    val viewModel : ConsultationViewModel by activityViewModels()
+   /*val viewModel by lazy {
+        ViewModelProvider(this@MedicalHistoryFragment)[ConsultationViewModel::class.java]
+    }*/
+
+    val myAdapter by lazy {
+        MedicalHistoryAdapter(requireContext())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    val viewModel by lazy {
-        ViewModelProvider(this@VisitsFragment)[ConsultationViewModel::class.java]
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentVisitsBinding.inflate(inflater, container, false)
+        _binding = FragmentMedicalHistoryBinding.inflate(inflater, container, false)
 
 
         return binding.root
@@ -52,13 +60,18 @@ class VisitsFragment : Fragment() {
         //getting the position of the patient in the consultation room
         val pPosition = requireActivity().intent.getIntExtra(PATIENT_VISITS, -1)
         //getting he/her medical history
-        val patient = viewModel.getCurrentPatientForConsult(pPosition)
+        val dailyConsultation: DailyConsultation = viewModel.getDailConsultationByID(pPosition)
+
+        val patient = viewModel.getCurrentPatientAtConsultation(pPosition)
         //setting all views with his/her details
         bindPatientDetails(patient)
 
         //Intending to add diagnoses & prescription
-        binding.addPatientVitals.setOnClickListener {
-           findNavController().navigate(R.id.dignosesFragment)
+        binding.addPatientDiagnosis.setOnClickListener {
+
+            viewModel.setPosition(patient.patientId)
+
+                findNavController().navigate(R.id.dignosesFragment)
         }
 
     }
@@ -103,4 +116,12 @@ class VisitsFragment : Fragment() {
 
         }
     }
+
+    /*private fun bindVitals(){
+        viewModel.getAllPatientDiagnoses().observe(viewLifecycleOwner){
+            lifecycleScope.launch { Dispatchers.Default
+            myAdapter.submitList(it)
+            }
+        }
+    }*/
 }

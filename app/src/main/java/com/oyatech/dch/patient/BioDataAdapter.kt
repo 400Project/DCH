@@ -21,7 +21,6 @@ class BioDataAdapter(context: Context) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun holderBinder(patientBioData: PatientBioData) {
-val id = patientBioData.patientId
             with(patientBioData)
             {
                 with(binding) {
@@ -29,7 +28,7 @@ val id = patientBioData.patientId
                     otherName.text = otherNames
                     recordedBy.text ="By: Dr. Kwesi"
                     date.text = patientBioData.date
-                    hospitalNumberTextView.text = patientBioData.hospitalNumber
+                    hospitalNumberTextView.text = hospitalNumber
                 }
             }
 
@@ -106,8 +105,7 @@ val id = patientBioData.patientId
         }*/
 
         holder.itemView.apply {  setOnClickListener {
-            val adapterPos = holder.adapterPosition
-            val v = getItem(adapterPos).patientId
+            val v = getItem(holder.adapterPosition).patientId
             val intent = Intent(context.applicationContext, EditBioDataActivity::class.java)
 
             context.startActivity(

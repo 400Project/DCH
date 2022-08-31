@@ -1,11 +1,8 @@
 package com.oyatech.dch.database.entities
 
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.Relation
+import androidx.room.*
 
-@Entity
+@Entity(indices = [Index (value = ["patientId","patient_Hosp_Number"], unique = true)])
 data  class DailyVitals (
     @PrimaryKey(autoGenerate = true)
     val id:Int,
