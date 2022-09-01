@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".details.VisitsFragment">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_margin="10dp"
+    tools:context=".details.MedicalHistoryFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/patient_bio_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:minHeight="200dp"
+        android:layout_marginBottom="10dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-       >
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/patient_full_name"
             style="@style/TextAppearance.Material3.DisplaySmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Patient Nartey"
             android:maxEms="15"
+            android:text="Patient Nartey"
             app:layout_constraintEnd_toStartOf="@id/patient_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -48,11 +45,11 @@
             android:id="@+id/patient_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Aged: "
             app:layout_constraintBottom_toBottomOf="@id/patient_full_name"
             app:layout_constraintEnd_toStartOf="@id/patient_age"
             app:layout_constraintStart_toEndOf="@id/patient_full_name"
-            app:layout_constraintTop_toTopOf="@id/patient_full_name"
-            android:text="Aged: " />
+            app:layout_constraintTop_toTopOf="@id/patient_full_name" />
 
         <TextView
             android:id="@+id/patient_age"
@@ -68,9 +65,10 @@
             android:id="@+id/hospital_no_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="Hospital Number :"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/patient_full_name"
-            android:text="Hospital Number :"/>
+            app:layout_constraintTop_toBottomOf="@id/patient_full_name" />
+
         <TextView
             android:id="@+id/address_text"
             android:layout_width="0dp"
@@ -147,48 +145,84 @@
             android:text="Mobile :"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/insurance_text" />
+
         <TextView
             android:id="@+id/patient_mobile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:minWidth="100dp"
-            tools:text="026005055"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/patient_nhis" />
+            app:layout_constraintTop_toBottomOf="@id/patient_nhis"
+            tools:text="026005055" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider1"
         android:layout_width="0dp"
         android:layout_height="3dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/patient_bio_layout" />
+
+    <TextView
+        android:id="@+id/textVisit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recent Visits"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        style="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintTop_toBottomOf="@id/divider1"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <ImageView
+        android:id="@+id/no_medicals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textVisit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/good_health">
+
+    </ImageView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/visitsRecycleView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:minHeight="400dp"
+        android:minHeight="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider1"
-        tools:listitem="@layout/visits_card">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textVisit"
+        tools:listitem="@layout/history_card">
 
     </androidx.recyclerview.widget.RecyclerView>
+    <TextView
+        android:id="@+id/noMedic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No medical history"
+        android:layout_marginStart="5dp"
+        style="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/add_patient_vitals"
+        android:id="@+id/add_patient_diagnosis"
         style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="15dp"
         android:text="Diagnose"
         app:icon="@drawable/ic_pen"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -197,15 +231,5 @@
     </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
 
 
-    <TextView
-        android:id="@+id/show_hide_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No visits yet!!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>

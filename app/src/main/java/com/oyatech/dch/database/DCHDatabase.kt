@@ -4,16 +4,14 @@ import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.oyatech.dch.database.entities.DailyConsultation
-import com.oyatech.dch.database.entities.DailyVitals
-import com.oyatech.dch.database.entities.PatientBioData
-import com.oyatech.dch.database.entities.Vitals
+import com.oyatech.dch.database.entities.*
 
 @Database(
     entities = [PatientBioData::class,
         Vitals::class,
         DailyVitals::class,
-        DailyConsultation::class], version = 1
+        DailyConsultation::class,
+        Diagnose::class], version = 1
 )
 abstract class DCHDatabase : RoomDatabase() {
 

@@ -2,12 +2,20 @@ package com.oyatech.dch.database
 
 import androidx.lifecycle.LiveData
 import com.oyatech.dch.database.entities.DailyConsultation
+import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.database.entities.PatientBioData
+import com.oyatech.dch.database.entities.Vitals
 
 interface IConsult {
     fun bookForConsultation(bioData: DailyConsultation )
 
     fun getAllBookedForConsultation(): LiveData<MutableList<DailyConsultation>>
 
-    fun getCurrentPatientForConsult(id:Int): PatientBioData
+    fun getDailConsultationByID(id:Int): DailyConsultation
+
+    fun  getCurrentVitals(id:Int):Vitals
+    fun getCurrentPatientAtConsultation(id:Int):PatientBioData
+
+    fun getAllPatientDiagnoses(foreignKey: Int):LiveData<MutableList<Diagnose>>
+    fun insertDiagnosis(diagnose: Diagnose)
 }

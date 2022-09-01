@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.oyatech.dch.database.entities.DailyVitals
 import com.oyatech.dch.database.entities.PatientBioData
-import com.oyatech.dch.database.entities.PatientBioViewModel
+import com.oyatech.dch.patient.PatientBioViewModel
 import com.oyatech.dch.databinding.ActivityEditBioDataBinding
 
 
@@ -31,7 +31,7 @@ class EditBioDataActivity : AppCompatActivity() {
 val viewModel= viewModel
         //Getting the selected patient details
         var patientNumber = intent.getIntExtra("details", -1)
-        //patientNumber += 1
+
        _patientBioData= viewModel.currentBio(patientNumber)
         details(patientBioData)
 

@@ -12,7 +12,8 @@ import com.oyatech.dch.model.DataSource
 
 
 
-class VitalsViewModel(application: Application) :  AndroidViewModel(application){
+class VitalsViewModel(application: Application)
+    :  AndroidViewModel(application){
     // TODO: Implement the ViewModel
     private var _repository : Repository? = null
      private val repository get()=_repository!!
@@ -30,9 +31,11 @@ class VitalsViewModel(application: Application) :  AndroidViewModel(application)
         return repository.getCurrentPatientForVitals(id)
 
     }
-
-    fun removeFromVitalsQue(particular: PatientBioData){
-       // _queueForVitals.remove(particular)
+    fun getCurrentQueVitals(id: Int): DailyVitals {
+        return repository.getCurrentQueVitals(id)
+    }
+    fun removePatientFromVitalsQue(dialVitals: DailyVitals){
+      repository.removePatientFromVitalsQue(dialVitals)
     }
     fun clearVitalsList(){
        DataSource.allPatient().clear()

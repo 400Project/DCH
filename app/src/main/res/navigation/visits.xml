@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/visitsFragment">
+    app:startDestination="@id/medicalHistoryFragment">
 
     <fragment
-        android:id="@+id/visitsFragment"
-        android:name="com.oyatech.dch.details.VisitsFragment"
-        tools:layout="@layout/fragment_visits"
+        android:id="@+id/medicalHistoryFragment"
+        android:name="com.oyatech.dch.details.MedicalHistoryFragment"
+        tools:layout="@layout/fragment_medical_history"
         android:label="Patient Visits"/>
     <fragment
         android:id="@+id/detailRecordFragment"

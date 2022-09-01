@@ -23,7 +23,6 @@ class VitalsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVitalsBinding
     private var primaryKey = 0
     private var foreignKey = 0
-    val dateTime = Utils.getDateAndTime()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVitalsBinding.inflate(LayoutInflater.from(this))
@@ -41,10 +40,13 @@ class VitalsActivity : AppCompatActivity() {
 
         binding.toConsultation.setOnClickListener {
             lifecycleScope.launch {
+                val v = viewModel.getCurrentQueVitals(foreignKey)
                 Dispatchers.IO
                 viewModel.apply {
                     insertVitals(getVitals())
                     bookForConsultation(getPatientForConsult(currentPatient))
+                    viewModel.removePatientFromVitalsQue(v)
+
                 }
             }
             Toast.makeText(

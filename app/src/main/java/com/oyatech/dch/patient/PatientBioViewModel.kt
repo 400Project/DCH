@@ -1,19 +1,17 @@
-package com.oyatech.dch.database.entities
+package com.oyatech.dch.patient
 
 import android.app.Application
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.oyatech.dch.database.IRepository
 import com.oyatech.dch.database.Repository
+import com.oyatech.dch.database.entities.DailyVitals
+import com.oyatech.dch.database.entities.PatientBioData
 
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class PatientBioViewModel(application: Application) :
@@ -45,7 +43,7 @@ var number = 0
 
     //val allPatient = listOfPatientPaticulars
 
-    override    fun currentBio(int:Int):PatientBioData{
+    override    fun currentBio(int:Int): PatientBioData {
       return  repository.currentBio(int)
     }
 

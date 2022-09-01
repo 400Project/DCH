@@ -7,29 +7,44 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="5dp"
         app:cardElevation="4dp"
-    android:layout_marginBottom="3dp"
+    android:layout_marginBottom="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint"
+            android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <TextView
 
+                android:id="@+id/principal_diagnosis_history"
+                style="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:maxLength="100"
+                android:maxLines="2"
+                android:ellipsize="end"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Malarial,Fever,General wickness General Malarial,Fever,General wickness General wickness,wickness General wickness"
+                android:textAlignment="textStart"
+                app:layout_constraintEnd_toStartOf="@id/visit_date"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                />
             <TextView
 
                 android:id="@+id/doctor_name"
-                style="@style/TextAppearance.AppCompat.Headline"
+                style="@style/TextAppearance.AppCompat.Caption"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="4dp"
                 android:text="Doctor: Olivier"
                 android:textAlignment="textStart"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/doctor_name"
+                app:layout_constraintTop_toBottomOf="@id/principal_diagnosis_history"                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintVertical_bias="0.0"
               >
 
@@ -38,13 +53,12 @@
             <TextView
 
                 android:id="@+id/visit_date"
-                style="@style/TextAppearance.AppCompat.Headline"
+                style="@style/TextAppearance.AppCompat.Caption"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
-                android:maxLength="15"
-                android:text="Date: 12/4/22"
+                android:text="12/4/22"
                 android:textAlignment="textEnd"
                 app:layout_constraintBottom_toTopOf="@id/patient_status"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -63,9 +77,9 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="Admitted"
-                app:layout_constraintStart_toStartOf="@id/doctor_name"
-                app:layout_constraintEnd_toEndOf="@id/doctor_name"
-                app:layout_constraintTop_toBottomOf="@id/visit_date">
+                app:layout_constraintStart_toStartOf="@id/visit_date"
+                app:layout_constraintEnd_toEndOf="@id/visit_date"
+                app:layout_constraintBottom_toBottomOf="parent">
 
             </TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>

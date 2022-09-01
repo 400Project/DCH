@@ -20,7 +20,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
-import com.oyatech.dch.database.entities.PatientBioViewModel
+import com.oyatech.dch.patient.PatientBioViewModel
 import com.oyatech.dch.databinding.FragmentBioDataBinding
 import com.oyatech.dch.datacenter.PatientsDataPageActivity
 import com.oyatech.dch.database.entities.PatientBioData

@@ -87,7 +87,7 @@ class ConsultationAdapter(context: Context) :
         }
 
         holder.itemView.setOnClickListener {
-            val listPosition = position +1
+            val listPosition = getItem(holder.adapterPosition).patientId
             val visits = Intent(context, DetailActivity::class.java)
 
             visits.putExtra(PATIENT_VISITS, listPosition)

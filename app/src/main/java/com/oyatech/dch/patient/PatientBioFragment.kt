@@ -12,9 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.oyatech.dch.database.entities.PatientBioViewModel
 import com.oyatech.dch.databinding.FragmentPatientsBinding
-import com.oyatech.dch.model.DataSource
 import com.oyatech.dch.recordforms.PatientRegistrationFormActivity
 
 /**

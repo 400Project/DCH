@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oyatech.dch.database.entities.PatientBioData
 
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
-import com.oyatech.dch.patient.RegisterNewPatientViewModel
 
 
 
@@ -88,8 +87,9 @@ class VitalsAdapter():ListAdapter<PatientBioData,
                 binder(getItem(position))
         }
 
-        val currentPatientPos = position +1
+
         holder.itemView.setOnClickListener{
+            val currentPatientPos = getItem(holder.adapterPosition).patientId
             val vitalsIntent = Intent(context.applicationContext,VitalsActivity::class.java)
 
             vitalsIntent.putExtra(DUE_FOR_VITALS,currentPatientPos)

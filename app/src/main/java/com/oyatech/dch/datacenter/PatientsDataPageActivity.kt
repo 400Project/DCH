@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.findViewTreeLifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oyatech.dch.Department
 import com.oyatech.dch.R
-import com.oyatech.dch.database.entities.PatientBioViewModel
+import com.oyatech.dch.patient.PatientBioViewModel
 import com.oyatech.dch.databinding.ActivityPatientsDataPageBinding
-import com.oyatech.dch.patient.RegisterNewPatientViewModel
 import com.oyatech.dch.ui.MainActivity
 import com.oyatech.dch.vitals.VitalsViewModel
 
