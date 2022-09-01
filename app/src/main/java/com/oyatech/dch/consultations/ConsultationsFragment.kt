@@ -34,7 +34,7 @@ class ConsultationsFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private var v = mutableListOf<PatientBioData>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,16 +58,15 @@ class ConsultationsFragment : Fragment() {
         val viewModel = viewModel
 
         viewModel.getAllBookedForConsultation().observe(viewLifecycleOwner) { it ->
-
+         val v = mutableListOf<PatientBioData>()
             lifecycleScope.launch {
                 Dispatchers.IO
                 it.forEach {
                     v.add(it.bios)
                 }
-                adapter.submitList(v)
+
             }
-
-
+            adapter.submitList(v)
         }
         binding.consultReviewer.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -77,8 +76,10 @@ class ConsultationsFragment : Fragment() {
 
     override fun onPause()
     {
+
         Log.i("Consulta", "onPause: $viewModel is paused")
         super.onPause()
+        binding.consultReviewer.adapter = consultAdapter
     }
     override fun onDestroyView() {
         super.onDestroyView()

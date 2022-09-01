@@ -97,4 +97,10 @@ class Repository(application: Application):IRepository,IConsult {
     override fun getAllPatientDiagnoses(foreignKey: Int): LiveData<MutableList<Diagnose>> {
         return mDao.getAllPatientDiagnoses(foreignKey)
     }
+
+    override fun insertDiagnosis(diagnose: Diagnose) {
+        mDao.insertDiagnoses(diagnose)
+    }
+
+
 }

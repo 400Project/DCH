@@ -5,9 +5,11 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.R
 import com.oyatech.dch.consultations.ConsultationViewModel
 import com.oyatech.dch.database.entities.DailyConsultation
+import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.FragmentMedicalHistoryBinding
 
@@ -60,12 +62,22 @@ class MedicalHistoryFragment : Fragment() {
         //getting the position of the patient in the consultation room
         val pPosition = requireActivity().intent.getIntExtra(PATIENT_VISITS, -1)
         //getting he/her medical history
-        val dailyConsultation: DailyConsultation = viewModel.getDailConsultationByID(pPosition)
+
 
         val patient = viewModel.getCurrentPatientAtConsultation(pPosition)
         //setting all views with his/her details
         bindPatientDetails(patient)
-
+val layoutManager = LinearLayoutManager(requireContext())
+        binding.visitsRecycleView.apply {
+        viewModel.getAllPatientDiagnoses(pPosition).observe(viewLifecycleOwner){
+            if (it.isNotEmpty()){
+                binding.noMedic.visibility = View.GONE
+                binding.noMedicals.visibility = View.GONE
+            }
+            myAdapter.submitList(it)
+            setLayoutManager(layoutManager)
+            adapter = myAdapter
+        }}
         //Intending to add diagnoses & prescription
         binding.addPatientDiagnosis.setOnClickListener {
 

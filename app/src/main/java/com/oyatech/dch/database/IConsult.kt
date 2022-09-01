@@ -17,4 +17,5 @@ interface IConsult {
     fun getCurrentPatientAtConsultation(id:Int):PatientBioData
 
     fun getAllPatientDiagnoses(foreignKey: Int):LiveData<MutableList<Diagnose>>
+    fun insertDiagnosis(diagnose: Diagnose)
 }

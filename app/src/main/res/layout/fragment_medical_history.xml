@@ -157,6 +157,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider1"
         android:layout_width="0dp"
@@ -165,6 +166,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/patient_bio_layout" />
+
     <TextView
         android:id="@+id/textVisit"
         android:layout_width="wrap_content"
@@ -175,6 +177,18 @@
         style="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintTop_toBottomOf="@id/divider1"
         app:layout_constraintStart_toStartOf="parent"/>
+    <ImageView
+        android:id="@+id/no_medicals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textVisit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/good_health">
+
+    </ImageView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/visitsRecycleView"

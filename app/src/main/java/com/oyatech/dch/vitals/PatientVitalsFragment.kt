@@ -16,13 +16,13 @@ import kotlinx.coroutines.launch
 
 
 class PatientVitalsFragment : Fragment() {
-private  var _binding :FragmentPatientVitalsBinding?=null
+    private var _binding: FragmentPatientVitalsBinding? = null
     private val binding get() = _binding!!
     private val v = mutableListOf<PatientBioData>()
 
-  private  val viewModel by lazy {
-      ViewModelProvider(this@PatientVitalsFragment)[VitalsViewModel::class.java]
-  }
+    private val viewModel by lazy {
+        ViewModelProvider(this@PatientVitalsFragment)[VitalsViewModel::class.java]
+    }
     private val myAdapter by lazy {
         VitalsAdapter(requireContext())
     }
@@ -32,8 +32,8 @@ private  var _binding :FragmentPatientVitalsBinding?=null
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentPatientVitalsBinding.inflate(inflater,container,false)
-        
+        _binding = FragmentPatientVitalsBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -44,34 +44,31 @@ private  var _binding :FragmentPatientVitalsBinding?=null
         val adapter = myAdapter
         val viewModel = viewModel
 
-        viewModel.patientAndVitals().observe(viewLifecycleOwner){ it ->
-            val  v = mutableListOf<PatientBioData>()
-            lifecycleScope.launch { Dispatchers.IO
+        viewModel.patientAndVitals().observe(viewLifecycleOwner) { it ->
+            val v = mutableListOf<PatientBioData>()
+            lifecycleScope.launch {
+                Dispatchers.IO
                 it.forEach {
                     v.add(it.patientBioData)
                 }
             }
-
             adapter.submitList(v)
-
         }
 
 
-
-       binding.vitalsRecycleView.apply{
+        binding.vitalsRecycleView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setAdapter(adapter)
         }
 
 
-        binding.clear.setOnClickListener{
-    //        viewModel.clearVitalsList()
+        binding.clear.setOnClickListener {
+            //        viewModel.clearVitalsList()
             binding.vitalsRecycleView.adapter?.notifyDataSetChanged()
         }
 
         Log.i("Vitals", "onViewCreated: is called")
     }
-
 
 
     override fun onDestroy() {
@@ -90,4 +87,5 @@ private  var _binding :FragmentPatientVitalsBinding?=null
         Log.i("Vitals", "onPause: is called")
         super.onPause()
         binding.vitalsRecycleView.adapter = myAdapter
-    } }
+    }
+}

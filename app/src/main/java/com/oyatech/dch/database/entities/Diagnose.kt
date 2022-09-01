@@ -10,15 +10,15 @@ import com.oyatech.dch.util.Utils
 data class Diagnose(
     @PrimaryKey(autoGenerate = true) val diagnoseID: Int,
     //Foreign Key
-    val parentID:Int,
-
+    val parentID: Int,
     var provisional: String,
-    @ColumnInfo(name = "Tests_Conducted")
-    var tests: String,
     var principal: String,
     var additional: String,
-    var treatmentStatus: String,
-    val staffName:String,
+    var nurseNote :String ="Check the PB",
+    val staffName: String,
+    val dateTime: String = Utils.getDateAndTime(),
+    var treatmentStatus: String = "Treated",
+    @ColumnInfo(name = "Tests_Conducted")
+    var tests: String = "Not Lab",
 
-    val dateTime :String = Utils.getDateAndTime()
-)
+    )

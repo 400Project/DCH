@@ -463,7 +463,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/provisional_diagnosi"
+                        android:id="@+id/pricipal_diagnosis"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Principal Diagnosis"
@@ -815,6 +815,7 @@
                    >
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/prescription"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Patient Prescription"
@@ -867,6 +868,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="40dp"
                     android:text="Submit"
+                    android:id="@+id/submit"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

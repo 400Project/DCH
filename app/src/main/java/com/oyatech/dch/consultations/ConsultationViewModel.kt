@@ -59,6 +59,10 @@ private var _position = 0
 
     }
 
+    override fun insertDiagnosis(diagnose: Diagnose) {
+        repository.insertDiagnosis(diagnose)
+    }
+
 
     fun setPosition(position:Int)
     {

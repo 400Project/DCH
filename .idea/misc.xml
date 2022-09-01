@@ -16,7 +16,7 @@
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/drawable/ic_pulse_life.xml" value="0.173" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/drawable/ic_undraw_medicine_b_1_ol.xml" value="0.147" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/drawable/patient_vitals_background.xml" value="0.112" />
-        <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/activity_detail.xml" value="0.22" />
+        <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/activity_detail.xml" value="0.189873417721519" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/activity_edit_bio_data.xml" value="0.25" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/activity_patient_records.xml" value="0.22" />
@@ -35,7 +35,7 @@
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_date_picker.xml" value="0.1859375" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_detail_record.xml" value="0.33" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_detial.xml" value="0.1" />
-        <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_dignoses.xml" value="0.1" />
+        <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_dignoses.xml" value="0.25" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_dispensary.xml" value="0.2" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_first.xml" value="0.25" />
         <entry key="..\:/MEGACLOUD/MOOC/DCH/app/src/main/res/layout/fragment_fragment_patient_vitals.xml" value="0.1" />
