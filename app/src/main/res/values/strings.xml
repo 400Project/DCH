@@ -25,6 +25,7 @@
 
     <!--Patient Treatment Status-->
     <string-array name="patient_status">
+        <item>Treatment Status</item>
         <item>Admitted</item>
         <item>Absconded</item>
         <item>Discharged</item>

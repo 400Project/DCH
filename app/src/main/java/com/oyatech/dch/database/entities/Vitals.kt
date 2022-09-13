@@ -15,7 +15,8 @@ data class Vitals(
     val weight: String,
     val bodyTemperature: String,
     val sugarLevel:String,
-    val dateTime: String = Utils.getDateAndTime()
+    val dateTime: String = Utils.getDateAndTime(),
+val recordBy:String = "Grace Ama"
 )
 
 //Modeling one-to-many relationship between patient and vitals

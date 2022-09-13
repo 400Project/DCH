@@ -11,6 +11,7 @@ interface IConsult {
 
     fun getAllBookedForConsultation(): LiveData<MutableList<DailyConsultation>>
 
+    fun removeFromDailyConsultation(dailyConsultation: DailyConsultation)
     fun getDailConsultationByID(id:Int): DailyConsultation
 
     fun  getCurrentVitals(id:Int):Vitals
@@ -18,4 +19,6 @@ interface IConsult {
 
     fun getAllPatientDiagnoses(foreignKey: Int):LiveData<MutableList<Diagnose>>
     fun insertDiagnosis(diagnose: Diagnose)
+
+
 }

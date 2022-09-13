@@ -8,7 +8,7 @@ import java.util.*
 object Utils {
     fun getDateAndTime(): String {
         val l = Locale.getDefault()
-        val sdf = SimpleDateFormat("dd/M/y hh:m aa",l)
+        val sdf = SimpleDateFormat("dd/M/y")
         val calender = Calendar.getInstance()
         return sdf.format(calender.time)
     }

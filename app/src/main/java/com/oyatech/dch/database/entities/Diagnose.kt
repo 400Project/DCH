@@ -16,8 +16,8 @@ data class Diagnose(
     var additional: String,
     var nurseNote :String ="Check the PB",
     val staffName: String,
+    var treatmentStatus: String,
     val dateTime: String = Utils.getDateAndTime(),
-    var treatmentStatus: String = "Treated",
     @ColumnInfo(name = "Tests_Conducted")
     var tests: String = "Not Lab",
 

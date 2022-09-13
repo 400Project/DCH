@@ -83,6 +83,10 @@ class Repository(application: Application):IRepository,IConsult {
         return mDao.getAllBookedForConsultation()
     }
 
+    override fun removeFromDailyConsultation(dailyConsultation: DailyConsultation) {
+        mDao.removeFromDailyConsultation(dailyConsultation)
+    }
+
     override   fun getDailConsultationByID(id:Int):DailyConsultation{
         return mDao.getDailConsultationByID(id)
     }

@@ -12,6 +12,7 @@ import com.oyatech.dch.database.entities.DailyConsultation
 import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.FragmentMedicalHistoryBinding
+import com.oyatech.dch.patient.PatientBioViewModel
 
 
 /**
@@ -27,12 +28,13 @@ class MedicalHistoryFragment : Fragment() {
     private val binding get() = _binding!!
 
     val viewModel : ConsultationViewModel by activityViewModels()
+    private val patientViewModel : PatientBioViewModel by activityViewModels()
    /*val viewModel by lazy {
         ViewModelProvider(this@MedicalHistoryFragment)[ConsultationViewModel::class.java]
     }*/
 
     val myAdapter by lazy {
-        MedicalHistoryAdapter(requireContext())
+        MedicalHistoryAdapter(requireContext(),this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,9 +64,11 @@ class MedicalHistoryFragment : Fragment() {
         //getting the position of the patient in the consultation room
         val pPosition = requireActivity().intent.getIntExtra(PATIENT_VISITS, -1)
         //getting he/her medical history
+        /**
+         * TODO: I'm getting the error because im trying to load from an object that i'm try to delete from
+         */
+      val patient = patientViewModel.currentBio(pPosition)
 
-
-        val patient = viewModel.getCurrentPatientAtConsultation(pPosition)
         //setting all views with his/her details
         bindPatientDetails(patient)
 val layoutManager = LinearLayoutManager(requireContext())

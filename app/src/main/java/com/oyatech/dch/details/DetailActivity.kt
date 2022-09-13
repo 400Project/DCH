@@ -38,9 +38,6 @@ class DetailActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()||super.onSupportNavigateUp()
     }
-    /**
-     * TODO: DESIGN THE PRESCRIPTION LAYOUT
-     */
 /*
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.visits,menu)

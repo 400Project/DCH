@@ -36,6 +36,10 @@ private var _position = 0
         return repository.getAllBookedForConsultation()
     }
 
+    override fun removeFromDailyConsultation(dailyConsultation: DailyConsultation) {
+        repository.removeFromDailyConsultation(dailyConsultation)
+    }
+
     override fun getDailConsultationByID(id: Int): DailyConsultation {
         return repository.getDailConsultationByID(id)
     }

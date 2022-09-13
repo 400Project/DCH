@@ -6,6 +6,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -27,12 +29,10 @@ class DiagnosesFragment : Fragment() {
     private val binding get() = _binding!!
 
     val viewModel: ConsultationViewModel by activityViewModels()
-    /*val viewModel by lazy {
-        ViewModelProvider(this@DiagnosesFragment)[ConsultationViewModel::class.java]
-    }*/
 
     private var isTestLayoutVisible = true
     var numberOfTest = SECOND
+    lateinit var treatStatus: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,8 +48,8 @@ class DiagnosesFragment : Fragment() {
 
         val viewModel = viewModel
         viewModel.apply {
-            val v = getCurrentVitals(position)
-            bindVitalViews(v)
+
+            bindVitalViews(getCurrentVitals(position))
         }
         //    val vitals = viewModel.getCurrentVitals(viewModel.position)
         with(binding) {
@@ -61,15 +61,20 @@ class DiagnosesFragment : Fragment() {
         binding.submit.setOnClickListener {
             Toast.makeText(requireContext(), "Diagnosed", Toast.LENGTH_SHORT).show()
            viewModel.apply {
-              insertDiagnosis(diagnoseObject(position))
+               val consultation = getDailConsultationByID(position)
+               val diagnose = diagnoseObject(position)
+              insertDiagnosis(diagnose)
+               if ((treatStatus == "Discharged")
+                   || (treatStatus == "Transferred")
+                   ||(treatStatus=="Died")){
+                   removeFromDailyConsultation(consultation)
+               }
+
            }
             findNavController().navigate(R.id.medicalHistoryFragment)
         }
-        /**
-         * TODO: I implemented Diagnoese: To be tested by inserting diagnoses
-         * to diagnoses table
-         */
 
+binding.treatmentStatus.onItemSelectedListener = getTreatmentStatus()
     }
 
     //Creating the number of test layout for test to be conducted
@@ -144,6 +149,7 @@ class DiagnosesFragment : Fragment() {
     private fun diagnoseObject(position: Int): Diagnose {
         val primaryKey = 0
         binding.apply {
+            val treatment = treatStatus
             val provisional = provisionalDiagnosis.text.toString().trim()
             val principal = pricipalDiagnosis.text.toString().trim()
             val additional = additionalDiagnosis.text.toString().trim()
@@ -152,9 +158,39 @@ class DiagnosesFragment : Fragment() {
             val tests = firstTest.text.toString().trim()
             return Diagnose(
                 primaryKey, position, provisional, principal, additional,
-                nurseNote,"Dr.Robert"
+                nurseNote,"Dr.Robert",treatment
             )
         }
     }
     //TODO: populate ward and dispensary page with patient
+
+    private fun getTreatmentStatus(): AdapterView.OnItemSelectedListener
+    {
+//The createFromResource() method allows you to create an ArrayAdapter from the string array.
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.patient_status,
+            android.R.layout.simple_spinner_item
+            /**
+             * You should then call setDropDownViewResource(int) to specify the layout the adapter
+             * should use to display the list of spinner choice
+             */
+        ).also { arrayAdapter ->
+            arrayAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item
+            )
+            binding.treatmentStatus.adapter = arrayAdapter
+//Responding to user selection
+            val item: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(adapteView: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                    treatStatus = adapteView?.getItemAtPosition(position).toString()
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
+            }
+            return item
+
+        }
+    }
 }

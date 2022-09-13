@@ -854,14 +854,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     />
+
                 <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/treatmentStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:entries="@array/patient_status"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:tooltipText="Patient Treatment Status"
-                    />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:layout_width="match_parent"

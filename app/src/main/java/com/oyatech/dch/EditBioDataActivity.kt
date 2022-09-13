@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.oyatech.dch.database.entities.DailyVitals
+import com.oyatech.dch.database.entities.NextOfKin
 import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.patient.PatientBioViewModel
 import com.oyatech.dch.databinding.ActivityEditBioDataBinding
@@ -48,6 +49,8 @@ val dVitals = DailyVitals(primaryKey,patientBioData)
 
 
         binding.done.setOnClickListener {
+            val nextOfKin = nextOfKinDetails()
+            
             Toast.makeText(this, "Record Updated", Toast.LENGTH_SHORT).show()
             finish()
         }
@@ -70,5 +73,16 @@ val dVitals = DailyVitals(primaryKey,patientBioData)
         }
     }
 
+    fun nextOfKinDetails():NextOfKin{
+        with(binding){
+         val fullName =   nextOfKingName.text.toString().trim()
+         val relationship =   nofKRelationshipLayout.text.toString().trim()
+         val mobile =   nofKMobile.text.toString().trim()
+            val address = nofKAddress.text.toString().trim()
+            val occupation = occupation.text.toString().trim()
+            return NextOfKin(primaryKey,fullName,relationship,mobile,address,occupation)
+        }
+
+    }
 
 }
