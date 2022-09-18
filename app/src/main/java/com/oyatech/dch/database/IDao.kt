@@ -3,7 +3,6 @@ package com.oyatech.dch.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.oyatech.dch.database.entities.*
-import com.oyatech.dch.model.MedicalHistory
 
 @Dao
 interface IDao {
@@ -32,7 +31,7 @@ fun searchForPatient(search:String):LiveData<MutableList<PatientBioData>>
     @Insert
     fun insertVitals(vitals: Vitals)
 
-    @Query("SELECT * FROM Vitals WHERE foreignKyePatient = :id")
+    @Query("SELECT * FROM Vitals WHERE patientId = :id")
     fun getCurrentVitals(id: Int):MutableList<Vitals>
 
     //Diagnosis
@@ -61,4 +60,21 @@ fun searchForPatient(search:String):LiveData<MutableList<PatientBioData>>
     fun removeFromDailyConsultation(dailyConsultation: DailyConsultation)
 
 
+    //Produce auto increment for Vitals table
+    @Insert
+    fun insertVitalsIDs( vitals: ViDs)
+
+    @Query ("UPDATE ViDs set vitalsID =:current where vitalsID =:prev")
+    fun updateVitalsIDs(prev: Int, current:Int)
+    @Query ("SELECT vitalsID FROM ViDs")
+    fun getVitalsIDs():Int
+
+//Produce auto increment for Diagnosis table
+    @Insert
+    fun insertDiagnoseIDs( diagID: DiagID)
+
+    @Query ("UPDATE DiagID set diagnoseID =:current where diagnoseID =:previous")
+    fun updateDiagnoseIDs(previous: Int, current:Int)
+    @Query ("SELECT diagnoseID FROM DiagID")
+    fun getDiagnoseIDs():Int
 }

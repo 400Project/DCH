@@ -1,23 +1,28 @@
 package com.oyatech.dch.database.entities
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.oyatech.dch.util.Utils
 
 @Entity
-data class Vitals(
-    @PrimaryKey(autoGenerate = true) val vID: Int,
+data class Vitals constructor(
+    @PrimaryKey(autoGenerate = true)
+    val vitalsID: Int,
     //Foreign Key
-    val foreignKyePatient: Int,
+    val patientId: Int,
 
-    @ColumnInfo(name = "date_recorded")
     val bloodPressure: String,
     val weight: String,
     val bodyTemperature: String,
     val sugarLevel:String,
-    val dateTime: String = Utils.getDateAndTime(),
-val recordBy:String = "Grace Ama"
-)
+    val date: String = Utils.getDate(),
+    val time: String = Utils.getTime(),
+    val recordBy:String = "Grace Ama"
+){
+    constructor():this(0,0,"","","","","","","")
+}
 
 //Modeling one-to-many relationship between patient and vitals
 @Entity

@@ -27,7 +27,8 @@ class BioDataAdapter(context: Context) :
                     firstName.text = first_Name
                     otherName.text = otherNames
                     recordedBy.text ="By: Dr. Kwesi"
-                    date.text = patientBioData.date
+                    dateRecorded.text = dates
+                    timeRecorded.text = times
                     hospitalNumberTextView.text = hospitalNumber
                 }
             }

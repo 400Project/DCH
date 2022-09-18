@@ -11,7 +11,9 @@ import com.oyatech.dch.database.entities.*
         Vitals::class,
         DailyVitals::class,
         DailyConsultation::class,
-        Diagnose::class], version = 1
+        Diagnose::class,
+        ViDs::class,
+        DiagID::class], version = 1
 )
 abstract class DCHDatabase : RoomDatabase() {
 

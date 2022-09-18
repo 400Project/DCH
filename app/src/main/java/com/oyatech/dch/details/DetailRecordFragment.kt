@@ -105,7 +105,7 @@ class DetailRecordFragment : Fragment() {
                 provisionalDiagnosis.text = provisional
                 principalDiagnose.text = principal
                 additionalDiagnosis.text = additional
-                dateDiagnose.text = dateTime
+                dateDiagnose.text = date
 
             }
         }

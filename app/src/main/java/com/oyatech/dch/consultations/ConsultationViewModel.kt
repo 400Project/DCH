@@ -4,10 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.oyatech.dch.database.IConsult
 import com.oyatech.dch.database.Repository
-import com.oyatech.dch.database.entities.DailyConsultation
-import com.oyatech.dch.database.entities.Diagnose
-import com.oyatech.dch.database.entities.PatientBioData
-import com.oyatech.dch.database.entities.Vitals
+import com.oyatech.dch.database.entities.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -16,6 +13,7 @@ class ConsultationViewModel(application: Application): AndroidViewModel(applicat
 
     private var _repository : Repository? = null
     private val repository get()=_repository!!
+
 
 private var _position = 0
     val position get() = _position
@@ -36,9 +34,10 @@ private var _position = 0
         return repository.getAllBookedForConsultation()
     }
 
-    override fun removeFromDailyConsultation(dailyConsultation: DailyConsultation) {
-        repository.removeFromDailyConsultation(dailyConsultation)
+    override fun removeConsultation(int: Int) {
+        TODO("Not yet implemented")
     }
+
 
     override fun getDailConsultationByID(id: Int): DailyConsultation {
         return repository.getDailConsultationByID(id)
@@ -52,27 +51,21 @@ private var _position = 0
     }
 
 
-
-    override fun getAllPatientDiagnoses(foreignKey: Int): LiveData<MutableList<Diagnose>> {
-        var diagnose:LiveData<MutableList<Diagnose>> = MutableLiveData()
-        viewModelScope.launch {
-            Dispatchers.Default
-            diagnose = repository.getAllPatientDiagnoses(foreignKey)
-        }
-        return diagnose
-
-    }
-
-    override fun insertDiagnosis(diagnose: Diagnose) {
-        repository.insertDiagnosis(diagnose)
-    }
-
-
     fun setPosition(position:Int)
     {
         _position = position
 
     }
+    //Remote operations
+    fun fetchDailyConsultRemote(): LiveData<MutableList<DailyConsultation>>{
+        var allRecords:LiveData<MutableList<DailyConsultation>> = MutableLiveData()
+        viewModelScope.launch { Dispatchers.IO
+            allRecords =  repository.fetchDailyConsult()
+
+        }
+        return allRecords
+    }
+
 
 
 }

@@ -11,14 +11,12 @@ interface IConsult {
 
     fun getAllBookedForConsultation(): LiveData<MutableList<DailyConsultation>>
 
-    fun removeFromDailyConsultation(dailyConsultation: DailyConsultation)
+    fun removeConsultation(int: Int)
     fun getDailConsultationByID(id:Int): DailyConsultation
 
     fun  getCurrentVitals(id:Int):Vitals
     fun getCurrentPatientAtConsultation(id:Int):PatientBioData
 
-    fun getAllPatientDiagnoses(foreignKey: Int):LiveData<MutableList<Diagnose>>
-    fun insertDiagnosis(diagnose: Diagnose)
 
 
 }

@@ -22,8 +22,8 @@ class ConsultationAdapter(context: Context) :
         fun bindAllQues(patientBioData: PatientBioData) {
             binding.apply {
                 with(patientBioData){
-                    firstName.text = first_Name
-                    otherName.text = otherNames
+                    firstName.text = patientBioData.first_Name
+                    otherName.text = patientBioData.otherNames
                 }
             }
         }

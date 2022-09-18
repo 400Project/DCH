@@ -16,9 +16,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.util.rangeTo
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.FirebaseFirestore
 import com.oyatech.dch.R
 import com.oyatech.dch.patient.PatientBioViewModel
 import com.oyatech.dch.databinding.FragmentBioDataBinding
@@ -33,18 +36,14 @@ class PatientRegistrationFragment : Fragment() {
  private   var _binding:  FragmentBioDataBinding? = null
    private val binding get() = _binding!!
 
-  val viewModel by lazy {
-      ViewModelProvider(this)[PatientBioViewModel::class.java]
-  }
+    val viewModel  : PatientBioViewModel by activityViewModels()
+     var primaryKey:Int = 0
 
-    var primaryKay =0
-
-   private val calender: Calendar = Calendar.getInstance()
-   private var patientYear:Int = 0
+    private val calender: Calendar = Calendar.getInstance()
+   private var patientYear=0
    lateinit var sex: String
-   companion object{
-       private  var hospitalNumber:Int = 0
-   }
+
+
 
  //   private val viewModel : RegisterNewPatientViewModel by activityViewModels()
 
@@ -55,6 +54,7 @@ class PatientRegistrationFragment : Fragment() {
     ): View? {
           _binding = FragmentBioDataBinding.inflate(LayoutInflater.from(context)
             ,container,false)
+
         return binding.root.rootView
     }
 
@@ -62,10 +62,15 @@ class PatientRegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        primaryKey = activity?.intent?.getIntExtra(PRIMARY_KEY,0)!!
+
+        Log.i("Regid", "onCreate: is called")
         //Phone number formatter according to Ghana local
+
        formatPhoneNumber()
 val myViewModel = viewModel
         binding.patientDoB.setOnClickListener{
+
             //getting the calender by using the DatePickerDialog
        pickDate()
 
@@ -130,10 +135,12 @@ binding.next.setOnClickListener {
     private fun addNewPatient() {
 
         with(binding){
-            Toast.makeText(requireContext(),"Patient Added",Toast.LENGTH_SHORT).show()
-            val date = Utils.getDateAndTime()
+
+            val hospitalNumber = Utils.generateHospitalNumber(primaryKey)
+
+            val date = Utils.getDate()
            val sex = sex
-            val hospitalNumber = generateHospitalNumber()
+
             val firstName = patientFirstName.text.toString().trim()
             val otherName = patientOtherNames.text.toString().trim()
             val address =patientAddress.text.toString().trim()
@@ -143,16 +150,21 @@ binding.next.setOnClickListener {
             val mobile =patientMobile.text.toString().trim()
             val nhis =patientNhis.text.toString().trim()
 
-                val patientBioData = PatientBioData(primaryKay,hospitalNumber,
+                val patientBioData = PatientBioData(primaryKey
+                    ,hospitalNumber,
                     firstName, otherName,
-                    address,dob,sex,
-                    occupation,date,
-                    mobile,nhis,age)
-   viewModel?.insertPatientBio(patientBioData)
+                    address,dob,age,sex,
+                    occupation,mobile,nhis,date,
+                    Utils.getTime())
+
+            viewModel.insertPatientFirestore(patientBioData)
+            Toast.makeText(requireContext(),"Patient Added",Toast.LENGTH_SHORT).show()
 
         }
+
         startActivity(Intent(this.context,PatientsDataPageActivity::class.java))
         activity?.finish()
+
     }
 
     //Getting the date from the date picker
@@ -200,11 +212,13 @@ binding.next.setOnClickListener {
     }
 
 
-    private fun generateHospitalNumber ():String{
-        val year = calender.get(Calendar.YEAR)
-        hospitalNumber += 1
+    private val PRIMARY_KEY = "patient_primary_key"
 
-        return  "DCH/$hospitalNumber/$year"
+
+
+    override fun onPause() {
+        Log.i("Regid", "onPause: is called")
+primaryKey
+        super.onPause()
     }
-
 }

@@ -3,6 +3,7 @@ package com.oyatech.dch.patient
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.oyatech.dch.database.IRepository
 import com.oyatech.dch.database.Repository
@@ -32,9 +33,9 @@ var number = 0
         }
     }
 
-    override fun getQueueForVitals(): LiveData<MutableList<DailyVitals>> {
+   /* override fun getQueueForVitals(): LiveData<MutableList<DailyVitals>> {
         return repository.getQueueForVitals()
-    }
+    }*/
 
 
     override fun getAllBioData():LiveData<MutableList<PatientBioData>>{
@@ -53,6 +54,34 @@ var number = 0
 
     override fun queueForVitals(dailyVitals: DailyVitals) {
         return repository.queueForVitals(dailyVitals)
+    }
+
+
+    /*
+* The following methods communicates with the firebase cloud firestore
+* */
+
+
+    override fun insertPatientFirestore(patientBioData: PatientBioData) {
+     viewModelScope.launch {
+         Dispatchers.IO
+         repository.insertPatientFirestore(patientBioData)
+     }
+    }
+
+    fun insertDailyVitals(dailyVitals: DailyVitals){
+        viewModelScope.launch {
+            Dispatchers.IO
+            repository.insertDailyVitals(dailyVitals)
+        }
+
+    }
+ override fun fetchAllRecords(): LiveData<MutableList<PatientBioData>> {
+        var allRecords:LiveData<MutableList<PatientBioData>> = MutableLiveData()
+        viewModelScope.launch { Dispatchers.IO
+            allRecords =  repository.fetchAllRecords()
+        }
+    return allRecords
     }
 
 

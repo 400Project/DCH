@@ -17,6 +17,7 @@ import com.oyatech.dch.R
 import com.oyatech.dch.Tests
 import com.oyatech.dch.Tests.*
 import com.oyatech.dch.consultations.ConsultationViewModel
+import com.oyatech.dch.database.entities.DiagID
 import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.database.entities.Vitals
 import com.oyatech.dch.databinding.FragmentDignosesBinding
@@ -28,12 +29,17 @@ class DiagnosesFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    val viewModel: ConsultationViewModel by activityViewModels()
+    private val viewModel: MedicalHistoryViewModel by activityViewModels()
+    val consultViewModel: ConsultationViewModel by activityViewModels()
 
+    private var diagnoseID = 0
+    private var previous = 0
+    private var vitalsID = 0
+    private var patientId = 0
     private var isTestLayoutVisible = true
     var numberOfTest = SECOND
     lateinit var treatStatus: String
-
+    var vitals = Vitals()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,36 +52,67 @@ class DiagnosesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = viewModel
-        viewModel.apply {
 
-            bindVitalViews(getCurrentVitals(position))
+
+
+
+        viewModel.apply {
+            previous = getDiagnoseIDs()
+
+            val v = getCurrentVitalsOnline(position)
+
+            v.observe(viewLifecycleOwner) {
+                vitals = it.last().copy()
+                bindVitalViews(vitals)
+                vitalsID = vitals.vitalsID
+                patientId = vitals.patientId
+            }
+
         }
-        //    val vitals = viewModel.getCurrentVitals(viewModel.position)
+
+//getting the today's vitals id
+
+
         with(binding) {
             showHideIcon.setOnClickListener {
                 showHidLayout(testLayout)
             }
         }
+        binding.treatmentStatus.onItemSelectedListener = getTreatmentStatus()
 
         binding.submit.setOnClickListener {
             Toast.makeText(requireContext(), "Diagnosed", Toast.LENGTH_SHORT).show()
-           viewModel.apply {
-               val consultation = getDailConsultationByID(position)
-               val diagnose = diagnoseObject(position)
-              insertDiagnosis(diagnose)
-               if ((treatStatus == "Discharged")
-                   || (treatStatus == "Transferred")
-                   ||(treatStatus=="Died")){
-                   removeFromDailyConsultation(consultation)
-               }
 
-           }
+
+//Saving into the diagnose table
+            viewModel.insertDiagnoseRemote(diagnoseObject())
+
+
+            removeFromConsultation()
+
+
+            if (diagnoseID == 1) {
+                viewModel.insertDiagnoseIDs(DiagID(diagnoseID))
+            } else
+                viewModel.updateDiagnoseIDs(previous, diagnoseID)
             findNavController().navigate(R.id.medicalHistoryFragment)
+            activity?.finish()
         }
 
-binding.treatmentStatus.onItemSelectedListener = getTreatmentStatus()
     }
+
+    //If true then remove patient from the consultation queue
+    private fun removeFromConsultation() {
+        if (!((treatStatus == "Admitted")
+                    || (treatStatus == "Detained")
+                    || (treatStatus == "Lab"))
+        ) {
+            viewModel.apply {
+                removeConsultation(patientId)
+            }
+        }
+    }
+
 
     //Creating the number of test layout for test to be conducted
     private fun createNumberOfTest(testNumber: Tests) {
@@ -146,26 +183,27 @@ binding.treatmentStatus.onItemSelectedListener = getTreatmentStatus()
         }
     }
 
-    private fun diagnoseObject(position: Int): Diagnose {
-        val primaryKey = 0
+    private fun diagnoseObject(): Diagnose {
+        diagnoseID = previous + 1
         binding.apply {
             val treatment = treatStatus
+
             val provisional = provisionalDiagnosis.text.toString().trim()
             val principal = pricipalDiagnosis.text.toString().trim()
             val additional = additionalDiagnosis.text.toString().trim()
-            // val prescription= prescription.text.toString().trim()
+            val prescription = prescription.text.toString().trim()
             var nurseNote = nurseNote.text.toString().trim()
             val tests = firstTest.text.toString().trim()
             return Diagnose(
-                primaryKey, position, provisional, principal, additional,
-                nurseNote,"Dr.Robert",treatment
+                diagnoseID, patientId, vitalsID, provisional,
+                principal, additional, prescription,
+                nurseNote, "Dr.Robert", treatment
             )
         }
     }
     //TODO: populate ward and dispensary page with patient
 
-    private fun getTreatmentStatus(): AdapterView.OnItemSelectedListener
-    {
+    private fun getTreatmentStatus(): AdapterView.OnItemSelectedListener {
 //The createFromResource() method allows you to create an ArrayAdapter from the string array.
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -181,14 +219,20 @@ binding.treatmentStatus.onItemSelectedListener = getTreatmentStatus()
             )
             binding.treatmentStatus.adapter = arrayAdapter
 //Responding to user selection
-            val item: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(adapteView: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                    treatStatus = adapteView?.getItemAtPosition(position).toString()
-                }
+            val item: AdapterView.OnItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        adapteView: AdapterView<*>?,
+                        p1: View?,
+                        position: Int,
+                        p3: Long
+                    ) {
+                        treatStatus = adapteView?.getItemAtPosition(position).toString()
+                    }
 
-                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+                    }
                 }
-            }
             return item
 
         }

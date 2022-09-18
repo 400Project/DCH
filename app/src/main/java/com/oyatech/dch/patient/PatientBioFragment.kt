@@ -11,23 +11,32 @@ import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.FragmentPatientsBinding
 import com.oyatech.dch.recordforms.PatientRegistrationFormActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class PatientBioFragment : Fragment(){
 
+    private val PRIMARY_KEY: String = "patient_primary_key"
     private var _binding: FragmentPatientsBinding? = null
    // val viewModel = RegisterNewPatientViewModel.viewModel
-
+   var primaryKey = 0;
 //    private val viewModel : RegisterNewPatientViewModel by activityViewModels()
 // This property is only valid between onCreateView and
 // onDestroyView.
 private val binding get() = _binding!!
-
+companion object{
+    val tree: TreeMap<Int,PatientBioData> = TreeMap()
+}
     private val myAdapter by lazy {
         BioDataAdapter(requireContext())
     }
@@ -58,11 +67,10 @@ private val binding get() = _binding!!
         binding.patientRecycleView.apply {
             setLayoutManager(layoutManager)
 
-            viewModel.getAllBioData().observe(viewLifecycleOwner){ bioData ->
 
-               myAdapter.submitList(bioData)
-                adapter= myAdapter
-        }}
+                recycleViewer()
+            }
+
         //    addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
 
 
@@ -82,7 +90,10 @@ private val binding get() = _binding!!
 
 
         binding.addPatient.setOnClickListener{
-            startActivity(Intent(context?.applicationContext, PatientRegistrationFormActivity::class.java))
+            val intent = Intent(requireContext(),PatientRegistrationFormActivity::class.java)
+            primaryKey += 1
+            intent.putExtra(PRIMARY_KEY,primaryKey)
+            startActivity(intent)
             //clears the fragment from stack
             Toast.makeText(context,"Click", Toast.LENGTH_SHORT).show()
         }
@@ -95,7 +106,25 @@ private val binding get() = _binding!!
     }
 
     override fun onResume() {
+        recycleViewer()
         super.onResume()
+    }
+
+    private fun recycleViewer() {
+        viewModel.fetchAllRecords().observe(viewLifecycleOwner) { bioData ->
+            lifecycleScope.launch {
+                Dispatchers.Default
+                bioData.forEach {
+                    tree[it.patientId] = it
+
+
+                }
+                primaryKey = bioData.size
+            }
+
+            myAdapter.submitList(bioData)
+            binding.patientRecycleView.adapter = myAdapter
+        }
     }
 
 
@@ -107,5 +136,10 @@ private val binding get() = _binding!!
 
           }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("Bio", "onPause: is called")
     }
     }

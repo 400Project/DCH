@@ -72,12 +72,12 @@ val viewModel = bioViewModel
     lifecycle
         with(binding.tabLayout) {
 
-            bioViewModel.getAllBioData().observe(this@PatientsDataPageActivity){totalRecord ->
+            bioViewModel.fetchAllRecords().observe(this@PatientsDataPageActivity){totalRecord ->
                 totalRecord.size.also {
                     getTabAt(0)?.orCreateBadge?.number = it
                 }
             }
-            vitalsViewModel.patientAndVitals().observe(this@PatientsDataPageActivity){ waitingForVital ->
+            vitalsViewModel.fetchDailyVitals().observe(this@PatientsDataPageActivity){ waitingForVital ->
                 waitingForVital.size.also {
                     getTabAt(1)?.orCreateBadge?.number = it
                 }

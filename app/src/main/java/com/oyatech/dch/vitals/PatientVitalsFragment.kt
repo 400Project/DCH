@@ -13,12 +13,16 @@ import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.FragmentPatientVitalsBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class PatientVitalsFragment : Fragment() {
     private var _binding: FragmentPatientVitalsBinding? = null
     private val binding get() = _binding!!
-    private val v = mutableListOf<PatientBioData>()
+companion object{
+    val vitalQueue = TreeMap<Int,PatientBioData>()
+}
+
 
     private val viewModel by lazy {
         ViewModelProvider(this@PatientVitalsFragment)[VitalsViewModel::class.java]
@@ -44,15 +48,17 @@ class PatientVitalsFragment : Fragment() {
         val adapter = myAdapter
         val viewModel = viewModel
 
-        viewModel.patientAndVitals().observe(viewLifecycleOwner) { it ->
+        viewModel.fetchDailyVitals().observe(viewLifecycleOwner) { it ->
             val v = mutableListOf<PatientBioData>()
-            lifecycleScope.launch {
-                Dispatchers.IO
                 it.forEach {
+                    val ids = it.patientBioData.patientId
                     v.add(it.patientBioData)
-                }
+                    vitalQueue[ids] = it.patientBioData
             }
             adapter.submitList(v)
+            if(v.size >0){
+                binding.noVitals.visibility = View.INVISIBLE
+            }
         }
 
 
@@ -60,7 +66,6 @@ class PatientVitalsFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             setAdapter(adapter)
         }
-
 
         binding.clear.setOnClickListener {
             //        viewModel.clearVitalsList()

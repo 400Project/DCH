@@ -28,10 +28,9 @@ val context = context
             diagnose.apply {
                 with(binding) {
                     principalDiagnosisHistory.text = principal
-                    visitDate.text = dateTime
+                    visitDate.text = date
                     doctorName.text = staffName
                     patientStatus.text = treatmentStatus
-                    visitDate.text = dateTime
                 }
             }
         }

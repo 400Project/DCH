@@ -36,6 +36,7 @@ android {
        dataBinding true
        viewBinding true
    }
+    namespace 'com.oyatech.dch'
 
 }
 
@@ -55,10 +56,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     //FireStore dependency
-    implementation 'com.google.firebase:firebase-firestore:24.2.2'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.3.0'
 
     //Room
     implementation "androidx.room:room-ktx:2.4.3"
+
     kapt "androidx.room:room-compiler:2.4.3"
     androidTestImplementation "androidx.room:room-testing:2.4.3"
 
