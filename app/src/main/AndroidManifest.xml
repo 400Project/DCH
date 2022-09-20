@@ -43,6 +43,7 @@
             android:name=".datacenter.PatientsDataPageActivity"
             android:exported="true"
             android:label="@string/title_activity_patients_data_page"
+            android:launchMode="singleInstance"
             android:parentActivityName=".ui.MainActivity" >
 
             <intent-filter>

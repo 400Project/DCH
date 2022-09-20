@@ -19,7 +19,7 @@ class VitalsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVitalsBinding
     private var current = 0
     private var previous =0
-    private var foreignKey = 0
+    private var patientId = 0
 
     val viewModel by lazy {
         ViewModelProvider(this)[VitalsViewModel::class.java]
@@ -32,7 +32,7 @@ class VitalsActivity : AppCompatActivity() {
 
         val currentPatientPos: Int = intent.getIntExtra(DUE_FOR_VITALS, -1)
         val currentPatient = PatientVitalsFragment.vitalQueue[currentPatientPos]
-        foreignKey = currentPatient!!.patientId
+        patientId = currentPatient!!.patientId
 
 
     previous = viewModel.getVitalsIDs()
@@ -51,7 +51,7 @@ class VitalsActivity : AppCompatActivity() {
                 Dispatchers.IO
                 viewModel.apply {
                //     insertVitals(getVitals())
-                    insertVitalsOnline(foreignKey,getVitals())
+                    insertVitalsOnline(getVitals())
                     val d = ViDs(current)
                     if (current==1){
                         insertVitalsIDs(d)
@@ -105,7 +105,7 @@ finish()
             val temperature = temperature.text.toString().trim()
             val sugarLevel = sugerLevel.text.toString().trim()
             val vitals = Vitals(
-            current, foreignKey, bloodPressure,
+            current, patientId, bloodPressure,
             weight, temperature, sugarLevel
             )
 

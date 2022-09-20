@@ -4,13 +4,17 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.R
 import com.oyatech.dch.consultations.ConsultationsFragment
+import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.FragmentMedicalHistoryBinding
+import kotlinx.coroutines.launch
+import java.util.*
 
 class MedicalHistoryFragment : Fragment() {
     private final val PATIENT_VISITS = "com.oyatech.dch.details"
@@ -19,10 +23,12 @@ class MedicalHistoryFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private var patientId:Int =0
+    companion object {
+        var diagnosis: TreeMap<Int, Diagnose> = TreeMap()
+    }
+    var patientId: Int = 0
 
-    val viewModel: MedicalHistoryViewModel by activityViewModels()
-
+    val viewModel : MedicalHistoryViewModel by activityViewModels()
     val myAdapter by lazy {
         MedicalHistoryAdapter(requireContext(), this)
     }
@@ -49,21 +55,48 @@ class MedicalHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var adapter = myAdapter
         //getting the position of the patient in the consultation room
         patientId = requireActivity().intent.getIntExtra(PATIENT_VISITS, -1)
+
         //getting he/her medical history
         val patient = ConsultationsFragment.trees[patientId]!!
+
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.visitsRecycleView.apply {
+            viewModel.fetchDiagnosis(patientId).observe(viewLifecycleOwner) { it ->
+                if (it.isEmpty()) {
+                    binding.noMedic.visibility = View.VISIBLE
+                    binding.noMedicals.visibility = View.VISIBLE
+                }
+                setLayoutManager(layoutManager)
+                adapter.submitList(it)
+
+                //setting recycle adapter
+                adapter = adapter
+
+                viewModel.setPosition(patientId)
+                lifecycleScope.launch {
+
+                    it.forEach {
+                        diagnosis[it.diagnoseID] = it
+                    }
+                }
+            }
+        }
 
         //setting vitals view with the appropriate views
         bindPatientDetails(patient)
 
-       //updating the recycleView
-      createRecycleViewer()
+        //updating the recycleView
+    //    createRecycleViewer()
 
         binding.addPatientDiagnosis.setOnClickListener {
 
             //passing the current patient id to used to locate the vitals
-            viewModel.setPosition(patient.patientId)
+         //   viewModel.setPosition(patientId)
+            /* val bundle = Bundle()
+            bundle.putInt("patientId", patientId)*/
 
             findNavController().navigate(R.id.dignosesFragment)
         }
@@ -111,29 +144,14 @@ class MedicalHistoryFragment : Fragment() {
         }
     }
 
- private  fun createRecycleViewer (){
-        val layoutManager = LinearLayoutManager(requireContext())
-        binding.visitsRecycleView.apply {
-            viewModel.fetchDiagnosis(patientId).observe(viewLifecycleOwner) {
-                setLayoutManager(layoutManager)
-                myAdapter.submitList(it)
+    private fun createRecycleViewer() {
 
-                //setting recycle adapter
-                adapter = myAdapter
-
-                if (it.isEmpty()) {
-                    binding.noMedic.visibility = View.VISIBLE
-                    binding.noMedicals.visibility = View.VISIBLE
-                }
-
-            }
-        }
-
- }
+    }
 
     override fun onResume() {
         binding.visitsRecycleView.apply {
-            viewModel.fetchDiagnosis(patientId).observe(viewLifecycleOwner){
+            viewModel.fetchDiagnosis(patientId).observe(viewLifecycleOwner) {
+                myAdapter.submitList(it)
                 adapter = myAdapter
             }
         }

@@ -1,7 +1,6 @@
 package com.oyatech.dch.details
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -57,11 +56,12 @@ val context = context
 
         holder.apply {
             itemView.setOnClickListener {
-                val id = getItem(adapterPosition).parentID
-                val b = Bundle()
-                b.putInt("diagnoses",id)
-fragment.findNavController().navigate(R.id.detailRecordFragment,b)
-                Log.i("MediHistory", "onBindViewHolder: $b")
+                val diagnoseId = getItem(adapterPosition).diagnoseID
+
+                val bundle = Bundle()
+                bundle.putInt("diagnoseId",diagnoseId)
+fragment.findNavController().navigate(R.id.detailRecordFragment,bundle)
+                Log.i("MediHistory", "onBindViewHolder: $bundle")
 
             }
         }

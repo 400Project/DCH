@@ -3,7 +3,6 @@ package com.oyatech.dch.details
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.oyatech.dch.database.Repository
 import com.oyatech.dch.database.entities.DiagID
@@ -12,26 +11,31 @@ import com.oyatech.dch.database.entities.Vitals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MedicalHistoryViewModel(application: Application)
-    :AndroidViewModel(application) {
+class MedicalHistoryViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var _repository : Repository? = null
-    private val repository get()=_repository!!
+    private var _repository: Repository? = null
+    private val repository get() = _repository!!
 
 
-    private var _position = 0
-    val position get() = _position
+    private var _position:Int? =null
+    val position get() = _position!!
 
-    private var  _allDiagnosis :LiveData<MutableList<Diagnose>>? = null
-     val  allDiagnosis :LiveData<MutableList<Diagnose>> get() = _allDiagnosis!!
+    private var _allDiagnosis: LiveData<MutableList<Diagnose>>? = null
+    val allDiagnosis: LiveData<MutableList<Diagnose>> get() = _allDiagnosis!!
+
+    private var _listOfVitals: MutableList<Vitals> = mutableListOf()
+    val listOfVitals: MutableList<Vitals> get() = _listOfVitals
+
+
+  private  var _currentVitals: LiveData<MutableList<Vitals>>? = null
+    val currentVitals: LiveData<MutableList<Vitals>> get()  = _currentVitals!!
+
     init {
         _repository = Repository(application)
     }
 
-    fun setPosition(position:Int)
-    {
-        _position = position
-
+    fun setPosition(pos: Int) {
+        _position = pos
     }
 
     //Diagnose table id
@@ -51,24 +55,22 @@ class MedicalHistoryViewModel(application: Application)
         return repository.getDiagnoseIDs()
     }
 
-    private   var _listOfVitals:MutableList<Vitals> = mutableListOf()
-    val listOfVitals:MutableList<Vitals> get() = _listOfVitals
 
-    fun  insertDiagnoseRemote(diagnose: Diagnose){
+    fun insertDiagnoseRemote(diagnose: Diagnose) {
         repository.insertDiagnosisRemote(diagnose)
     }
 
-    fun getCurrentVitalsOnline(position: Int): LiveData<MutableList<Vitals>> {
-        var listOfVitals:LiveData<MutableList<Vitals>> = MutableLiveData()
+    fun fetchAllVitals(patientId: Int): LiveData<MutableList<Vitals>> {
+
         viewModelScope.launch {
-            Dispatchers.IO
-            listOfVitals =  repository.fetchAllVitals(position)
+          Dispatchers.IO
+            _currentVitals = repository.fetchAllVitals(patientId)
         }
-       return  listOfVitals
+        return currentVitals
     }
 
     //remove patient from consultation queue
-   fun removeConsultation(int: Int) {
+    fun removeConsultation(int: Int) {
         viewModelScope.launch {
             Dispatchers.Default
             repository.removeConsultation(int)
@@ -77,12 +79,18 @@ class MedicalHistoryViewModel(application: Application)
     }
 
     fun fetchDiagnosis(patientId: Int)
-    :LiveData<MutableList<Diagnose>>   {
+            : LiveData<MutableList<Diagnose>> {
         viewModelScope.launch {
             Dispatchers.IO
-            _allDiagnosis =   repository.fetchDiagnosis(patientId)
+            _allDiagnosis = repository.fetchDiagnosis(patientId)
         }
         return allDiagnosis
     }
 
+    fun getVitals():MutableList<Vitals>{
+        currentVitals.value?.forEach {
+            _listOfVitals.add(it)
+        }
+        return listOfVitals
+    }
 }

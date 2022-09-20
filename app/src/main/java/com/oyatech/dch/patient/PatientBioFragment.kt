@@ -29,7 +29,7 @@ class PatientBioFragment : Fragment(){
     private val PRIMARY_KEY: String = "patient_primary_key"
     private var _binding: FragmentPatientsBinding? = null
    // val viewModel = RegisterNewPatientViewModel.viewModel
-   var primaryKey = 0;
+   var primaryKey = 1;
 //    private val viewModel : RegisterNewPatientViewModel by activityViewModels()
 // This property is only valid between onCreateView and
 // onDestroyView.
@@ -61,14 +61,15 @@ companion object{
         val searchView = binding.search
         Log.i("Record", "onViewCreated: ${viewModel.getAllBioData().value?.size}")
 
+        val viewModel = viewModel
 
  val myAdapter = myAdapter
         val layoutManager = LinearLayoutManager(requireContext())
         binding.patientRecycleView.apply {
             setLayoutManager(layoutManager)
 
+recycleViewer()
 
-                recycleViewer()
             }
 
         //    addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
@@ -94,6 +95,7 @@ companion object{
             primaryKey += 1
             intent.putExtra(PRIMARY_KEY,primaryKey)
             startActivity(intent)
+
             //clears the fragment from stack
             Toast.makeText(context,"Click", Toast.LENGTH_SHORT).show()
         }
@@ -107,6 +109,7 @@ companion object{
 
     override fun onResume() {
         recycleViewer()
+        Log.i("TAG", "onResume: is called $primaryKey")
         super.onResume()
     }
 
@@ -117,13 +120,13 @@ companion object{
                 bioData.forEach {
                     tree[it.patientId] = it
 
-
                 }
-                primaryKey = bioData.size
+
+                myAdapter.submitList(bioData)
+                binding.patientRecycleView.adapter = myAdapter
+                primaryKey = bioData.first().patientId
             }
 
-            myAdapter.submitList(bioData)
-            binding.patientRecycleView.adapter = myAdapter
         }
     }
 
@@ -139,7 +142,10 @@ companion object{
     }
 
     override fun onPause() {
+
         super.onPause()
         Log.i("Bio", "onPause: is called")
     }
+
+
     }

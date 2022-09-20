@@ -47,26 +47,7 @@ companion object{
 
         val adapter = myAdapter
         val viewModel = viewModel
-
-        viewModel.fetchDailyVitals().observe(viewLifecycleOwner) { it ->
-            val v = mutableListOf<PatientBioData>()
-                it.forEach {
-                    val ids = it.patientBioData.patientId
-                    v.add(it.patientBioData)
-                    vitalQueue[ids] = it.patientBioData
-            }
-            adapter.submitList(v)
-            if(v.size >0){
-                binding.noVitals.visibility = View.INVISIBLE
-            }
-        }
-
-
-        binding.vitalsRecycleView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            setAdapter(adapter)
-        }
-
+       recycleViewer()
         binding.clear.setOnClickListener {
             //        viewModel.clearVitalsList()
             binding.vitalsRecycleView.adapter?.notifyDataSetChanged()
@@ -74,7 +55,6 @@ companion object{
 
         Log.i("Vitals", "onViewCreated: is called")
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -84,13 +64,40 @@ companion object{
 
     override fun onResume() {
         Log.i("Vitals", "onResume: is called")
+        recycleViewer()
         super.onResume()
 
     }
 
     override fun onPause() {
-        Log.i("Vitals", "onPause: is called")
+
         super.onPause()
-        binding.vitalsRecycleView.adapter = myAdapter
+
+    }
+
+    private fun recycleViewer(){
+        binding.vitalsRecycleView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+
+
+            viewModel.fetchDailyVitals().observe(viewLifecycleOwner)
+            { it ->
+                val v = mutableListOf<PatientBioData>()
+                it.forEach {
+                    val ids = it.patientBioData.patientId
+                    v.add(it.patientBioData)
+                    vitalQueue[ids] = it.patientBioData
+                }
+                myAdapter.submitList(v)
+                if(v.size >0){
+                    binding.noVitals.visibility = View.INVISIBLE
+                }
+            }
+
+
+            adapter = myAdapter
+        }
+
+
     }
 }

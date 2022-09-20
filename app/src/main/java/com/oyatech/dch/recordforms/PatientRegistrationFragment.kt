@@ -1,5 +1,6 @@
 package com.oyatech.dch.recordforms
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
@@ -58,7 +59,6 @@ class PatientRegistrationFragment : Fragment() {
         return binding.root.rootView
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -96,7 +96,8 @@ binding.next.setOnClickListener {
         //register new patient to the hospital records database
         binding.done.setOnClickListener {
             addNewPatient()
-
+            startActivity(Intent(this.context,PatientsDataPageActivity::class.java))
+            activity?.finish()
         }
     }
 
@@ -162,12 +163,10 @@ binding.next.setOnClickListener {
 
         }
 
-        startActivity(Intent(this.context,PatientsDataPageActivity::class.java))
-        activity?.finish()
-
     }
 
     //Getting the date from the date picker
+    @SuppressLint("SuspiciousIndentation")
     private fun pickDate() {
 
         val year = calender.get(Calendar.YEAR)

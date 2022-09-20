@@ -59,7 +59,7 @@ class ConsultationsFragment : Fragment() {
     private fun createRecyclerView() {
         val adapter = consultAdapter
         val viewModel = viewModel
-
+        binding.consultReviewer.apply {
         viewModel.fetchDailyConsultRemote().observe(viewLifecycleOwner) { it ->
             val v = mutableListOf<PatientBioData>()
             lifecycleScope.launch {
@@ -71,21 +71,22 @@ class ConsultationsFragment : Fragment() {
             }
             adapter.submitList(v)
 
-            if (v.isNotEmpty()){
-                binding.noVitals.visibility = View.INVISIBLE
+            if (v.isEmpty()){
+                binding.noVitals.visibility = View.VISIBLE
             }
         }
-        binding.consultReviewer.apply {
+
             layoutManager = LinearLayoutManager(requireContext())
             setAdapter(adapter)
         }
     }
 
-    override fun onPause() {
+    override fun onResume() {
 
         Log.i("Consulta", "onPause: $viewModel is paused")
         super.onPause()
         binding.consultReviewer.adapter = consultAdapter
+        super.onResume()
     }
 
     override fun onDestroyView() {

@@ -78,8 +78,8 @@ class VitalsViewModel(application: Application)
         return allRecords
     }
 
-    fun  insertVitalsOnline( patientID: Int, vitals: Vitals){
-        repository.insertVitalsRemote(patientID,vitals)
+    fun  insertVitalsOnline(vitals: Vitals){
+        repository.insertVitalsRemote(vitals)
     }
 
     fun insertDailyConsultation(consult: DailyConsultation){

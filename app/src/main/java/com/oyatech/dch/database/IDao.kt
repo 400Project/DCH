@@ -38,7 +38,7 @@ fun searchForPatient(search:String):LiveData<MutableList<PatientBioData>>
     @Insert
     fun insertDiagnoses(diagnose: Diagnose)
 
-    @Query("SELECT * from Diagnose WHERE parentID == :foreignKey  ORDER BY diagnoseID DESC ")
+    @Query("SELECT * from Diagnose WHERE patientId == :foreignKey  ORDER BY diagnoseID DESC ")
     fun getAllPatientDiagnoses(foreignKey: Int):LiveData<MutableList<Diagnose>>
   /* @Query("SELECT * FROM Diagnose ,Vitals on PatientBioData.patientId ==Diagnose.parentID " +
             "and PatientBioData.patientId == Vitals.foreignKyePatient" +

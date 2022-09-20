@@ -21,18 +21,15 @@ class Repository(application: Application) : IRepository, IConsult {
     private val _allRecords: MutableLiveData<MutableList<PatientBioData>> = MutableLiveData()
     private val allRecords: LiveData<MutableList<PatientBioData>> = _allRecords!!
 
-    private val _allVitals: MutableLiveData<MutableList<DailyVitals>>? = MutableLiveData()
-    private val allVitals: LiveData<MutableList<DailyVitals>> = _allVitals!!
-
-    private var _dayVitals: MutableLiveData<MutableList<Vitals>> = MutableLiveData()
-    private val dayVitals: LiveData<MutableList<Vitals>> = _dayVitals!!
+    private val _vitalQueue: MutableLiveData<MutableList<DailyVitals>>? = MutableLiveData()
+    private val vitalQueue: LiveData<MutableList<DailyVitals>> = _vitalQueue!!
 
     private var _allDiagnosis: MutableLiveData<MutableList<Diagnose>> = MutableLiveData()
     private val allDiagnosis: LiveData<MutableList<Diagnose>> = _allDiagnosis
 
     private val firestore = Firebase.firestore
     private val DCH = "dch"
-    private val VITALS = "Vitals"
+    private val VITALS = "vitals"
     private val DAILY_VITALS = "dailyVitals"
     private val DAILY_CONSULT = "dailyConsult"
     private val DIADNOSIS = "diagnosis"
@@ -169,7 +166,7 @@ class Repository(application: Application) : IRepository, IConsult {
      * Inserting patient diagnoses into the diagnose table online
      */
     fun insertDiagnosisRemote(diagnose: Diagnose) {
-        firestore.collection(DCH).document(diagnose.parentID.toString())
+        firestore.collection(DCH).document(diagnose.patientId.toString())
             .collection(DIADNOSIS).document("${diagnose.diagnoseID}")
             .set(diagnose).addOnSuccessListener {
                 Log.i(TAG, "insertDailyVitals: ${it}")
@@ -232,7 +229,7 @@ class Repository(application: Application) : IRepository, IConsult {
             .addOnSuccessListener { result ->
                 if (result != null) {
 
-                    _allVitals?.value = result.toObjects(DailyVitals::class.java)
+                    _vitalQueue?.value = result.toObjects(DailyVitals::class.java)
                 }
                 Log.i(TAG, "fetchAllRecords: ${result}")
 
@@ -240,7 +237,7 @@ class Repository(application: Application) : IRepository, IConsult {
                 Log.e(TAG, "fetchAllRecords: ", exception)
             }
 
-        return allVitals
+        return vitalQueue
 
     }
 
@@ -253,14 +250,14 @@ class Repository(application: Application) : IRepository, IConsult {
     }
 
 
-    fun insertVitalsRemote(patientID: Int, vitals: Vitals) {
+    fun insertVitalsRemote(vitals: Vitals) {
 
-        firestore.collection(DCH).document(patientID.toString())
+        firestore.collection(DCH).document(vitals.patientId.toString())
             .collection(VITALS).document("${vitals.vitalsID}")
             .set(vitals).addOnSuccessListener {
-                Log.i(TAG, "insertDailyVitals: ${it}")
+                Log.i(TAG, "insert Vitals: ${it}")
             }.addOnFailureListener {
-                Log.i(TAG, "insertDailyVitals: ${it.message}")
+                Log.i(TAG, "insert Vitals: ${it.message}")
             }
     }
 
@@ -301,15 +298,14 @@ class Repository(application: Application) : IRepository, IConsult {
     }
 
     fun fetchAllVitals(position: Int): LiveData<MutableList<Vitals>> {
-        var listOVitals: MutableList<Vitals> = mutableListOf()
+        val allVitals: MutableLiveData<MutableList<Vitals>> = MutableLiveData()
 
-        val vitals = firestore.collection("$DCH/$position/$VITALS")
-
-        vitals.get()
+        firestore.collection(DCH)
+            .document(position.toString())
+            .collection(VITALS).get()
             .addOnSuccessListener { result ->
                 if (result != null) {
-                    listOVitals = result.toObjects(Vitals::class.java)
-                    _dayVitals.value = listOVitals
+                  allVitals.value = result.toObjects(Vitals::class.java)
                 }
 
                 Log.i(TAG, "patient vitals: ${result}")
@@ -317,7 +313,11 @@ class Repository(application: Application) : IRepository, IConsult {
             }.addOnFailureListener { exception ->
                 Log.e(TAG, "vitals no access: ", exception.cause)
             }
-        return dayVitals
+        return allVitals
 
     }
 }
+
+/**
+ * TODO: Update the details ui with appropriate vitals data
+ */

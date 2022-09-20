@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
 import com.oyatech.dch.consultations.ConsultationViewModel
@@ -30,8 +31,7 @@ class DetailRecordFragment : Fragment() {
      var _binding : FragmentDetailRecordBinding? = null
     val binding get() = _binding!!
 
-    val viewModel : ConsultationViewModel by activityViewModels()
-    val patientViewModel : PatientBioViewModel by activityViewModels()
+    val viewModel  : MedicalHistoryViewModel by activityViewModels()
 
 
     private val showMore = arrayListOf(false,false,false)
@@ -50,11 +50,17 @@ class DetailRecordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-    val id = arguments?.getInt("diagnoses")
+        var diagnoseId = 0
+        val bundle = this.arguments
+        if (bundle != null){
+            diagnoseId = bundle.getInt("diagnoseId",0)
+        }
+        MedicalHistoryFragment.diagnosis.get(diagnoseId)?.let { bindToDiagnose(it) }
 
-      val vitals =  viewModel.getCurrentVitals(id!!)
 
-        bindDataToViews(vitals)
+      //val diagnose = id?.let { viewModel.allDiagnosis.}!!
+
+      //  bindDataToViews(vitals)
 
     //    bindToDiagnose(viewModel.diagnose)
         binding.patientDiagnosisLayout.setOnClickListener{

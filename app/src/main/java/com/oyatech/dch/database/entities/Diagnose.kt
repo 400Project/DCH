@@ -10,7 +10,7 @@ data class Diagnose(
     @PrimaryKey(autoGenerate = true)
     val diagnoseID: Int,
     //Foreign Key
-    val parentID: Int,
+    val patientId: Int,
     //foreign key
     val vitalsID: Int,
 

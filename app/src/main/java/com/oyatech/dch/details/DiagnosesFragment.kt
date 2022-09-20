@@ -16,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
 import com.oyatech.dch.Tests
 import com.oyatech.dch.Tests.*
-import com.oyatech.dch.consultations.ConsultationViewModel
 import com.oyatech.dch.database.entities.DiagID
 import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.database.entities.Vitals
@@ -30,7 +29,6 @@ class DiagnosesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: MedicalHistoryViewModel by activityViewModels()
-    val consultViewModel: ConsultationViewModel by activityViewModels()
 
     private var diagnoseID = 0
     private var previous = 0
@@ -52,26 +50,29 @@ class DiagnosesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+       /* val bundle = this.arguments
+        if (bundle != null){
+            diagnoseID = bundle.getInt("patientId",-1)
+        }*/
 
+            previous = viewModel.getDiagnoseIDs()
 
-
-
-        viewModel.apply {
-            previous = getDiagnoseIDs()
-
-            val v = getCurrentVitalsOnline(position)
+            /**
+             * TODO: look at why the vials is not been loaded
+             */
+            diagnoseID = viewModel.position
+            val v = viewModel.fetchAllVitals(diagnoseID)
 
             v.observe(viewLifecycleOwner) {
-                vitals = it.last().copy()
+                vitals = it.last()
                 bindVitalViews(vitals)
                 vitalsID = vitals.vitalsID
                 patientId = vitals.patientId
             }
 
-        }
+
 
 //getting the today's vitals id
-
 
         with(binding) {
             showHideIcon.setOnClickListener {
@@ -81,12 +82,12 @@ class DiagnosesFragment : Fragment() {
         binding.treatmentStatus.onItemSelectedListener = getTreatmentStatus()
 
         binding.submit.setOnClickListener {
-            Toast.makeText(requireContext(), "Diagnosed", Toast.LENGTH_SHORT).show()
 
 
 //Saving into the diagnose table
             viewModel.insertDiagnoseRemote(diagnoseObject())
 
+            Toast.makeText(requireContext(), "Diagnosed", Toast.LENGTH_SHORT).show()
 
             removeFromConsultation()
 
@@ -96,7 +97,6 @@ class DiagnosesFragment : Fragment() {
             } else
                 viewModel.updateDiagnoseIDs(previous, diagnoseID)
             findNavController().navigate(R.id.medicalHistoryFragment)
-            activity?.finish()
         }
 
     }
