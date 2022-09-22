@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="16dp"
+    android:layout_margin="16dp"
     tools:context=".details.DetailRecordFragment">
 
     <ScrollView
         android:layout_width="match_parent"
+        android:scrollbars="none"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,6 +101,36 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/patient_weight"
                     tools:text="45mmHg" />
+  <TextView
+                    android:id="@+id/textview8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView7"
+                    tools:text="Sugar Level" />
+  <TextView
+                    android:id="@+id/patient_sugar_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/patient_blood_pressure"
+                    tools:text="45mmHg" />
+                <TextView
+                    android:id="@+id/dateTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/recordedBy"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="Time" />
+                <TextView
+                    android:id="@+id/recordedBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@id/dateTime"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="Time" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -120,7 +152,7 @@
                 app:layout_constraintTop_toBottomOf="@id/divider2">
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/dateDiagnose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Diagnosis"
@@ -153,10 +185,9 @@
 
 
                 <TextView
-                    android:id="@+id/provisional_diagnosis2"
+                    android:id="@+id/principal_diagnose"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="27dp"
                     android:layout_marginTop="10dp"
                     android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="@+id/show_hide_test"
@@ -224,14 +255,13 @@
                     android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="@id/textView8"
                     app:layout_constraintStart_toStartOf="@id/textView8"
-                    app:layout_constraintTop_toBottomOf="@+id/provisional_diagnosis2"
+                    app:layout_constraintTop_toBottomOf="@+id/principal_diagnose"
                     android:text="Additional Diagnosis" />
 
                 <TextView
-                    android:id="@+id/additional_diagnosis_layout"
+                    android:id="@+id/additional_diagnosis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="27dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/diag"
                     android:textAlignment="center"
@@ -259,7 +289,7 @@
                     android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="@id/textView8"
                     app:layout_constraintStart_toStartOf="@id/textView8"
-                    app:layout_constraintTop_toBottomOf="@+id/additional_diagnosis_layout" />
+                    app:layout_constraintTop_toBottomOf="@+id/additional_diagnosis" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

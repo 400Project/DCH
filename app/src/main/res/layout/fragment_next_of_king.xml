@@ -24,7 +24,7 @@
     </ImageView>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/next_of_king_layout"
+        android:id="@+id/next_of_king_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minWidth="100dp"
@@ -47,8 +47,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:minWidth="100dp"
-        app:layout_constraintTop_toBottomOf="@id/next_of_king_layout"
-        app:layout_constraintStart_toStartOf="@id/next_of_king_layout"
+        app:layout_constraintTop_toBottomOf="@id/next_of_king_name"
+        app:layout_constraintStart_toStartOf="@id/next_of_king_name"
         app:layout_constraintEnd_toEndOf="@id/nofK_relationship_layout"
         >
         <com.google.android.material.textfield.TextInputEditText

@@ -14,7 +14,12 @@ interface IRepository {
     fun searchForPatient(search:String):LiveData<MutableList<PatientBioData>>
 
     fun queueForVitals(dailyVitals: DailyVitals)
-    fun getQueueForVitals(): LiveData<MutableList<DailyVitals>>
+  //  fun getQueueForVitals(): LiveData<MutableList<DailyVitals>>
+
+    //Firebase calls
+    fun insertPatientFirestore(patientBioData: PatientBioData)
+   fun fetchAllRecords(): LiveData<MutableList<PatientBioData>>
+ ///  fun insertDailyVitals(patientBioData: PatientBioData)
 
 
 }

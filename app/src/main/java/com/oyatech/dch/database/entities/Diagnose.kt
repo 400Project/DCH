@@ -1,24 +1,31 @@
 package com.oyatech.dch.database.entities
 
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.oyatech.dch.util.Utils
 
 @Entity
 data class Diagnose(
-    @PrimaryKey(autoGenerate = true) val diagnoseID: Int,
+    @PrimaryKey(autoGenerate = true)
+    val diagnoseID: Int,
     //Foreign Key
-    val parentID: Int,
+    val patientId: Int,
+    //foreign key
+    val vitalsID: Int,
+
     var provisional: String,
     var principal: String,
     var additional: String,
-    var nurseNote :String ="Check the PB",
+    var prescription: String,
+    var nurseNote: String,
     val staffName: String,
-    val dateTime: String = Utils.getDateAndTime(),
-    var treatmentStatus: String = "Treated",
-    @ColumnInfo(name = "Tests_Conducted")
-    var tests: String = "Not Lab",
-
-    )
+    var treatmentStatus: String,
+    var labs: String = "Not Lab",
+    val date: String = Utils.getDate(),
+val time: String = Utils.getTime()
+) {
+    constructor() : this(0, 0, 0,
+        "", "", "", "",
+        "", "", "","","","")
+}

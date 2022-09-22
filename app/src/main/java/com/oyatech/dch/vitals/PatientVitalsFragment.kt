@@ -13,12 +13,16 @@ import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.FragmentPatientVitalsBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class PatientVitalsFragment : Fragment() {
     private var _binding: FragmentPatientVitalsBinding? = null
     private val binding get() = _binding!!
-    private val v = mutableListOf<PatientBioData>()
+companion object{
+    val vitalQueue = TreeMap<Int,PatientBioData>()
+}
+
 
     private val viewModel by lazy {
         ViewModelProvider(this@PatientVitalsFragment)[VitalsViewModel::class.java]
@@ -43,25 +47,7 @@ class PatientVitalsFragment : Fragment() {
 
         val adapter = myAdapter
         val viewModel = viewModel
-
-        viewModel.patientAndVitals().observe(viewLifecycleOwner) { it ->
-            val v = mutableListOf<PatientBioData>()
-            lifecycleScope.launch {
-                Dispatchers.IO
-                it.forEach {
-                    v.add(it.patientBioData)
-                }
-            }
-            adapter.submitList(v)
-        }
-
-
-        binding.vitalsRecycleView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            setAdapter(adapter)
-        }
-
-
+       recycleViewer()
         binding.clear.setOnClickListener {
             //        viewModel.clearVitalsList()
             binding.vitalsRecycleView.adapter?.notifyDataSetChanged()
@@ -69,7 +55,6 @@ class PatientVitalsFragment : Fragment() {
 
         Log.i("Vitals", "onViewCreated: is called")
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -79,13 +64,40 @@ class PatientVitalsFragment : Fragment() {
 
     override fun onResume() {
         Log.i("Vitals", "onResume: is called")
+        recycleViewer()
         super.onResume()
 
     }
 
     override fun onPause() {
-        Log.i("Vitals", "onPause: is called")
+
         super.onPause()
-        binding.vitalsRecycleView.adapter = myAdapter
+
+    }
+
+    private fun recycleViewer(){
+        binding.vitalsRecycleView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+
+
+            viewModel.fetchDailyVitals().observe(viewLifecycleOwner)
+            { it ->
+                val v = mutableListOf<PatientBioData>()
+                it.forEach {
+                    val ids = it.patientBioData.patientId
+                    v.add(it.patientBioData)
+                    vitalQueue[ids] = it.patientBioData
+                }
+                myAdapter.submitList(v)
+                if(v.size >0){
+                    binding.noVitals.visibility = View.INVISIBLE
+                }
+            }
+
+
+            adapter = myAdapter
+        }
+
+
     }
 }

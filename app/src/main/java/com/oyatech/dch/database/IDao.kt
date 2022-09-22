@@ -31,15 +31,19 @@ fun searchForPatient(search:String):LiveData<MutableList<PatientBioData>>
     @Insert
     fun insertVitals(vitals: Vitals)
 
-    @Query("SELECT * FROM Vitals WHERE foreignKyePatient = :id")
+    @Query("SELECT * FROM Vitals WHERE patientId = :id")
     fun getCurrentVitals(id: Int):MutableList<Vitals>
 
     //Diagnosis
     @Insert
     fun insertDiagnoses(diagnose: Diagnose)
 
-    @Query("SELECT * from Diagnose WHERE parentID == :foreignKey  ORDER BY diagnoseID DESC ")
+    @Query("SELECT * from Diagnose WHERE patientId == :foreignKey  ORDER BY diagnoseID DESC ")
     fun getAllPatientDiagnoses(foreignKey: Int):LiveData<MutableList<Diagnose>>
+  /* @Query("SELECT * FROM Diagnose ,Vitals on PatientBioData.patientId ==Diagnose.parentID " +
+            "and PatientBioData.patientId == Vitals.foreignKyePatient" +
+            " WHERE parentID == :id group by Vitals.vID" )
+    fun getDiagnose(id:Int, date:String):MutableList<MedicalHistory>*/
 
 
 
@@ -52,6 +56,25 @@ fun searchForPatient(search:String):LiveData<MutableList<PatientBioData>>
 
     @Query ("SELECT * from  DailyConsultation WHERE patientId = :id")
     fun getDailConsultationByID(id:Int):DailyConsultation
+    @Delete
+    fun removeFromDailyConsultation(dailyConsultation: DailyConsultation)
 
 
+    //Produce auto increment for Vitals table
+    @Insert
+    fun insertVitalsIDs( vitals: ViDs)
+
+    @Query ("UPDATE ViDs set vitalsID =:current where vitalsID =:prev")
+    fun updateVitalsIDs(prev: Int, current:Int)
+    @Query ("SELECT vitalsID FROM ViDs")
+    fun getVitalsIDs():Int
+
+//Produce auto increment for Diagnosis table
+    @Insert
+    fun insertDiagnoseIDs( diagID: DiagID)
+
+    @Query ("UPDATE DiagID set diagnoseID =:current where diagnoseID =:previous")
+    fun updateDiagnoseIDs(previous: Int, current:Int)
+    @Query ("SELECT diagnoseID FROM DiagID")
+    fun getDiagnoseIDs():Int
 }

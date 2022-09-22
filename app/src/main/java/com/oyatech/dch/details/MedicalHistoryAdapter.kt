@@ -1,18 +1,24 @@
 package com.oyatech.dch.details
 
 import android.content.Context
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.oyatech.dch.R
 import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.databinding.HistoryCardBinding
 import com.oyatech.dch.details.MedicalHistoryAdapter.MedicalHistoryViewHolder
 
-class MedicalHistoryAdapter(context: Context) :
+class MedicalHistoryAdapter(context: Context,fragment:Fragment) :
     ListAdapter<Diagnose, MedicalHistoryViewHolder>(DiffCall) {
-
+val context = context
+    val fragment = fragment
 
     inner class MedicalHistoryViewHolder(val binding: HistoryCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -21,7 +27,7 @@ class MedicalHistoryAdapter(context: Context) :
             diagnose.apply {
                 with(binding) {
                     principalDiagnosisHistory.text = principal
-                    visitDate.text = dateTime
+                    visitDate.text = date
                     doctorName.text = staffName
                     patientStatus.text = treatmentStatus
                 }
@@ -47,7 +53,20 @@ class MedicalHistoryAdapter(context: Context) :
             //call the helper method from the onCreateView by passing in the diagnoses object
             bindToHistory(diagnose)
         } }
+
+        holder.apply {
+            itemView.setOnClickListener {
+                val diagnoseId = getItem(adapterPosition).diagnoseID
+
+                val bundle = Bundle()
+                bundle.putInt("diagnoseId",diagnoseId)
+fragment.findNavController().navigate(R.id.detailRecordFragment,bundle)
+                Log.i("MediHistory", "onBindViewHolder: $bundle")
+
+            }
+        }
     }
+
 
     override fun getItemCount() = currentList.size
 
@@ -106,6 +125,11 @@ class MedicalHistoryAdapter(context: Context) :
         override fun areContentsTheSame(oldItem: Diagnose, newItem: Diagnose): Boolean {
            return oldItem == newItem
         }
+
+    }
+
+    fun intentToDiagnoseDetails(holder:MedicalHistoryViewHolder){
+
 
     }
 }

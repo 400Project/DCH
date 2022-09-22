@@ -6,10 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
+import com.oyatech.dch.consultations.ConsultationViewModel
+import com.oyatech.dch.database.entities.Diagnose
+import com.oyatech.dch.database.entities.PatientBioData
+import com.oyatech.dch.database.entities.Vitals
 import com.oyatech.dch.databinding.FragmentDetailRecordBinding
+import com.oyatech.dch.patient.PatientBioViewModel
 
 
 /**
@@ -21,6 +30,8 @@ class DetailRecordFragment : Fragment() {
 
      var _binding : FragmentDetailRecordBinding? = null
     val binding get() = _binding!!
+
+    val viewModel  : MedicalHistoryViewModel by activityViewModels()
 
 
     private val showMore = arrayListOf(false,false,false)
@@ -39,9 +50,21 @@ class DetailRecordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var diagnoseId = 0
+        val bundle = this.arguments
+        if (bundle != null){
+            diagnoseId = bundle.getInt("diagnoseId",0)
+        }
+        MedicalHistoryFragment.diagnosis.get(diagnoseId)?.let { bindToDiagnose(it) }
 
+
+      //val diagnose = id?.let { viewModel.allDiagnosis.}!!
+
+      //  bindDataToViews(vitals)
+
+    //    bindToDiagnose(viewModel.diagnose)
         binding.patientDiagnosisLayout.setOnClickListener{
-            findNavController().navigate(R.id.dignosesFragment)
+       Toast.makeText(context, "Click",Toast.LENGTH_SHORT).show()
         }
 
 
@@ -67,5 +90,30 @@ class DetailRecordFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+ private  fun bindDataToViews(vitals:Vitals){
+        binding.apply {
+            with(vitals){
+                patientTemperature.text =bodyTemperature
+                patientWeight.text = weight
+                patientBloodPressure.text = bloodPressure
+                patientSugarLevel.text = sugarLevel
+                recordedBy.text = recordBy
+            }
+
+        }
+    }
+
+    private fun bindToDiagnose(diagnose:Diagnose){
+        binding.apply {
+            with(diagnose){
+                provisionalDiagnosis.text = provisional
+                principalDiagnose.text = principal
+                additionalDiagnosis.text = additional
+                dateDiagnose.text = date
+
+            }
+        }
     }
 }

@@ -169,24 +169,25 @@
 
     <TextView
         android:id="@+id/textVisit"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recent Visits"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
-        style="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintTop_toBottomOf="@id/divider1"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginTop="10dp"
+        android:text="Recent Visits"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider1" />
     <ImageView
         android:id="@+id/no_medicals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textVisit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/good_health">
+        android:src="@drawable/daily_vitals">
 
     </ImageView>
 
@@ -196,25 +197,28 @@
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:minHeight="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textVisit"
+        app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/history_card">
 
     </androidx.recyclerview.widget.RecyclerView>
+
     <TextView
         android:id="@+id/noMedic"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No medical history"
         android:layout_marginStart="5dp"
-        style="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp"
+        android:visibility="invisible"
+        android:text="No medical history"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textVisit" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/add_patient_diagnosis"

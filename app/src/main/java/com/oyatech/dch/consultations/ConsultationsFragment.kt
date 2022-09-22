@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +13,7 @@ import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.FragmentConsultationBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -22,6 +22,9 @@ class ConsultationsFragment : Fragment() {
 
     private val consultAdapter by lazy {
         ConsultationAdapter(requireContext())
+    }
+    companion object{
+        val trees = TreeMap<Int , PatientBioData> ()
     }
 
     private val viewModel by lazy {
@@ -56,31 +59,36 @@ class ConsultationsFragment : Fragment() {
     private fun createRecyclerView() {
         val adapter = consultAdapter
         val viewModel = viewModel
-
-        viewModel.getAllBookedForConsultation().observe(viewLifecycleOwner) { it ->
-         val v = mutableListOf<PatientBioData>()
+        binding.consultReviewer.apply {
+        viewModel.fetchDailyConsultRemote().observe(viewLifecycleOwner) { it ->
+            val v = mutableListOf<PatientBioData>()
             lifecycleScope.launch {
                 Dispatchers.IO
                 it.forEach {
                     v.add(it.bios)
+                    trees.put(it.bios.patientId,it.bios)
                 }
-
             }
             adapter.submitList(v)
+
+            if (v.isEmpty()){
+                binding.noVitals.visibility = View.VISIBLE
+            }
         }
-        binding.consultReviewer.apply {
+
             layoutManager = LinearLayoutManager(requireContext())
             setAdapter(adapter)
         }
     }
 
-    override fun onPause()
-    {
+    override fun onResume() {
 
         Log.i("Consulta", "onPause: $viewModel is paused")
         super.onPause()
         binding.consultReviewer.adapter = consultAdapter
+        super.onResume()
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

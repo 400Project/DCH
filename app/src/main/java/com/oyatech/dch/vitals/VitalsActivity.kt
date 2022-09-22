@@ -2,18 +2,14 @@ package com.oyatech.dch.vitals
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.oyatech.dch.database.entities.DailyConsultation
-import com.oyatech.dch.database.entities.PatientBioData
-import com.oyatech.dch.database.entities.Vitals
+import com.oyatech.dch.database.entities.*
 import com.oyatech.dch.databinding.ActivityVitalsBinding
 import com.oyatech.dch.datacenter.PatientsDataPageActivity
-import com.oyatech.dch.util.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -21,31 +17,54 @@ import kotlinx.coroutines.launch
 class VitalsActivity : AppCompatActivity() {
     val DUE_FOR_VITALS = "com.oyatech.dch.vitals"
     private lateinit var binding: ActivityVitalsBinding
-    private var primaryKey = 0
-    private var foreignKey = 0
+    private var current = 0
+    private var previous =0
+    private var patientId = 0
+
+    val viewModel by lazy {
+        ViewModelProvider(this)[VitalsViewModel::class.java]
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVitalsBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
-        val viewModel = ViewModelProvider(this)[VitalsViewModel::class.java]
-        val currentPatientPos = intent.getIntExtra(DUE_FOR_VITALS, -1)
-        val currentPatient = viewModel.getCurrentPatientForVitals(currentPatientPos)
-        foreignKey = currentPatient.patientId
+
+        val currentPatientPos: Int = intent.getIntExtra(DUE_FOR_VITALS, -1)
+        val currentPatient = PatientVitalsFragment.vitalQueue[currentPatientPos]
+        patientId = currentPatient!!.patientId
+
+
+    previous = viewModel.getVitalsIDs()
+
 
         /**
          * passing the patient object to be bind to the views
          */
         bindPatientDetails(currentPatient)
-
+        /**
+         * TODO: SAVE TO VITALS
+         */
         binding.toConsultation.setOnClickListener {
             lifecycleScope.launch {
-                val v = viewModel.getCurrentQueVitals(foreignKey)
+            //    val v: DailyVitals = viewModel.getCurrentQueVitals(foreignKey)
                 Dispatchers.IO
                 viewModel.apply {
-                    insertVitals(getVitals())
-                    bookForConsultation(getPatientForConsult(currentPatient))
-                    viewModel.removePatientFromVitalsQue(v)
+               //     insertVitals(getVitals())
+                    insertVitalsOnline(getVitals())
+                    val d = ViDs(current)
+                    if (current==1){
+                        insertVitalsIDs(d)
+                    }else{
+                        updateVitalsIDs(previous,current)
+                    }
+                    //book for consultation
+                   insertDailyConsultation(
+                       getPatientForConsult(
+                           currentPatientPos,currentPatient)
+                   )
+                    //remove for vital queue
+                   removePatientFromVitalsQue(currentPatientPos)
 
                 }
             }
@@ -55,7 +74,7 @@ class VitalsActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
             startActivity(Intent(this, PatientsDataPageActivity::class.java))
-            finish()
+finish()
         }
     }
 
@@ -66,7 +85,7 @@ class VitalsActivity : AppCompatActivity() {
                 patientAge.text = age
                 patientHospitalNumber.text = hospitalNumber
                 patientAddress.text = address
-                patientGender.text = sex
+                patientGender.text = gender
                 patientDoB.text = dob
                 patientNhis.text = insuranceNumber
                 patientMobile.text = mobile
@@ -80,35 +99,25 @@ class VitalsActivity : AppCompatActivity() {
 
     private fun getVitals(): Vitals {
         with(binding) {
+            current = previous + 1
             val bloodPressure = bloodPressure.text.toString().trim()
             val weight = patientWeight.text.toString().trim()
             val temperature = temperature.text.toString().trim()
             val sugarLevel = sugerLevel.text.toString().trim()
-            return Vitals(
-                primaryKey, foreignKey, bloodPressure,
-                weight, temperature, sugarLevel
+            val vitals = Vitals(
+            current, patientId, bloodPressure,
+            weight, temperature, sugarLevel
             )
+
+            return vitals
         }
 
     }
 
-    private fun getPatientForConsult(bioData: PatientBioData): DailyConsultation {
-        val primaryKey = 0
-        return DailyConsultation(primaryKey,bioData)
-    }
-    override fun onSaveInstanceState(outState: Bundle) {
-        Log.i("Vitals", "onSaveInstanceState: state in null")
-
-
-        super.onSaveInstanceState(outState)
-
+    private fun getPatientForConsult(postiton: Int,
+                                     bioData: PatientBioData)
+    : DailyConsultation {
+        return DailyConsultation(postiton,bioData)
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        if (savedInstanceState != null) {
-
-            Log.i("Vitals", "onSaveInstanceState: state in not null")
-        }
-        super.onRestoreInstanceState(savedInstanceState)
-    }
 }

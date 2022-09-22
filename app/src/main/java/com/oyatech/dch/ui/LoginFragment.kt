@@ -2,11 +2,14 @@ package com.oyatech.dch.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.FragmentLoginBinding
 import com.oyatech.dch.datacenter.PatientsDataPageActivity
@@ -36,10 +39,9 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 //Setting auto complete for users
         autocomplete()
+val firebase = FirebaseFirestore.getInstance()
 
-       binding.login.setOnClickListener {
-            startActivity(Intent(context, PatientsDataPageActivity::class.java))
-        }
+
     }
 
     override fun onDestroyView() {

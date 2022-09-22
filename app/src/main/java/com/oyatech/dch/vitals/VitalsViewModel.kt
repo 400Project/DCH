@@ -3,13 +3,13 @@ package com.oyatech.dch.vitals
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.oyatech.dch.database.Repository
-import com.oyatech.dch.database.entities.DailyConsultation
-import com.oyatech.dch.database.entities.DailyVitals
-import com.oyatech.dch.database.entities.PatientBioData
-import com.oyatech.dch.database.entities.Vitals
+import com.oyatech.dch.database.entities.*
 import com.oyatech.dch.model.DataSource
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class VitalsViewModel(application: Application)
@@ -34,20 +34,61 @@ class VitalsViewModel(application: Application)
     fun getCurrentQueVitals(id: Int): DailyVitals {
         return repository.getCurrentQueVitals(id)
     }
-    fun removePatientFromVitalsQue(dialVitals: DailyVitals){
-      repository.removePatientFromVitalsQue(dialVitals)
+    fun removePatientFromVitalsQue(int: Int){
+        viewModelScope.launch {
+            repository.removeVitalsQue(int)
+        }
     }
     fun clearVitalsList(){
        DataSource.allPatient().clear()
     }
 
-    fun insertVitals( vitals: Vitals){
-        repository.insertVitals(vitals)
+    fun insertVitalsIDs( vitals: ViDs){
+        repository.insertVitalsIDs(vitals)
     }
-     fun patientAndVitals(): LiveData<MutableList<DailyVitals>>{
+    fun updateVitalsIDs(prev: Int, current:Int){
+        viewModelScope.launch {
+            Dispatchers.IO
+            repository.updateVitalsIDs(prev, current)
+        }
+
+    }
+
+    fun getVitalsIDs():Int{
+        return repository.getVitalsIDs()
+    }
+
+    /* fun patientAndVitals(): LiveData<MutableList<DailyVitals>>{
         return repository.getQueueForVitals()
-    }
+    }*/
     fun bookForConsultation(bioData: DailyConsultation){
         return repository.bookForConsultation(bioData)
     }
+
+    /**
+     * Firebase activities
+     */
+
+
+    fun fetchDailyVitals(): LiveData<MutableList<DailyVitals>>{
+        var allRecords:LiveData<MutableList<DailyVitals>> = MutableLiveData()
+        viewModelScope.launch { Dispatchers.IO
+          allRecords =  repository.fetchDailyVitals()
+        }
+        return allRecords
+    }
+
+    fun  insertVitalsOnline(vitals: Vitals){
+        repository.insertVitalsRemote(vitals)
+    }
+
+    fun insertDailyConsultation(consult: DailyConsultation){
+        viewModelScope.launch {
+            Dispatchers.Default
+            repository.insertDailyConsultation(consult)
+        }
+    }
+  fun getCurrentQueVitalsOnline(id: DailyVitals){
+
+  }
 }

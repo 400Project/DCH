@@ -6,6 +6,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -14,7 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
 import com.oyatech.dch.Tests
 import com.oyatech.dch.Tests.*
-import com.oyatech.dch.consultations.ConsultationViewModel
+import com.oyatech.dch.database.entities.DiagID
 import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.database.entities.Vitals
 import com.oyatech.dch.databinding.FragmentDignosesBinding
@@ -26,14 +28,16 @@ class DiagnosesFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    val viewModel: ConsultationViewModel by activityViewModels()
-    /*val viewModel by lazy {
-        ViewModelProvider(this@DiagnosesFragment)[ConsultationViewModel::class.java]
-    }*/
+    private val viewModel: MedicalHistoryViewModel by activityViewModels()
 
+    private var diagnoseID = 0
+    private var previous = 0
+    private var vitalsID = 0
+    private var patientId = 0
     private var isTestLayoutVisible = true
     var numberOfTest = SECOND
-
+    lateinit var treatStatus: String
+    var vitals = Vitals()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,31 +50,69 @@ class DiagnosesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = viewModel
-        viewModel.apply {
-            val v = getCurrentVitals(position)
-            bindVitalViews(v)
-        }
-        //    val vitals = viewModel.getCurrentVitals(viewModel.position)
+       /* val bundle = this.arguments
+        if (bundle != null){
+            diagnoseID = bundle.getInt("patientId",-1)
+        }*/
+
+            previous = viewModel.getDiagnoseIDs()
+
+            /**
+             * TODO: look at why the vials is not been loaded
+             */
+            diagnoseID = viewModel.position
+            val v = viewModel.fetchAllVitals(diagnoseID)
+
+            v.observe(viewLifecycleOwner) {
+                vitals = it.last()
+                bindVitalViews(vitals)
+                vitalsID = vitals.vitalsID
+                patientId = vitals.patientId
+            }
+
+
+
+//getting the today's vitals id
+
         with(binding) {
             showHideIcon.setOnClickListener {
                 showHidLayout(testLayout)
             }
         }
+        binding.treatmentStatus.onItemSelectedListener = getTreatmentStatus()
 
         binding.submit.setOnClickListener {
+
+
+//Saving into the diagnose table
+            viewModel.insertDiagnoseRemote(diagnoseObject())
+
             Toast.makeText(requireContext(), "Diagnosed", Toast.LENGTH_SHORT).show()
-           viewModel.apply {
-              insertDiagnosis(diagnoseObject(position))
-           }
+
+            removeFromConsultation()
+
+
+            if (diagnoseID == 1) {
+                viewModel.insertDiagnoseIDs(DiagID(diagnoseID))
+            } else
+                viewModel.updateDiagnoseIDs(previous, diagnoseID)
             findNavController().navigate(R.id.medicalHistoryFragment)
         }
-        /**
-         * TODO: I implemented Diagnoese: To be tested by inserting diagnoses
-         * to diagnoses table
-         */
 
     }
+
+    //If true then remove patient from the consultation queue
+    private fun removeFromConsultation() {
+        if (!((treatStatus == "Admitted")
+                    || (treatStatus == "Detained")
+                    || (treatStatus == "Lab"))
+        ) {
+            viewModel.apply {
+                removeConsultation(patientId)
+            }
+        }
+    }
+
 
     //Creating the number of test layout for test to be conducted
     private fun createNumberOfTest(testNumber: Tests) {
@@ -141,20 +183,58 @@ class DiagnosesFragment : Fragment() {
         }
     }
 
-    private fun diagnoseObject(position: Int): Diagnose {
-        val primaryKey = 0
+    private fun diagnoseObject(): Diagnose {
+        diagnoseID = previous + 1
         binding.apply {
+            val treatment = treatStatus
+
             val provisional = provisionalDiagnosis.text.toString().trim()
             val principal = pricipalDiagnosis.text.toString().trim()
             val additional = additionalDiagnosis.text.toString().trim()
-            // val prescription= prescription.text.toString().trim()
+            val prescription = prescription.text.toString().trim()
             var nurseNote = nurseNote.text.toString().trim()
             val tests = firstTest.text.toString().trim()
             return Diagnose(
-                primaryKey, position, provisional, principal, additional,
-                nurseNote,"Dr.Robert"
+                diagnoseID, patientId, vitalsID, provisional,
+                principal, additional, prescription,
+                nurseNote, "Dr.Robert", treatment
             )
         }
     }
     //TODO: populate ward and dispensary page with patient
+
+    private fun getTreatmentStatus(): AdapterView.OnItemSelectedListener {
+//The createFromResource() method allows you to create an ArrayAdapter from the string array.
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.patient_status,
+            android.R.layout.simple_spinner_item
+            /**
+             * You should then call setDropDownViewResource(int) to specify the layout the adapter
+             * should use to display the list of spinner choice
+             */
+        ).also { arrayAdapter ->
+            arrayAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item
+            )
+            binding.treatmentStatus.adapter = arrayAdapter
+//Responding to user selection
+            val item: AdapterView.OnItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        adapteView: AdapterView<*>?,
+                        p1: View?,
+                        position: Int,
+                        p3: Long
+                    ) {
+                        treatStatus = adapteView?.getItemAtPosition(position).toString()
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+                    }
+                }
+            return item
+
+        }
+    }
 }

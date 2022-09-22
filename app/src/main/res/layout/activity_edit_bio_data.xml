@@ -19,10 +19,10 @@
             android:elevation="5dp">
 
             <TextView
+                style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hospital Number"
-                style="@style/TextAppearance.Material3.BodyLarge"
                 app:layout_constraintBottom_toBottomOf="@+id/image"
                 app:layout_constraintEnd_toStartOf="@+id/image"
                 app:layout_constraintHorizontal_bias="0.55"
@@ -192,7 +192,7 @@
                 app:layout_constraintTop_toBottomOf="@id/nihs_layout"></TextView>
 
             <EditText
-                android:id="@+id/next_of_king_layout"
+                android:id="@+id/next_of_king_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Next of King Full Name"
@@ -200,14 +200,14 @@
                 android:minWidth="100dp"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/nofK_mobile_layout"
+                app:layout_constraintEnd_toStartOf="@id/nofK_mobile"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/next_of_king_text">
 
             </EditText>
 
             <EditText
-                android:id="@+id/nofK_mobile_layout"
+                android:id="@+id/nofK_mobile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_mobile"
@@ -216,8 +216,8 @@
                 android:minWidth="100dp"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="@id/nofK_relationship_layout"
-                app:layout_constraintStart_toStartOf="@id/next_of_king_layout"
-                app:layout_constraintTop_toBottomOf="@id/next_of_king_layout"></EditText>
+                app:layout_constraintStart_toStartOf="@id/next_of_king_name"
+                app:layout_constraintTop_toBottomOf="@id/next_of_king_name"></EditText>
 
             <EditText
                 android:id="@+id/nofK_relationship_layout"
@@ -230,7 +230,34 @@
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nofK_mobile_layout"></EditText>
+                app:layout_constraintTop_toBottomOf="@id/nofK_mobile">
+
+            </EditText>
+
+            <EditText
+                android:id="@+id/nofK_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_location"
+                android:hint="Address"
+                android:inputType="textCapWords"
+                android:minWidth="100dp"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nofK_relationship_layout"></EditText>
+ <EditText
+                android:id="@+id/occupation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_occupation"
+                android:hint="Occupation"
+                android:inputType="textCapWords"
+                android:minWidth="100dp"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nofK_address"></EditText>
 
 
             <com.google.android.material.button.MaterialButton
@@ -249,7 +276,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/vital_que"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nofK_relationship_layout" />
+                app:layout_constraintTop_toBottomOf="@id/occupation" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/vital_que"
@@ -267,7 +294,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/done"
-                app:layout_constraintTop_toBottomOf="@id/nofK_relationship_layout" />
+                app:layout_constraintTop_toBottomOf="@id/occupation" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
