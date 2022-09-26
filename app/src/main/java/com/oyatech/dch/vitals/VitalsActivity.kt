@@ -1,12 +1,20 @@
 package com.oyatech.dch.vitals
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
+import android.text.Spanned
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.oyatech.dch.R
+
 import com.oyatech.dch.database.entities.*
 import com.oyatech.dch.databinding.ActivityVitalsBinding
 import com.oyatech.dch.datacenter.PatientsDataPageActivity
@@ -24,18 +32,26 @@ class VitalsActivity : AppCompatActivity() {
     val viewModel by lazy {
         ViewModelProvider(this)[VitalsViewModel::class.java]
     }
+
+    override fun onStart() {
+        super.onStart()
+
+    }
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVitalsBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
+        val myViewModel = viewModel
+       //make temperature unit a superscript
+makeSuperScript()
 
 
         val currentPatientPos: Int = intent.getIntExtra(DUE_FOR_VITALS, -1)
         val currentPatient = PatientVitalsFragment.vitalQueue[currentPatientPos]
         patientId = currentPatient!!.patientId
 
-
-    previous = viewModel.getVitalsIDs()
+        //getting the previous vitals id from remote
 
 
         /**
@@ -45,26 +61,28 @@ class VitalsActivity : AppCompatActivity() {
         /**
          * TODO: SAVE TO VITALS
          */
+       myViewModel.getVitalsId().observe(this){
+           previous = it
+        }
         binding.toConsultation.setOnClickListener {
-            lifecycleScope.launch {
-            //    val v: DailyVitals = viewModel.getCurrentQueVitals(foreignKey)
-                Dispatchers.IO
-                viewModel.apply {
+            myViewModel.apply {
+
+                lifecycleScope.launch {
                //     insertVitals(getVitals())
                     insertVitalsOnline(getVitals())
-                    val d = ViDs(current)
-                    if (current==1){
-                        insertVitalsIDs(d)
-                    }else{
-                        updateVitalsIDs(previous,current)
-                    }
+
+                        insertVitalId(ViDs(current))
+
                     //book for consultation
-                   insertDailyConsultation(
-                       getPatientForConsult(
-                           currentPatientPos,currentPatient)
-                   )
-                    //remove for vital queue
-                   removePatientFromVitalsQue(currentPatientPos)
+                    removePatientFromVitalsQue(currentPatientPos)
+                    //remove from vital queue
+                    try { val forConsult = DailyConsultation(currentPatientPos,currentPatient)
+                        insertDailyConsultation(forConsult)
+
+
+                    }catch (e:Exception){
+                        Log.i("Vitals", "onCreate: ${e.message}")
+                    }
 
                 }
             }
@@ -76,6 +94,8 @@ class VitalsActivity : AppCompatActivity() {
             startActivity(Intent(this, PatientsDataPageActivity::class.java))
 finish()
         }
+
+
     }
 
     private fun bindPatientDetails(patient: PatientBioData) {
@@ -99,6 +119,7 @@ finish()
 
     private fun getVitals(): Vitals {
         with(binding) {
+
             current = previous + 1
             val bloodPressure = bloodPressure.text.toString().trim()
             val weight = patientWeight.text.toString().trim()
@@ -108,16 +129,15 @@ finish()
             current, patientId, bloodPressure,
             weight, temperature, sugarLevel
             )
-
             return vitals
         }
 
     }
 
-    private fun getPatientForConsult(postiton: Int,
-                                     bioData: PatientBioData)
-    : DailyConsultation {
-        return DailyConsultation(postiton,bioData)
-    }
 
+@RequiresApi(Build.VERSION_CODES.N)
+private fun makeSuperScript(){
+    val hint : String = getString(R.string.temperature)
+    val sytledHint: Spanned = Html.fromHtml(hint,FROM_HTML_MODE_LEGACY)
+    binding.temperatureLayout.hint = sytledHint}
 }

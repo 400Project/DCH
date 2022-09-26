@@ -61,13 +61,6 @@ fun searchForPatient(search:String):LiveData<MutableList<PatientBioData>>
 
 
     //Produce auto increment for Vitals table
-    @Insert
-    fun insertVitalsIDs( vitals: ViDs)
-
-    @Query ("UPDATE ViDs set vitalsID =:current where vitalsID =:prev")
-    fun updateVitalsIDs(prev: Int, current:Int)
-    @Query ("SELECT vitalsID FROM ViDs")
-    fun getVitalsIDs():Int
 
 //Produce auto increment for Diagnosis table
     @Insert

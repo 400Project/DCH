@@ -41,6 +41,9 @@ class LoginFragment : Fragment() {
         autocomplete()
 val firebase = FirebaseFirestore.getInstance()
 
+        binding.login.setOnClickListener{
+            startActivity(Intent(requireContext(),PatientsDataPageActivity::class.java))
+        }
 
     }
 

@@ -12,14 +12,17 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
 import com.oyatech.dch.Tests
 import com.oyatech.dch.Tests.*
+import com.oyatech.dch.alerts.snackForError
 import com.oyatech.dch.database.entities.DiagID
 import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.database.entities.Vitals
 import com.oyatech.dch.databinding.FragmentDignosesBinding
+import kotlinx.coroutines.launch
 
 
 class DiagnosesFragment : Fragment() {
@@ -31,6 +34,7 @@ class DiagnosesFragment : Fragment() {
     private val viewModel: MedicalHistoryViewModel by activityViewModels()
 
     private var diagnoseID = 0
+    private var edit = 0
     private var previous = 0
     private var vitalsID = 0
     private var patientId = 0
@@ -43,34 +47,42 @@ class DiagnosesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentDignosesBinding.inflate(inflater, container, false)
+        _binding = FragmentDignosesBinding.inflate(
+            inflater,
+            container,
+            false
+        )
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       /* val bundle = this.arguments
-        if (bundle != null){
-            diagnoseID = bundle.getInt("patientId",-1)
-        }*/
-
-            previous = viewModel.getDiagnoseIDs()
-
-            /**
-             * TODO: look at why the vials is not been loaded
-             */
-            diagnoseID = viewModel.position
-            val v = viewModel.fetchAllVitals(diagnoseID)
-
-            v.observe(viewLifecycleOwner) {
-                vitals = it.last()
-                bindVitalViews(vitals)
-                vitalsID = vitals.vitalsID
-                patientId = vitals.patientId
-            }
+        val bundle = this.arguments
+        if (bundle != null) {
+            edit = bundle.getInt("editDiagnose", -1)
+        }
 
 
+
+        viewModel.apply {
+            fetchAllVitals(position)
+                .observe(viewLifecycleOwner) {
+                    vitals = it.last()
+                    bindVitalViews(vitals)
+                    vitalsID = vitals.vitalsID
+                    patientId = vitals.patientId
+                }
+        }
+
+
+        val diagnose = viewModel.diagnoses[edit]
+
+        editDiagnose(diagnose)
+
+        viewModel.getDiagnoseId().observe(viewLifecycleOwner){
+            previous = it
+        }
 
 //getting the today's vitals id
 
@@ -81,31 +93,47 @@ class DiagnosesFragment : Fragment() {
         }
         binding.treatmentStatus.onItemSelectedListener = getTreatmentStatus()
 
+        //save patient diagnosis of the day
         binding.submit.setOnClickListener {
 
 
 //Saving into the diagnose table
-            viewModel.insertDiagnoseRemote(diagnoseObject())
-
-            Toast.makeText(requireContext(), "Diagnosed", Toast.LENGTH_SHORT).show()
-
-            removeFromConsultation()
+            if (binding.treatmentStatus.selectedItem != "Select Status") {
+                lifecycleScope.launch {
+                    viewModel.apply {
 
 
-            if (diagnoseID == 1) {
-                viewModel.insertDiagnoseIDs(DiagID(diagnoseID))
-            } else
-                viewModel.updateDiagnoseIDs(previous, diagnoseID)
-            findNavController().navigate(R.id.medicalHistoryFragment)
+                        insertDiagnoseRemote(diagnoseObject())
+                        insertDiagnoseId(DiagID(diagnoseID))
+                        removeFromConsultation()
+                    }
+                }
+
+
+                Toast.makeText(requireContext(), "Diagnosed", Toast.LENGTH_SHORT).show()
+
+
+
+                findNavController().navigate(R.id.medicalHistoryFragment)
+
+            } else {
+
+                //show snackbar for the error
+                requireContext().snackForError(view, getString(R.string.treatment_status))
+
+                binding.treatmentStatus.setBackgroundColor(resources.getColor(R.color.red))
+            }
         }
 
     }
 
     //If true then remove patient from the consultation queue
+
     private fun removeFromConsultation() {
         if (!((treatStatus == "Admitted")
                     || (treatStatus == "Detained")
                     || (treatStatus == "Lab"))
+
         ) {
             viewModel.apply {
                 removeConsultation(patientId)
@@ -184,22 +212,30 @@ class DiagnosesFragment : Fragment() {
     }
 
     private fun diagnoseObject(): Diagnose {
-        diagnoseID = previous + 1
-        binding.apply {
-            val treatment = treatStatus
-
-            val provisional = provisionalDiagnosis.text.toString().trim()
-            val principal = pricipalDiagnosis.text.toString().trim()
-            val additional = additionalDiagnosis.text.toString().trim()
-            val prescription = prescription.text.toString().trim()
-            var nurseNote = nurseNote.text.toString().trim()
-            val tests = firstTest.text.toString().trim()
-            return Diagnose(
-                diagnoseID, patientId, vitalsID, provisional,
-                principal, additional, prescription,
-                nurseNote, "Dr.Robert", treatment
-            )
+        var diagnose = Diagnose()
+        diagnoseID = if (edit != 0) {
+            edit
+        } else {
+            previous + 1
         }
+            binding.apply {
+                val treatment = treatStatus
+
+                val provisional = provisionalDiagnosis.text.toString().trim()
+                val principal = principalDiagnosis.text.toString().trim()
+                val additional = additionalDiagnosis.text.toString().trim()
+                val prescription = prescription.text.toString().trim()
+                val nurseNote = nurseNote.text.toString().trim()
+                val tests = firstTest.text.toString().trim()
+
+                    diagnose = Diagnose(
+                        diagnoseID, patientId, vitalsID, provisional,
+                        principal, additional, prescription,
+                        nurseNote, "Dr.Robert", treatment
+                    )
+            }
+        return diagnose
+
     }
     //TODO: populate ward and dispensary page with patient
 
@@ -236,5 +272,18 @@ class DiagnosesFragment : Fragment() {
             return item
 
         }
+    }
+
+    private fun editDiagnose(diagnose: Diagnose?) {
+        binding.apply {
+            diagnose?.let {
+                provisionalDiagnosis.setText(it.provisional)
+                principalDiagnosis.setText(it.provisional)
+                additionalDiagnosis.setText(it.additional)
+                prescription.setText(it.prescription)
+            }
+
+        }
+
     }
 }

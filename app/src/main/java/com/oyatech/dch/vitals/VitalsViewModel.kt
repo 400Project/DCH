@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.oyatech.dch.database.IVitalsId
 import com.oyatech.dch.database.Repository
 import com.oyatech.dch.database.entities.*
 import com.oyatech.dch.model.DataSource
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 
 
 class VitalsViewModel(application: Application)
-    :  AndroidViewModel(application){
+    :  AndroidViewModel(application),IVitalsId{
     // TODO: Implement the ViewModel
     private var _repository : Repository? = null
      private val repository get()=_repository!!
@@ -26,41 +27,13 @@ class VitalsViewModel(application: Application)
         }
 
 
-
-     fun getCurrentPatientForVitals(id: Int): PatientBioData {
-        return repository.getCurrentPatientForVitals(id)
-
-    }
-    fun getCurrentQueVitals(id: Int): DailyVitals {
-        return repository.getCurrentQueVitals(id)
-    }
     fun removePatientFromVitalsQue(int: Int){
         viewModelScope.launch {
+
             repository.removeVitalsQue(int)
         }
     }
-    fun clearVitalsList(){
-       DataSource.allPatient().clear()
-    }
 
-    fun insertVitalsIDs( vitals: ViDs){
-        repository.insertVitalsIDs(vitals)
-    }
-    fun updateVitalsIDs(prev: Int, current:Int){
-        viewModelScope.launch {
-            Dispatchers.IO
-            repository.updateVitalsIDs(prev, current)
-        }
-
-    }
-
-    fun getVitalsIDs():Int{
-        return repository.getVitalsIDs()
-    }
-
-    /* fun patientAndVitals(): LiveData<MutableList<DailyVitals>>{
-        return repository.getQueueForVitals()
-    }*/
     fun bookForConsultation(bioData: DailyConsultation){
         return repository.bookForConsultation(bioData)
     }
@@ -84,11 +57,21 @@ class VitalsViewModel(application: Application)
 
     fun insertDailyConsultation(consult: DailyConsultation){
         viewModelScope.launch {
-            Dispatchers.Default
+
             repository.insertDailyConsultation(consult)
         }
     }
   fun getCurrentQueVitalsOnline(id: DailyVitals){
 
   }
+
+    override fun insertVitalId(id: ViDs) {
+        viewModelScope.launch {
+            repository.insertVitalId(id)
+        }
+    }
+
+    override fun getVitalsId(): LiveData<Int>{
+    return    repository.getVitalsId()
+    }
 }

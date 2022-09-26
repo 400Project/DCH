@@ -26,40 +26,10 @@ var number = 0
     init {
         _repository = Repository(application)
     }
-
-  override  fun insertPatientBio(patientBioData: PatientBioData){
-        viewModelScope.launch { Dispatchers.IO
-            repository.insertPatientBio(patientBioData)
-        }
-    }
-
-   /* override fun getQueueForVitals(): LiveData<MutableList<DailyVitals>> {
-        return repository.getQueueForVitals()
-    }*/
-
-
-    override fun getAllBioData():LiveData<MutableList<PatientBioData>>{
-       return repository.getAllBioData()
-   }
-
-    //val allPatient = listOfPatientPaticulars
-
-    override    fun currentBio(int:Int): PatientBioData {
-      return  repository.currentBio(int)
-    }
-
-    override fun searchForPatient(search: String): LiveData<MutableList<PatientBioData>> {
-        return repository.searchForPatient(search)
-    }
-
     override fun queueForVitals(dailyVitals: DailyVitals) {
         return repository.queueForVitals(dailyVitals)
     }
 
-
-    /*
-* The following methods communicates with the firebase cloud firestore
-* */
 
 
     override fun insertPatientFirestore(patientBioData: PatientBioData) {

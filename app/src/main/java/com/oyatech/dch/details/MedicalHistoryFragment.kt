@@ -1,6 +1,7 @@
 package com.oyatech.dch.details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -35,7 +36,7 @@ class MedicalHistoryFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+
     }
 
 
@@ -52,10 +53,16 @@ class MedicalHistoryFragment : Fragment() {
 
     }
 
+    private val medicalHistoryAdapter: MedicalHistoryAdapter
+        get() {
+            var adapter = myAdapter
+            return adapter
+        }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var adapter = myAdapter
+        var adapter = medicalHistoryAdapter
         //getting the position of the patient in the consultation room
         patientId = requireActivity().intent.getIntExtra(PATIENT_VISITS, -1)
 
@@ -93,11 +100,6 @@ class MedicalHistoryFragment : Fragment() {
 
         binding.addPatientDiagnosis.setOnClickListener {
 
-            //passing the current patient id to used to locate the vitals
-         //   viewModel.setPosition(patientId)
-            /* val bundle = Bundle()
-            bundle.putInt("patientId", patientId)*/
-
             findNavController().navigate(R.id.dignosesFragment)
         }
 
@@ -110,20 +112,6 @@ class MedicalHistoryFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-
-        inflater.inflate(R.menu.visits, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId) {
-            R.id.vital -> findNavController().navigate(R.id.detailRecordFragment)
-        }
-        return true
     }
 
     private fun bindPatientDetails(patient: PatientBioData) {
@@ -149,12 +137,19 @@ class MedicalHistoryFragment : Fragment() {
     }
 
     override fun onResume() {
+        Log.i("Medical History", "onPause: is called")
         binding.visitsRecycleView.apply {
             viewModel.fetchDiagnosis(patientId).observe(viewLifecycleOwner) {
-                myAdapter.submitList(it)
-                adapter = myAdapter
+                medicalHistoryAdapter.submitList(it)
+                adapter = medicalHistoryAdapter
             }
         }
         super.onResume()
+    }
+
+    override fun onPause() {
+        Log.i("Medical History", "onPause: is called")
+        super.onPause()
+
     }
 }

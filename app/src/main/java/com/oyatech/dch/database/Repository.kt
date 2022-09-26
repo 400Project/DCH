@@ -5,14 +5,18 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.oyatech.dch.database.entities.*
 
 typealias liveData = (LiveData<MutableList<Any>>)
 
-class Repository(application: Application) : IRepository, IConsult {
+class Repository(application: Application) :
+    IRepository, IConsult, IVitalsId, IDiagnoseId {
 
     val TAG = Repository::class.java.simpleName
     private var _mao: IDao? = null
@@ -27,6 +31,9 @@ class Repository(application: Application) : IRepository, IConsult {
     private var _allDiagnosis: MutableLiveData<MutableList<Diagnose>> = MutableLiveData()
     private val allDiagnosis: LiveData<MutableList<Diagnose>> = _allDiagnosis
 
+    private var _allVitals: MutableLiveData<MutableList<Vitals>> = MutableLiveData()
+    private val allVitals: LiveData<MutableList<Vitals>> = _allVitals
+
     private val firestore = Firebase.firestore
     private val DCH = "dch"
     private val VITALS = "vitals"
@@ -40,47 +47,10 @@ class Repository(application: Application) : IRepository, IConsult {
     }
 
 
-    /**
-     * The Patient Bio data table for all records
-     */
-    override fun insertPatientBio(patientBioData: PatientBioData) {
-        mDao.insertBioData(patientBioData)
-    }
-
-    override fun getAllBioData(): LiveData<MutableList<PatientBioData>> {
-
-        return mDao.getAllBioData()
-    }
-
-    override fun currentBio(int: Int): PatientBioData {
-        return mDao.allPatients(int)
-    }
-
-    override fun searchForPatient(search: String): LiveData<MutableList<PatientBioData>> {
-        return mDao.searchForPatient(search)
-    }
-
-    /**
-     * The Whole Vitals table that contains all vitals of the patient records
-     */
-    fun insertVitals(vitals: Vitals) {
-        mDao.insertVitals(vitals)
-    }
 
     //Vitals table id
-    fun insertVitalsIDs(vitals: ViDs) {
-        mDao.insertVitalsIDs(vitals)
-    }
 
-    fun updateVitalsIDs(prev: Int, current: Int) {
-        mDao.updateVitalsIDs(prev, current)
-    }
-
-    fun getVitalsIDs(): Int {
-        return mDao.getVitalsIDs()
-    }
-
-    //Diagnose table id
+/*    //Diagnose table id
     fun insertDiagnoseIDs(diagID: DiagID) {
         mDao.insertDiagnoseIDs(diagID)
     }
@@ -92,7 +62,7 @@ class Repository(application: Application) : IRepository, IConsult {
     fun getDiagnoseIDs(): Int {
         return mDao.getDiagnoseIDs()
     }
-
+*/
 
     override fun getCurrentVitals(id: Int): Vitals {
 
@@ -298,14 +268,16 @@ class Repository(application: Application) : IRepository, IConsult {
     }
 
     fun fetchAllVitals(position: Int): LiveData<MutableList<Vitals>> {
-        val allVitals: MutableLiveData<MutableList<Vitals>> = MutableLiveData()
+        var allVital: MutableList<Vitals> = mutableListOf()
 
         firestore.collection(DCH)
             .document(position.toString())
-            .collection(VITALS).get()
+            .collection(VITALS).orderBy("date").get()
             .addOnSuccessListener { result ->
                 if (result != null) {
-                  allVitals.value = result.toObjects(Vitals::class.java)
+                    allVital = result.toObjects(Vitals::class.java)
+                    _allVitals.value = allVital
+
                 }
 
                 Log.i(TAG, "patient vitals: ${result}")
@@ -315,7 +287,67 @@ class Repository(application: Application) : IRepository, IConsult {
             }
         return allVitals
 
+
     }
+
+
+    override fun insertVitalId(id: ViDs) {
+        firestore.collection("vitalsID").document("currentId")
+            .set(id).addOnSuccessListener {
+                Log.i(TAG, "insertVitalsId: ${it}")
+            }.addOnFailureListener {
+                Log.i(TAG, "insertVitalsId: ${it.message}")
+            }
+    }
+
+    override fun getVitalsId(): MutableLiveData<Int>{
+        val id:MutableLiveData<Int> = MutableLiveData<Int>()
+
+        firestore.collection("vitalsID")
+            .document("currentId")
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null){
+                    id.value = document.toObject(ViDs::class.java)!!.vId
+
+                    Log.i(TAG, "getVitalsId: ${id}")
+
+                }
+
+            }
+        return id
+    }
+
+
+
+    //Storing and retrieving the diagnose ids
+    override fun insertDiagnoseId(id: DiagID) {
+        firestore.collection("diagnoseID").document("currentId")
+            .set(id).addOnSuccessListener {
+                Log.i(TAG, "insertDiagnoseId: ${it}")
+            }.addOnFailureListener {
+                Log.i(TAG, "insertDiagnoseId: ${it.message}")
+            }
+    }
+
+    override fun getDiagnoseId(): MutableLiveData<Int>{
+        val id:MutableLiveData<Int> = MutableLiveData<Int>()
+
+        firestore.collection("diagnoseID")
+            .document("currentId")
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null){
+                    id.value = document.toObject(DiagID::class.java)!!.diagnoseId
+
+                    Log.i(TAG, "getVitalsId: ${id}")
+
+                }
+
+            }
+        return id
+    }
+
 }
 
 /**

@@ -15,8 +15,8 @@
         <activity
             android:name=".EditBioDataActivity"
             android:theme="@style/Theme.Material3.DayNight"
-            android:parentActivityName=".datacenter.PatientsDataPageActivity"
-            android:exported="true">
+            android:exported="false"
+            android:parentActivityName=".datacenter.PatientsDataPageActivity">
         </activity>
         <activity
             android:name=".vitals.VitalsActivity"
@@ -43,21 +43,21 @@
             android:name=".datacenter.PatientsDataPageActivity"
             android:exported="true"
             android:label="@string/title_activity_patients_data_page"
-            android:launchMode="singleInstance"
+            android:launchMode="standard"
             android:parentActivityName=".ui.MainActivity" >
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

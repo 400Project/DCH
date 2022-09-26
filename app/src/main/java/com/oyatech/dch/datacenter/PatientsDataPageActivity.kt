@@ -38,11 +38,11 @@ class PatientsDataPageActivity : MainActivity() {
 val viewModel = bioViewModel
 
         val viewPager2 = binding.viewPager
-        viewPager2.adapter = TabAdapter(this, Department.WARD)
+        viewPager2.adapter = TabAdapter(this, Department.RECORDS)
         TabLayoutMediator(tablelayout, viewPager2) { tab, position ->
             run {
 
-                tab.text = title[position]
+                tab.text = title[0]
                 setTabBadges(this)
             }
         }.attach()

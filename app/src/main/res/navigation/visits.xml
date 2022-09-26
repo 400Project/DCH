@@ -15,16 +15,10 @@
         tools:layout="@layout/fragment_detail_record"
         android:label="Patient Detail"/>
     <fragment
-        android:id="@+id/prescriptionFragment"
-        android:name="com.oyatech.dch.details.PrescriptionFragment"
-        android:label="Prescriptions"
-        tools:layout="@layout/fragment_prescription" />
-    <fragment
         android:id="@+id/dignosesFragment"
         android:name="com.oyatech.dch.details.DiagnosesFragment"
         android:label="Diagnoses"
         tools:layout="@layout/fragment_dignoses" />
-
 
 
 </navigation>

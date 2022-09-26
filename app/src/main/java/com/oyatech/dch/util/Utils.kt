@@ -1,51 +1,40 @@
 package com.oyatech.dch.util
 
-import android.icu.text.TimeZoneFormat
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.room.PrimaryKey
 import java.text.SimpleDateFormat
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 object Utils {
     val calender = Calendar.getInstance()
 
-   var patientKay:Int =0
-    var previous = 0
-
-  private  var qVitalsKey = 0
- private   var qPreviousKey =0
+    var patientKay: Int = 0
 
     fun getDate(): String {
-        val sdf = SimpleDateFormat("dd/M/y")
+        val locale = Locale("en", "gh")
+        val sdf = SimpleDateFormat("dd/M/yyyy", locale)
         return sdf.format(calender.time)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getTime():String{
-val time = LocalTime.now()
-   val dtf =     DateTimeFormatter.ofPattern("HH:mm:ss")
+    fun getTime(): String {
+// Getting the current current time
+        // Getting the current current time
+        val date = Date()
 
-        return time.format(dtf)
+        // set format in 12 hours
+        val formatTime = SimpleDateFormat("h:mm aa")
+
+        val time = formatTime.format(
+            date
+        ) // changing the format of 'date'
+
+        return time
     }
 
-    fun generateHospitalNumber (primaryKey:Int):String{
+    fun generateHospitalNumber(primaryKey: Int): String {
         val year = calender.get(Calendar.YEAR)
 
 
-        return  "DCH/${primaryKey}/$year"
+        return "DCH/${primaryKey}/$year"
     }
-    fun dailyVitalKey ():Int{
 
-        qVitalsKey = (1..100).shuffled().last()
 
-        if (qVitalsKey== qPreviousKey){
-            dailyVitalKey()
-        }else
-            qPreviousKey = qVitalsKey
-
-        return qVitalsKey
-    }
 }

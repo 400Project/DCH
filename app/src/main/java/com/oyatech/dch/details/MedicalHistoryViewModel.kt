@@ -3,32 +3,38 @@ package com.oyatech.dch.details
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.oyatech.dch.database.IDiagnoseId
 import com.oyatech.dch.database.Repository
 import com.oyatech.dch.database.entities.DiagID
 import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.database.entities.Vitals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
-class MedicalHistoryViewModel(application: Application) : AndroidViewModel(application) {
+class MedicalHistoryViewModel(application: Application) : AndroidViewModel(application),IDiagnoseId {
 
     private var _repository: Repository? = null
     private val repository get() = _repository!!
 
 
-    private var _position:Int? =null
+    private var _position: Int? = null
     val position get() = _position!!
 
     private var _allDiagnosis: LiveData<MutableList<Diagnose>>? = null
     val allDiagnosis: LiveData<MutableList<Diagnose>> get() = _allDiagnosis!!
 
-    private var _listOfVitals: MutableList<Vitals> = mutableListOf()
-    val listOfVitals: MutableList<Vitals> get() = _listOfVitals
+    private var _listOfVitals: TreeMap<Int, Vitals> = TreeMap()
+    val listOfVitals: TreeMap<Int, Vitals> get() = _listOfVitals
 
 
-  private  var _currentVitals: LiveData<MutableList<Vitals>>? = null
-    val currentVitals: LiveData<MutableList<Vitals>> get()  = _currentVitals!!
+    private var _currentVitals: LiveData<MutableList<Vitals>>? = MutableLiveData()
+    val currentVitals: LiveData<MutableList<Vitals>> get() = _currentVitals!!
+
+    private var _diagnoses: TreeMap<Int, Diagnose> = TreeMap()
+    val diagnoses: TreeMap<Int, Diagnose> get() = _diagnoses
 
     init {
         _repository = Repository(application)
@@ -38,32 +44,17 @@ class MedicalHistoryViewModel(application: Application) : AndroidViewModel(appli
         _position = pos
     }
 
-    //Diagnose table id
-    fun insertDiagnoseIDs(diagID: DiagID) {
-        viewModelScope.launch {
-            repository.insertDiagnoseIDs(diagID)
-        }
-    }
-
-    fun updateDiagnoseIDs(prev: Int, current: Int) {
-        viewModelScope.launch {
-            repository.updateDiagnoseIDs(prev, current)
-        }
-    }
-
-    fun getDiagnoseIDs(): Int {
-        return repository.getDiagnoseIDs()
-    }
-
 
     fun insertDiagnoseRemote(diagnose: Diagnose) {
-        repository.insertDiagnosisRemote(diagnose)
+        viewModelScope.launch {
+            repository.insertDiagnosisRemote(diagnose)
+        }
     }
 
     fun fetchAllVitals(patientId: Int): LiveData<MutableList<Vitals>> {
 
         viewModelScope.launch {
-          Dispatchers.IO
+            Dispatchers.Default
             _currentVitals = repository.fetchAllVitals(patientId)
         }
         return currentVitals
@@ -81,16 +72,39 @@ class MedicalHistoryViewModel(application: Application) : AndroidViewModel(appli
     fun fetchDiagnosis(patientId: Int)
             : LiveData<MutableList<Diagnose>> {
         viewModelScope.launch {
-            Dispatchers.IO
+            Dispatchers.Default
             _allDiagnosis = repository.fetchDiagnosis(patientId)
         }
+
         return allDiagnosis
     }
 
-    fun getVitals():MutableList<Vitals>{
-        currentVitals.value?.forEach {
-            _listOfVitals.add(it)
+    fun setVitals() {
+        viewModelScope.launch {
+            Dispatchers.Default
+            _currentVitals?.value?.forEach {
+                _listOfVitals[it.vitalsID] = it
+            }
         }
-        return listOfVitals
     }
+
+    fun setDiagnosis() {
+        viewModelScope.launch {
+            Dispatchers.Default
+            _allDiagnosis?.value?.forEach {
+                _diagnoses[it.diagnoseID] = it
+            }
+        }
+    }
+
+    override fun insertDiagnoseId(id: DiagID) {
+        viewModelScope.launch {
+            repository.insertDiagnoseId(id)
+        }
+    }
+
+    override fun getDiagnoseId(): LiveData<Int> {
+    return    repository.getDiagnoseId()
+    }
+
 }

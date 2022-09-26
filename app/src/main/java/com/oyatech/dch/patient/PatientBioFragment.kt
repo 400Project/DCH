@@ -6,13 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import androidx.appcompat.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.FragmentPatientsBinding
@@ -24,26 +22,30 @@ import java.util.*
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class PatientBioFragment : Fragment(){
+class PatientBioFragment : Fragment() {
 
     private val PRIMARY_KEY: String = "patient_primary_key"
     private var _binding: FragmentPatientsBinding? = null
-   // val viewModel = RegisterNewPatientViewModel.viewModel
-   var primaryKey = 1;
-//    private val viewModel : RegisterNewPatientViewModel by activityViewModels()
+
+    // val viewModel = RegisterNewPatientViewModel.viewModel
+    var primaryKey = 1;
+
+    //    private val viewModel : RegisterNewPatientViewModel by activityViewModels()
 // This property is only valid between onCreateView and
 // onDestroyView.
-private val binding get() = _binding!!
-companion object{
-    val tree: TreeMap<Int,PatientBioData> = TreeMap()
-}
+    private val binding get() = _binding!!
+
+    companion object {
+        val tree: TreeMap<Int, PatientBioData> = TreeMap()
+    }
+
     private val myAdapter by lazy {
         BioDataAdapter(requireContext())
     }
     val viewModel by lazy {
         ViewModelProvider(this@PatientBioFragment)[PatientBioViewModel::class.java]
     }
-    
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,34 +56,35 @@ companion object{
         return binding.root
 
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         //populating patient data using recycleView
         val searchView = binding.search
-        Log.i("Record", "onViewCreated: ${viewModel.getAllBioData().value?.size}")
+    //    Log.i("Record", "onViewCreated: ${viewModel.getAllBioData().value?.size}")
 
         val viewModel = viewModel
 
- val myAdapter = myAdapter
+        val myAdapter = myAdapter
         val layoutManager = LinearLayoutManager(requireContext())
         binding.patientRecycleView.apply {
             setLayoutManager(layoutManager)
 
-recycleViewer()
+            recycleViewer()
 
-            }
+        }
 
         //    addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
 
 
-        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-              return true
+                return true
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-               searching(query!!)
+                searching(query!!)
 
                 return true
             }
@@ -90,14 +93,14 @@ recycleViewer()
 
 
 
-        binding.addPatient.setOnClickListener{
-            val intent = Intent(requireContext(),PatientRegistrationFormActivity::class.java)
+        binding.addPatient.setOnClickListener {
+            val intent = Intent(requireContext(), PatientRegistrationFormActivity::class.java)
             primaryKey += 1
-            intent.putExtra(PRIMARY_KEY,primaryKey)
+            intent.putExtra(PRIMARY_KEY, primaryKey)
             startActivity(intent)
 
             //clears the fragment from stack
-            Toast.makeText(context,"Click", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -121,24 +124,28 @@ recycleViewer()
                     tree[it.patientId] = it
 
                 }
-
-                myAdapter.submitList(bioData)
                 binding.patientRecycleView.adapter = myAdapter
-                primaryKey = bioData.first().patientId
+                myAdapter.submitList(bioData)
+try {
+    primaryKey = bioData.first().patientId
+}catch (e: Exception){
+    Log.i("TAG", "recycleViewer: ${e.message}")
+}
+
             }
 
         }
     }
 
 
-    fun searching(search:String){
+    fun searching(search: String) {
 
-      viewModel.searchForPatient(search).observe(viewLifecycleOwner){ bioData ->
+   /*     viewModel.searchForPatient(search).observe(viewLifecycleOwner) { bioData ->
             bioData.let {
                 myAdapter.submitList(it)
 
-          }
-        }
+            }
+        }*/
     }
 
     override fun onPause() {
@@ -148,4 +155,4 @@ recycleViewer()
     }
 
 
-    }
+}
