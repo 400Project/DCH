@@ -5,25 +5,28 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.oyatech.dch.admin.IStaff
 import com.oyatech.dch.database.entities.*
+import com.oyatech.dch.model.Staff
 
 typealias liveData = (LiveData<MutableList<Any>>)
 
 class Repository(application: Application) :
-    IRepository, IConsult, IVitalsId, IDiagnoseId {
+    IPatient, IConsult, IVitalsId, IDiagnoseId,IStaff {
 
+    private val STAFF: String = "staff"
     val TAG = Repository::class.java.simpleName
     private var _mao: IDao? = null
     private val mDao get() = _mao!!
 
     private val _allRecords: MutableLiveData<MutableList<PatientBioData>> = MutableLiveData()
     private val allRecords: LiveData<MutableList<PatientBioData>> = _allRecords!!
+
+    private val _allStaff: MutableLiveData<MutableList<Staff>> = MutableLiveData()
+    private val allStaff: LiveData<MutableList<Staff>> = _allStaff!!
 
     private val _vitalQueue: MutableLiveData<MutableList<DailyVitals>>? = MutableLiveData()
     private val vitalQueue: LiveData<MutableList<DailyVitals>> = _vitalQueue!!
@@ -46,31 +49,9 @@ class Repository(application: Application) :
         _mao = mIDao.mDao()
     }
 
-
-
-    //Vitals table id
-
-/*    //Diagnose table id
-    fun insertDiagnoseIDs(diagID: DiagID) {
-        mDao.insertDiagnoseIDs(diagID)
-    }
-
-    fun updateDiagnoseIDs(prev: Int, current: Int) {
-        mDao.updateDiagnoseIDs(prev, current)
-    }
-
-    fun getDiagnoseIDs(): Int {
-        return mDao.getDiagnoseIDs()
-    }
-*/
-
     override fun getCurrentVitals(id: Int): Vitals {
 
         return mDao.getCurrentVitals(id).last()
-    }
-
-    fun getCurrentPatientForVitals(id: Int): PatientBioData {
-        return mDao.getCurrentPatientForVitals(id).patientBioData
     }
 
 
@@ -79,16 +60,6 @@ class Repository(application: Application) :
      */
     override fun queueForVitals(dailyVitals: DailyVitals) {
         mDao.queueForVitals(dailyVitals)
-    }
-
-    /* override fun getQueueForVitals(): LiveData<MutableList<DailyVitals>> {
-
-         return mDao.getQueueForVitals()
-     }
- */
-
-    fun getCurrentQueVitals(id: Int): DailyVitals {
-        return mDao.getCurrentPatientForVitals(id)
     }
 
 
@@ -348,8 +319,37 @@ class Repository(application: Application) :
         return id
     }
 
-}
+    override fun addStaff(staff: Staff) {
+        firestore.collection(STAFF).document(staff.staffId)
+            .set(staff).addOnSuccessListener {
+                Log.i(TAG, "insertDailyVitals: ${it}")
+            }.addOnFailureListener {
+                Log.i(TAG, "insertDailyConsult: ${it.message}")
+            }
+    }
 
-/**
- * TODO: Update the details ui with appropriate vitals data
- */
+    override fun fetchStaff(): LiveData<MutableList<Staff>> {
+        var listOfRecords: MutableList<Staff> = mutableListOf()
+
+        firestore.collection(STAFF)
+            .orderBy(
+                "dateEmployed",
+                Query.Direction.DESCENDING
+            )
+            .get()
+            .addOnSuccessListener { result ->
+                if (result != null) {
+                    listOfRecords = result.toObjects(Staff::class.java)
+                    _allStaff.value = listOfRecords
+                }
+                Log.i(TAG, "fetchStaff: ${result}")
+
+            }.addOnFailureListener { exception ->
+                Log.e(TAG, "fetchStaff: ", exception)
+            }
+
+        return allStaff
+
+    }
+
+}

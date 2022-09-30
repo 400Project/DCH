@@ -9,24 +9,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:elevation="5dp">
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:maxWidth="110dp"
-                android:maxHeight="110dp"
-                android:src="@drawable/ic_medical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></ImageView>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -34,7 +25,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginBottom="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +33,7 @@
                 app:startIconDrawable="@drawable/ic_person">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/patient_firstName"
+                    android:id="@+id/staff_firstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="First Name"
@@ -60,7 +51,7 @@
                 app:startIconDrawable="@drawable/ic_person">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/patient_otherNames"
+                    android:id="@+id/staff_otherNames"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Other Names"
@@ -80,7 +71,7 @@
                 app:startIconDrawable="@drawable/ic_location">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/patient_Address"
+                    android:id="@+id/staff_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Address"
@@ -88,28 +79,28 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <EditText
-                android:id="@+id/patient_DoB"
+                android:id="@+id/staff_DoB"
                 style="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Date Of Birth"
                 android:inputType="none"
                 android:minHeight="50dp"
-                app:layout_constraintEnd_toStartOf="@id/patient_age"
+                app:layout_constraintEnd_toStartOf="@id/staff_age"
                 app:layout_constraintStart_toStartOf="parent"
 
                 app:layout_constraintTop_toBottomOf="@+id/address_layout" />
 
             <TextView
-                android:id="@+id/patient_age"
+                android:id="@+id/staff_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="30dp"
                 android:padding="5dp"
                 android:text="Age : "
-                app:layout_constraintBottom_toBottomOf="@id/patient_DoB"
+                app:layout_constraintBottom_toBottomOf="@id/staff_DoB"
                 app:layout_constraintEnd_toStartOf="@id/gender"
-                app:layout_constraintStart_toEndOf="@id/patient_DoB"
+                app:layout_constraintStart_toEndOf="@id/staff_DoB"
                 app:layout_constraintTop_toBottomOf="@id/address_layout" />
 
             <TextView
@@ -120,38 +111,49 @@
                 android:padding="5dp"
                 android:text="Sex:"
                 android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="@id/patient_age"
-                app:layout_constraintEnd_toStartOf="@id/patient_sex"
-                app:layout_constraintStart_toEndOf="@id/patient_age"
-                app:layout_constraintTop_toTopOf="@id/patient_age">
+                app:layout_constraintBottom_toBottomOf="@id/staff_age"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/staff_age"
+                app:layout_constraintTop_toTopOf="@id/staff_age">
 
             </TextView>
 
             <Spinner
-                android:id="@+id/patient_sex"
+                android:id="@+id/staff_gender"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:entries="@array/sex"
                 android:tooltipText="Sex"
-                app:layout_constraintBottom_toBottomOf="@id/patient_DoB"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/gender"
-                app:layout_constraintTop_toBottomOf="@id/address_layout"></Spinner>
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toTopOf="@id/occupation_layout"
+                app:layout_constraintEnd_toStartOf="@id/department"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/staff_DoB" />
+            <Spinner
+                android:id="@+id/department"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
 
+                android:entries="@array/department"
+                android:tooltipText="Department"
+                app:layout_constraintBottom_toTopOf="@id/occupation_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/staff_gender"
+                app:layout_constraintTop_toBottomOf="@id/staff_age" />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/occupation_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/patient_DoB"
+                app:layout_constraintTop_toBottomOf="@id/staff_gender"
                 app:startIconDrawable="@drawable/ic_occupation">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/patient_occupation"
+                    android:id="@+id/staff_role"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Occupation"
+                    android:hint="Staff Role"
                     android:inputType="textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -166,7 +168,7 @@
                 app:startIconDrawable="@drawable/ic_mobile">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/patient_mobile"
+                    android:id="@+id/staff_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Mobile Number"
@@ -174,25 +176,38 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nihs_layout"
+                android:id="@+id/email_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mobile_layout"
-                app:startIconDrawable="@drawable/ic_mobile">
+                app:layout_constraintTop_toBottomOf="@id/mobile_layout">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/patient_nhis"
+                    android:id="@+id/staff_email"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="NHIS"
-                    android:inputType="phone" />
+                    android:layout_height="match_parent"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/insurance"
+                app:layout_constraintTop_toBottomOf="@id/email_layout"
+                app:layout_constraintBottom_toTopOf="@id/recruit"
+                android:layout_width="match_parent"
+                android:hint="Insurance Number"
+                android:layout_height="match_parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/staff_insurance"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/done"
+                android:id="@+id/recruit"
                 style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -203,24 +218,11 @@
                 android:backgroundTint="@color/green"
                 android:text="Register"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/next"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nihs_layout" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/next"
-                style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:text="Next"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/done"
-                app:layout_constraintTop_toBottomOf="@id/nihs_layout" />
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/insurance" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

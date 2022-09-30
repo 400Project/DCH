@@ -21,7 +21,3 @@
         tools:layout="@layout/fragment_next_of_king" />
 
 </navigation>
-
-<!--
-TODO: I HAVE TO MAKE USE OF THIS GRAPH
--->

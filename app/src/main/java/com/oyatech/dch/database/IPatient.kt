@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import com.oyatech.dch.database.entities.DailyVitals
 import com.oyatech.dch.database.entities.PatientBioData
 
-import com.oyatech.dch.database.entities.Vitals
-
-interface IRepository {
+interface IPatient {
     //insert patient bio data into the database
 
     fun queueForVitals(dailyVitals: DailyVitals)

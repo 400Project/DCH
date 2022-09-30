@@ -62,7 +62,7 @@ class PatientBioFragment : Fragment() {
 
         //populating patient data using recycleView
         val searchView = binding.search
-    //    Log.i("Record", "onViewCreated: ${viewModel.getAllBioData().value?.size}")
+        //    Log.i("Record", "onViewCreated: ${viewModel.getAllBioData().value?.size}")
 
         val viewModel = viewModel
 
@@ -92,7 +92,6 @@ class PatientBioFragment : Fragment() {
         })
 
 
-
         binding.addPatient.setOnClickListener {
             val intent = Intent(requireContext(), PatientRegistrationFormActivity::class.java)
             primaryKey += 1
@@ -117,21 +116,25 @@ class PatientBioFragment : Fragment() {
     }
 
     private fun recycleViewer() {
-        viewModel.fetchAllRecords().observe(viewLifecycleOwner) { bioData ->
+        viewModel.fetchAllRecords().observe(viewLifecycleOwner) {
+                bioData ->
+            if (bioData.isNotEmpty())
+            {
+                binding.progressBar.visibility = View.INVISIBLE
+            }
             lifecycleScope.launch {
                 Dispatchers.Default
                 bioData.forEach {
                     tree[it.patientId] = it
-
                 }
                 binding.patientRecycleView.adapter = myAdapter
-                myAdapter.submitList(bioData)
-try {
-    primaryKey = bioData.first().patientId
-}catch (e: Exception){
-    Log.i("TAG", "recycleViewer: ${e.message}")
-}
 
+                myAdapter.submitList(bioData)
+                try {
+                    primaryKey = bioData.first().patientId
+                } catch (e: Exception) {
+                    Log.i("TAG", "recycleViewer: ${e.message}")
+                }
             }
 
         }
@@ -140,12 +143,12 @@ try {
 
     fun searching(search: String) {
 
-   /*     viewModel.searchForPatient(search).observe(viewLifecycleOwner) { bioData ->
-            bioData.let {
-                myAdapter.submitList(it)
+        /*     viewModel.searchForPatient(search).observe(viewLifecycleOwner) { bioData ->
+                 bioData.let {
+                     myAdapter.submitList(it)
 
-            }
-        }*/
+                 }
+             }*/
     }
 
     override fun onPause() {

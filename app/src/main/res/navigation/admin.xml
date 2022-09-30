@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/record_form_graph"
+    app:startDestination="@id/staffing">
+
+    <fragment
+        android:id="@+id/recruit_staff"
+        android:name="com.oyatech.dch.admin.EmployStaffFragment"
+        android:label="New Staff"
+        tools:layout="@layout/fragment_employ_staff" >
+        <action
+            android:id="@+id/action_recruit_staff_to_staffing"
+            app:destination="@id/staffing" />
+    </fragment>
+    <fragment
+        android:id="@+id/nextOfFragment"
+        android:name="com.oyatech.dch.admin.StaffFragment"
+        android:label="Next Of King"
+        tools:layout="@layout/fragment_next_of_king" />
+    <fragment
+        android:id="@+id/staffing"
+        android:name="com.oyatech.dch.admin.DchStaffFragment"
+        android:label="DCH Staff"
+        tools:layout="@layout/fragment_dch_staff" >
+        <action
+            android:id="@+id/action_staffing_to_recruit_staff"
+            app:destination="@id/recruit_staff" />
+        <action
+            android:id="@+id/action_staffing_to_createAccountFragment"
+            app:destination="@id/createAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountFragment"
+        android:name="com.oyatech.dch.admin.CreateAccountFragment"
+        android:label="Create Account"
+        tools:layout="@layout/fragment_create_account" >
+        <action
+            android:id="@+id/action_createAccountFragment_to_staffing"
+            app:destination="@id/staffing" />
+    </fragment>
+
+</navigation>

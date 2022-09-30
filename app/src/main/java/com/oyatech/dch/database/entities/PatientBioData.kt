@@ -29,7 +29,9 @@ data class PatientBioData(
     val times:String
     ){
 
-constructor():this(0,"","","","","","","","","","","","")
+constructor():this(0,"","",
+    "","","","","",
+    "","","","","")
 
 
     override fun toString(): String {

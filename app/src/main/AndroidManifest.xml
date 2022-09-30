@@ -13,42 +13,40 @@
         android:theme="@style/Theme.DCH.AppBarOverlay"
         tools:targetApi="31">
         <activity
-            android:name=".EditBioDataActivity"
-            android:theme="@style/Theme.Material3.DayNight"
+            android:name=".admin.AdminActivity"
             android:exported="false"
-            android:parentActivityName=".datacenter.PatientsDataPageActivity">
-        </activity>
+            android:label="Administration"
+            android:theme="@style/Theme.Material3.DayNight" />
+        <activity
+            android:name=".EditBioDataActivity"
+            android:exported="false"
+            android:parentActivityName=".datacenter.PatientsDataPageActivity"
+            android:theme="@style/Theme.Material3.DayNight" />
         <activity
             android:name=".vitals.VitalsActivity"
             android:exported="true"
-            android:theme="@style/Theme.Material3.DayNight"
             android:launchMode="standard"
-            android:parentActivityName=".datacenter.PatientsDataPageActivity"/>
+            android:parentActivityName=".datacenter.PatientsDataPageActivity"
+            android:theme="@style/Theme.Material3.DayNight" />
         <activity
             android:name=".details.DetailActivity"
             android:exported="false"
             android:label="Details"
             android:parentActivityName=".datacenter.PatientsDataPageActivity"
-            android:theme="@style/Theme.Material3.DayNight">
-        </activity>
+            android:theme="@style/Theme.Material3.DayNight" />
         <activity
             android:name=".recordforms.PatientRegistrationFormActivity"
             android:exported="false"
             android:label="New Patient"
-            android:theme="@style/Theme.Material3.DayNight"
             android:parentActivityName=".datacenter.PatientsDataPageActivity"
-
-            android:windowSoftInputMode="stateHidden"/>
+            android:theme="@style/Theme.Material3.DayNight"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".datacenter.PatientsDataPageActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/title_activity_patients_data_page"
             android:launchMode="standard"
-            android:parentActivityName=".ui.MainActivity" >
-
-
-
-        </activity>
+            android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
