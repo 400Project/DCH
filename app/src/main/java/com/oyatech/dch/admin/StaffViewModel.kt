@@ -1,6 +1,7 @@
 package com.oyatech.dch.admin
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,13 +10,13 @@ import com.oyatech.dch.database.Repository
 import com.oyatech.dch.model.Staff
 import kotlinx.coroutines.launch
 
-class StaffViewModel(application:Application)
-    : AndroidViewModel(application),IStaff {
-private var _repository:Repository? = null
+class StaffViewModel(application: Application) : AndroidViewModel(application), IStaff {
+    private var _repository: Repository? = null
     private val repository get() = _repository!!
-        init {
-           _repository = Repository(application)
-        }
+
+    init {
+        _repository = Repository(application)
+    }
 
     override fun addStaff(staff: Staff) {
 
@@ -26,12 +27,18 @@ private var _repository:Repository? = null
 
     override fun fetchStaff(): LiveData<MutableList<Staff>> {
 
-   var staff: LiveData<MutableList<Staff>> = MutableLiveData()
+        var staff: LiveData<MutableList<Staff>> = MutableLiveData()
         viewModelScope.launch {
-       staff =     repository.fetchStaff()
+            staff = repository.fetchStaff()
         }
-      return staff
+        return staff
     }
+
+
+    fun  getStaff(staffID: String):LiveData<Staff>{
+    return  repository.getStaff(staffID)
+    }
+
 
 
 }

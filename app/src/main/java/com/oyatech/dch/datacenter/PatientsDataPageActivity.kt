@@ -10,7 +10,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oyatech.dch.Department
 import com.oyatech.dch.R
-import com.oyatech.dch.alerts.snackForError
 import com.oyatech.dch.databinding.ActivityPatientsDataPageBinding
 import com.oyatech.dch.patient.PatientBioViewModel
 import com.oyatech.dch.ui.MainActivity
@@ -37,9 +36,8 @@ class PatientsDataPageActivity : MainActivity() {
 
         val intent = intent
         val department = intent.getStringExtra(DEPARTMENT)
-
-            if (department != null) {
-                whichDepart = whichDepartment(department)
+        if (department != null) {
+            whichDepart = whichDepartment(department)
         }
 
         /**
@@ -60,8 +58,8 @@ class PatientsDataPageActivity : MainActivity() {
                 }
             }.attach()
 
-        }catch (e:Exception){
-            Toast.makeText(this,"No department",Toast.LENGTH_LONG * 3).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, "No department", Toast.LENGTH_LONG * 3).show()
         }
 
 

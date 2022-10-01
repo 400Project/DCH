@@ -13,13 +13,9 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
-import com.oyatech.dch.alerts.emptyView
-import com.oyatech.dch.database.entities.PatientBioData
-import com.oyatech.dch.databinding.FragmentDchStaffBinding
+import com.oyatech.dch.alerts.isEmptyView
 import com.oyatech.dch.databinding.FragmentEmployStaffBinding
 import com.oyatech.dch.model.Staff
-import com.oyatech.dch.util.Utils
-import com.oyatech.dch.util.Utils.pickDate
 
 class EmployStaffFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -83,12 +79,12 @@ class EmployStaffFragment : Fragment() {
             val email = trimText(staffEmail)
             val insurance = trimText(staffInsurance)
 
-            return if ( (emptyView(staffFirstName))||
-                (emptyView(staffOtherNames))||
-                (emptyView(staffAddress))||
-                (emptyView(staffRole))||
-                (emptyView(staffMobile))||
-                (emptyView(staffEmail))){
+            return if ( (isEmptyView(staffFirstName))||
+                (isEmptyView(staffOtherNames))||
+                (isEmptyView(staffAddress))||
+                (isEmptyView(staffRole))||
+                (isEmptyView(staffMobile))||
+                (isEmptyView(staffEmail))){
                 true
             }else{
                 val staff = Staff(firstName,otherName,address,

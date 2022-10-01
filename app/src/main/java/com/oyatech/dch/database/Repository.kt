@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.oyatech.dch.admin.IStaff
 import com.oyatech.dch.database.entities.*
@@ -351,5 +352,19 @@ class Repository(application: Application) :
         return allStaff
 
     }
+
+  fun  getStaff(staffID: String):MutableLiveData<Staff>{
+      var aStaff = Staff()
+      var staff :MutableLiveData<Staff> = MutableLiveData()
+      firestore.collection(STAFF).document(staffID)
+         .get().addOnSuccessListener {
+              aStaff = it.toObject<Staff>()!!
+              staff.value = aStaff
+              Log.i(TAG, "insertDailyVitals: ${it}")
+          }.addOnFailureListener {
+              Log.i(TAG, "insertDailyVitals: ${it.message}")
+          }
+      return  staff
+  }
 
 }

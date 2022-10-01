@@ -10,9 +10,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.oyatech.dch.R
 import com.oyatech.dch.admin.AdminActivity
+import com.oyatech.dch.admin.StaffViewModel
+import com.oyatech.dch.alerts.isEmptyView
 import com.oyatech.dch.databinding.FragmentLoginBinding
 import com.oyatech.dch.datacenter.PatientsDataPageActivity
 
@@ -22,11 +25,13 @@ import com.oyatech.dch.datacenter.PatientsDataPageActivity
  */
 class LoginFragment : Fragment() {
     val TAG = LoginFragment::class.java.simpleName
-    private var staff_department:String = ""
+    private var staff_department: String = ""
     private var _binding: FragmentLoginBinding? = null
-private val DEPARTMENT = "department"
+    private val viewMode: StaffViewModel by activityViewModels()
+    private val DEPARTMENT = "department"
     private var gender = ""
-     var  department = ""
+    var department = ""
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -62,24 +67,38 @@ private val DEPARTMENT = "department"
 //Setting auto complete for users
         //    autocomplete()
 
-            binding.department.onItemSelectedListener = getStaffDepartment()
+   //     binding.department.onItemSelectedListener = getStaffDepartment()
 
         binding.login.setOnClickListener {
-if (staff_department =="Admin"){
-    startActivity(Intent(requireContext(),AdminActivity::class.java))
-}else {
-    val intent = Intent(requireContext(), PatientsDataPageActivity::class.java)
-    intent.putExtra(DEPARTMENT, staff_department)
-    startActivity(intent)
-    /*        val email = binding.staffId.text.toString().trim()
-            val password = binding.staffId.text.toString().trim()
-            if (!email.contains("@")) {
-                binding.staffId.error = "Missing @ or .com"
-
+            if (staff_department == "Admin") {
+                startActivity(Intent(requireContext(), AdminActivity::class.java))
             } else {
-   signIn(email, password)
-            }*/
-}
+
+
+                val email = binding.staffId.text.toString().trim()
+                val password = binding.staffPassword.text.toString().trim()
+               if (isEmptyView(binding.staffId)||isEmptyView(binding.staffPassword)){
+
+               }else if (!email.contains("@")) {
+                    binding.staffId.error = "Missing @ or .com"
+
+                } else {
+                    viewMode.getStaff(password).observe(viewLifecycleOwner) { staff ->
+                        val staff = staff
+                        if (staff == null) {
+                            Toast.makeText(
+                                requireContext(),
+                                "User those not exist",
+                                Toast.LENGTH_LONG * 3
+                            ).show()
+                        } else {
+             signIn(email, password)
+
+                        }
+                    }
+
+                }
+            }
         }
 
 
@@ -98,8 +117,8 @@ if (staff_department =="Admin"){
      }*/
 
 
-
-    private fun signIn(email: String, password: String) {
+    private fun signIn(email: String, password: String): Boolean {
+        var success = false
         binding.apply {
             progressBar.visibility = View.VISIBLE
             auth.signInWithEmailAndPassword(email, password)
@@ -108,13 +127,19 @@ if (staff_department =="Admin"){
                         Toast.makeText(
                             requireContext(),
                             "Sign In:${result.result.user?.email}",
-                            Toast.LENGTH_SHORT).show()
+                            Toast.LENGTH_SHORT
+                        ).show()
                         //launching an activity
-                        startActivity(Intent(requireContext(),AdminActivity::class.java))
+                        staff_department = password.substring(4, 7)
+                        val intent =
+                            Intent(requireContext(), PatientsDataPageActivity::class.java)
+                        intent.putExtra(DEPARTMENT, staff_department)
+
+                        startActivity(intent)
                     }
                 }.addOnFailureListener { failure ->
                     progressBar.visibility = View.INVISIBLE
-                noUser.visibility = View.VISIBLE
+                    noUser.visibility = View.VISIBLE
                     noUser.text = "Incorrect Credential"
                     Toast.makeText(
                         requireContext(),
@@ -122,8 +147,9 @@ if (staff_department =="Admin"){
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-
-        } }
+            return success
+        }
+    }
 
     private fun getPatientSex(): AdapterView.OnItemSelectedListener {
 //The createFromResource() method allows you to create an ArrayAdapter from the string array.
@@ -141,21 +167,30 @@ if (staff_department =="Admin"){
             )
             binding.department.adapter = arrayAdapter
 //Responding to user selection
-            val item: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(adapteView: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                    department = adapteView?.getItemAtPosition(position).toString()
-                    Log.i("Sinner", "onItemSelected: ${adapteView?.getItemAtPosition(position)}")
-                }
+            val item: AdapterView.OnItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        adapteView: AdapterView<*>?,
+                        p1: View?,
+                        position: Int,
+                        p3: Long
+                    ) {
+                        department = adapteView?.getItemAtPosition(position).toString()
+                        Log.i(
+                            "Sinner",
+                            "onItemSelected: ${adapteView?.getItemAtPosition(position)}"
+                        )
+                    }
 
-                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+                    }
                 }
-            }
             return item
 
         }
     }
 
-    private fun getStaffDepartment():AdapterView.OnItemSelectedListener {
+    private fun getStaffDepartment(): AdapterView.OnItemSelectedListener {
 //The createFromResource() method allows you to create an ArrayAdapter from the string array.
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -171,15 +206,24 @@ if (staff_department =="Admin"){
             )
             binding.department.adapter = arrayAdapter
 //Responding to user selection
-            val item: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(adapteView: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                    staff_department = adapteView?.getItemAtPosition(position).toString()
-                    Log.i("Sinner", "onItemSelected: ${adapteView?.getItemAtPosition(position)}")
-                }
+            val item: AdapterView.OnItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        adapteView: AdapterView<*>?,
+                        p1: View?,
+                        position: Int,
+                        p3: Long
+                    ) {
+                        staff_department = adapteView?.getItemAtPosition(position).toString()
+                        Log.i(
+                            "Sinner",
+                            "onItemSelected: ${adapteView?.getItemAtPosition(position)}"
+                        )
+                    }
 
-                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+                    }
                 }
-            }
             return item
 
         }
