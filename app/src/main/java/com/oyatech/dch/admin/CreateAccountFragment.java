@@ -1,6 +1,5 @@
 package com.oyatech.dch.admin;
 
-import static androidx.navigation.fragment.FragmentKt.findNavController;
 import static com.oyatech.dch.alerts.ProduceSnackbarKt.isEmptyView;
 import static com.oyatech.dch.alerts.ProduceSnackbarKt.snackForError;
 
@@ -17,7 +16,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.oyatech.dch.R;
 import com.oyatech.dch.databinding.FragmentCreateAccountBinding;
 
 public class CreateAccountFragment extends Fragment {
@@ -36,7 +34,6 @@ public class CreateAccountFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
 
 
-
     }
 
     @Override
@@ -47,7 +44,6 @@ public class CreateAccountFragment extends Fragment {
     }
 
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -56,27 +52,26 @@ public class CreateAccountFragment extends Fragment {
             String email = binding.staffEmail.getText().toString().trim();
             String password = binding.password.getText().toString().trim();
             String repeat_password = binding.repeatPassword.getText().toString().trim();
-            if(isEmptyView(binding.staffEmail)||
-            isEmptyView(binding.password)||
-            isEmptyView(binding.repeatPassword)){
-                snackForError(requireContext(),view,"Enter data please");
-            }else
-            if ((!email.isEmpty() )&& (!email.contains("@"))){
+            if (isEmptyView(binding.staffEmail) ||
+                    isEmptyView(binding.password) ||
+                    isEmptyView(binding.repeatPassword)) {
+                snackForError(requireContext(), view, "Enter data please");
+            } else if ((!email.isEmpty()) && (!email.contains("@"))) {
                 binding.staffEmail.setError("Missing @ symbol");
 
-            }else
-            if (!password.equals(repeat_password)) {
+            } else if (!password.equals(repeat_password)) {
 
                 Toast.makeText(requireContext(), "Password Not match", Toast.LENGTH_LONG * 2).show();
 
-            }else {
+            } else {
 //creating a new account to a user and signing him/her out
-              signUp(email,password);
-            signOut();
-         //      findNavController(this).navigate(R.id.staffing);
+                signUp(email, password);
+                signOut();
+                //      findNavController(this).navigate(R.id.staffing);
             }
         });
     }
+
     private void signUp(String email, String password) {
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
@@ -97,8 +92,7 @@ public class CreateAccountFragment extends Fragment {
         });
     }
 
-    private void signOut ()
-    {
+    private void signOut() {
         auth.signOut();
     }
 }

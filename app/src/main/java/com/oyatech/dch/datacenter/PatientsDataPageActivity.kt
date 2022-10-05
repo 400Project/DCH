@@ -1,21 +1,30 @@
 package com.oyatech.dch.datacenter
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
 import com.oyatech.dch.Department
+import com.oyatech.dch.DepartmentPreference
 import com.oyatech.dch.R
+import com.oyatech.dch.alerts.snackForError
 import com.oyatech.dch.databinding.ActivityPatientsDataPageBinding
 import com.oyatech.dch.patient.PatientBioViewModel
 import com.oyatech.dch.ui.MainActivity
 import com.oyatech.dch.vitals.VitalsViewModel
 
 class PatientsDataPageActivity : MainActivity() {
+    lateinit var auth:FirebaseAuth
+    private val dpPreference by lazy {
+        DepartmentPreference(this)
+    }
     val bioViewModel by lazy { ViewModelProvider(this)[PatientBioViewModel::class.java] }
     val vitalsViewModel by lazy { ViewModelProvider(this)[VitalsViewModel::class.java] }
     private var titles = mutableListOf<String>()
@@ -29,10 +38,12 @@ class PatientsDataPageActivity : MainActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
+auth = FirebaseAuth.getInstance()
         binding = ActivityPatientsDataPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+
+        val preference = dpPreference
 
         val intent = intent
         val department = intent.getStringExtra(DEPARTMENT)
@@ -73,6 +84,23 @@ class PatientsDataPageActivity : MainActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.signOut ->{
+                auth.signOut()
+                dpPreference.clearDepartment()
+                startActivity(Intent(this,MainActivity::class.java))
+                Toast.makeText(this,"Signed Out",Toast.LENGTH_LONG * 2).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this,MainActivity::class.java))
+    }
+
     //Setting the badges for the tabs due to the number of patients in the que
     private fun setTabBadges(lifecycleOwner: LifecycleOwner) {
 
@@ -105,7 +133,7 @@ class PatientsDataPageActivity : MainActivity() {
         return if (dp.equals("OPD", true)) {
             titles = title.subList(1, 2)
             Department.OPD
-        } else if (dp.equals("Record", true)) {
+        } else if (dp.equals("Rec", true)) {
             titles = title.subList(0, 1)
             Department.RECORDS
         } else if (dp.equals("IPD", true)) {

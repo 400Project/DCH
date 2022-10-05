@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.firebase.auth.FirebaseAuth
+import com.oyatech.dch.DepartmentPreference
 import com.oyatech.dch.R
 import com.oyatech.dch.admin.AdminActivity
 import com.oyatech.dch.admin.StaffViewModel
@@ -28,6 +29,9 @@ class LoginFragment : Fragment() {
     private var staff_department: String = ""
     private var _binding: FragmentLoginBinding? = null
     private val viewMode: StaffViewModel by activityViewModels()
+    private val dpPreference by lazy {
+        DepartmentPreference(requireContext())
+    }
     private val DEPARTMENT = "department"
     private var gender = ""
     var department = ""
@@ -53,8 +57,11 @@ class LoginFragment : Fragment() {
      */
     override fun onStart() {
         super.onStart()
+        val preference = dpPreference
+     staff_department =   preference.department
         val currentUser = auth.currentUser
-        if (currentUser != null) {
+        if ((staff_department.isNotEmpty()) && (currentUser != null)) {
+            intentToDataCenter(staff_department)
             Toast.makeText(requireContext(), "Signed In", Toast.LENGTH_SHORT).show()
         } else
             Toast.makeText(requireContext(), "No Account yet", Toast.LENGTH_SHORT).show()
@@ -67,13 +74,13 @@ class LoginFragment : Fragment() {
 //Setting auto complete for users
         //    autocomplete()
 
+
    //     binding.department.onItemSelectedListener = getStaffDepartment()
 
         binding.login.setOnClickListener {
             if (staff_department == "Admin") {
                 startActivity(Intent(requireContext(), AdminActivity::class.java))
             } else {
-
 
                 val email = binding.staffId.text.toString().trim()
                 val password = binding.staffPassword.text.toString().trim()
@@ -131,11 +138,8 @@ class LoginFragment : Fragment() {
                         ).show()
                         //launching an activity
                         staff_department = password.substring(4, 7)
-                        val intent =
-                            Intent(requireContext(), PatientsDataPageActivity::class.java)
-                        intent.putExtra(DEPARTMENT, staff_department)
-
-                        startActivity(intent)
+                        dpPreference?.saveDepartment(staff_department)
+                        intentToDataCenter(staff_department)
                     }
                 }.addOnFailureListener { failure ->
                     progressBar.visibility = View.INVISIBLE
@@ -149,6 +153,14 @@ class LoginFragment : Fragment() {
                 }
             return success
         }
+    }
+
+    private fun intentToDataCenter(staff_department: String) {
+        val intent =
+            Intent(requireContext(), PatientsDataPageActivity::class.java)
+        intent.putExtra(DEPARTMENT, staff_department)
+
+        startActivity(intent)
     }
 
     private fun getPatientSex(): AdapterView.OnItemSelectedListener {
