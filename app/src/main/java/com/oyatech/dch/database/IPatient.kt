@@ -4,14 +4,8 @@ import androidx.lifecycle.LiveData
 import com.oyatech.dch.database.entities.DailyVitals
 import com.oyatech.dch.database.entities.PatientBioData
 
-import com.oyatech.dch.database.entities.Vitals
-
-interface IRepository {
+interface IPatient {
     //insert patient bio data into the database
-    fun insertPatientBio(patientBioData: PatientBioData)
-    fun getAllBioData():LiveData<MutableList<PatientBioData>>
-    fun currentBio(int:Int):PatientBioData
-    fun searchForPatient(search:String):LiveData<MutableList<PatientBioData>>
 
     fun queueForVitals(dailyVitals: DailyVitals)
   //  fun getQueueForVitals(): LiveData<MutableList<DailyVitals>>
@@ -19,6 +13,7 @@ interface IRepository {
     //Firebase calls
     fun insertPatientFirestore(patientBioData: PatientBioData)
    fun fetchAllRecords(): LiveData<MutableList<PatientBioData>>
+
  ///  fun insertDailyVitals(patientBioData: PatientBioData)
 
 

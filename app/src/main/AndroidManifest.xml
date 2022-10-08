@@ -13,51 +13,50 @@
         android:theme="@style/Theme.DCH.AppBarOverlay"
         tools:targetApi="31">
         <activity
+            android:name=".admin.AdminActivity"
+            android:exported="false"
+            android:label="Administration"
+            android:launchMode="singleInstancePerTask"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.Material3.DayNight" />
+        <activity
             android:name=".EditBioDataActivity"
-            android:theme="@style/Theme.Material3.DayNight"
+            android:exported="false"
             android:parentActivityName=".datacenter.PatientsDataPageActivity"
-            android:exported="true">
-        </activity>
+            android:theme="@style/Theme.Material3.DayNight" />
         <activity
             android:name=".vitals.VitalsActivity"
             android:exported="true"
-            android:theme="@style/Theme.Material3.DayNight"
-            android:launchMode="standard"
-            android:parentActivityName=".datacenter.PatientsDataPageActivity"/>
+
+            android:parentActivityName=".datacenter.PatientsDataPageActivity"
+            android:theme="@style/Theme.Material3.DayNight" />
         <activity
             android:name=".details.DetailActivity"
             android:exported="false"
             android:label="Details"
             android:parentActivityName=".datacenter.PatientsDataPageActivity"
-            android:theme="@style/Theme.Material3.DayNight">
-        </activity>
+            android:theme="@style/Theme.Material3.DayNight" />
         <activity
             android:name=".recordforms.PatientRegistrationFormActivity"
             android:exported="false"
             android:label="New Patient"
-            android:theme="@style/Theme.Material3.DayNight"
             android:parentActivityName=".datacenter.PatientsDataPageActivity"
-
-            android:windowSoftInputMode="stateHidden"/>
+            android:theme="@style/Theme.Material3.DayNight"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".datacenter.PatientsDataPageActivity"
+            android:exported="false"
+            android:label="@string/title_activity_patients_data_page" />
+        <activity
+            android:name=".ui.MainActivity"
             android:exported="true"
-            android:label="@string/title_activity_patients_data_page"
-            android:launchMode="singleInstance"
-            android:parentActivityName=".ui.MainActivity" >
-
+            android:launchMode="standard"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        <activity
-            android:name=".ui.MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
-
         </activity>
     </application>
 

@@ -5,6 +5,7 @@
     <color name="green">#06A10C</color>
     <color name="white">#FCFDFD</color>
     <color name="light_orange">#DFCAF7</color>
-    <color name="light_purple">#ABD8FB</color>
+    <color name="light_purple">#9B92A6</color>
     <color name="light_green">#C4FBC5</color>
+    <color name="red">#F64F42</color>
 </resources>

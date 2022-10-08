@@ -1,7 +1,7 @@
 package com.oyatech.dch
 
 enum class Department {
-    RECORDS, OPD, NURSING, WARD, ADMINISTRATION
+    RECORDS, OPD, IPD, WARD, ADMINISTRATION
 }
 
 enum class Treatment {

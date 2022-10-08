@@ -12,10 +12,13 @@ import com.oyatech.dch.EditBioDataActivity
 import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.PatientParticularsCardBinding
 import com.oyatech.dch.patient.BioDataAdapter.ParticularsViewHolder
+import com.oyatech.dch.util.Utils
 
 class BioDataAdapter(context: Context) :
     ListAdapter<PatientBioData, ParticularsViewHolder>(DiffUtilCallback) {
     private var context = context
+    val todaysDate = Utils.getDate()
+    val todaysTime = Utils.getTime()
 
     inner class ParticularsViewHolder(val binding: PatientParticularsCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -27,8 +30,7 @@ class BioDataAdapter(context: Context) :
                     firstName.text = first_Name
                     otherName.text = otherNames
                     recordedBy.text ="By: Dr. Kwesi"
-                    dateRecorded.text = dates
-                    timeRecorded.text = times
+                    timeRecorded.text = showTimeOrDate(dates,times)
                     hospitalNumberTextView.text = hospitalNumber
                 }
             }
@@ -183,6 +185,40 @@ class BioDataAdapter(context: Context) :
             return oldItem == newItem
         }
 
+    }
+    fun showTimeOrDate(date: String, time: String): String {
+
+        var currentTime =todaysTime.replace(":", "").substring(0, 3).toInt()
+        var existingTime = time.replace(":", "").substring(0, 3).toInt()
+        var currentDate = todaysDate.substring(0, 2).toInt()
+        var existingDate = date.substring(0, 2).toInt()
+
+        var recordedTime = currentTime
+            .minus(
+                existingTime
+            )
+
+
+        val recordedDate = currentDate
+            .minus(
+                existingDate
+            )
+
+        when {
+            todaysDate ==  date   && recordedTime < 1 -> {
+                return "Just now"
+            }
+            todaysDate ==  date && recordedTime in 1..59 -> {
+                return "$recordedTime minutes ago"
+            }
+            todaysDate ==  date   &&  recordedTime > 60 -> {
+                return "Today, $time"
+            }
+            recordedDate == 1  -> {
+                return "Yesterday"
+            }
+        }
+        return date
     }
 
 

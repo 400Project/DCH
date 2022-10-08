@@ -7,13 +7,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.oyatech.dch.admin.IStaff
 import com.oyatech.dch.database.entities.*
+import com.oyatech.dch.model.Staff
 
 typealias liveData = (LiveData<MutableList<Any>>)
 
-class Repository(application: Application) : IRepository, IConsult {
+class Repository(application: Application) :
+    IPatient, IConsult, IVitalsId, IDiagnoseId,IStaff {
 
+    private val STAFF: String = "staff"
     val TAG = Repository::class.java.simpleName
     private var _mao: IDao? = null
     private val mDao get() = _mao!!
@@ -21,11 +26,17 @@ class Repository(application: Application) : IRepository, IConsult {
     private val _allRecords: MutableLiveData<MutableList<PatientBioData>> = MutableLiveData()
     private val allRecords: LiveData<MutableList<PatientBioData>> = _allRecords!!
 
+    private val _allStaff: MutableLiveData<MutableList<Staff>> = MutableLiveData()
+    private val allStaff: LiveData<MutableList<Staff>> = _allStaff!!
+
     private val _vitalQueue: MutableLiveData<MutableList<DailyVitals>>? = MutableLiveData()
     private val vitalQueue: LiveData<MutableList<DailyVitals>> = _vitalQueue!!
 
     private var _allDiagnosis: MutableLiveData<MutableList<Diagnose>> = MutableLiveData()
     private val allDiagnosis: LiveData<MutableList<Diagnose>> = _allDiagnosis
+
+    private var _allVitals: MutableLiveData<MutableList<Vitals>> = MutableLiveData()
+    private val allVitals: LiveData<MutableList<Vitals>> = _allVitals
 
     private val firestore = Firebase.firestore
     private val DCH = "dch"
@@ -39,68 +50,9 @@ class Repository(application: Application) : IRepository, IConsult {
         _mao = mIDao.mDao()
     }
 
-
-    /**
-     * The Patient Bio data table for all records
-     */
-    override fun insertPatientBio(patientBioData: PatientBioData) {
-        mDao.insertBioData(patientBioData)
-    }
-
-    override fun getAllBioData(): LiveData<MutableList<PatientBioData>> {
-
-        return mDao.getAllBioData()
-    }
-
-    override fun currentBio(int: Int): PatientBioData {
-        return mDao.allPatients(int)
-    }
-
-    override fun searchForPatient(search: String): LiveData<MutableList<PatientBioData>> {
-        return mDao.searchForPatient(search)
-    }
-
-    /**
-     * The Whole Vitals table that contains all vitals of the patient records
-     */
-    fun insertVitals(vitals: Vitals) {
-        mDao.insertVitals(vitals)
-    }
-
-    //Vitals table id
-    fun insertVitalsIDs(vitals: ViDs) {
-        mDao.insertVitalsIDs(vitals)
-    }
-
-    fun updateVitalsIDs(prev: Int, current: Int) {
-        mDao.updateVitalsIDs(prev, current)
-    }
-
-    fun getVitalsIDs(): Int {
-        return mDao.getVitalsIDs()
-    }
-
-    //Diagnose table id
-    fun insertDiagnoseIDs(diagID: DiagID) {
-        mDao.insertDiagnoseIDs(diagID)
-    }
-
-    fun updateDiagnoseIDs(prev: Int, current: Int) {
-        mDao.updateDiagnoseIDs(prev, current)
-    }
-
-    fun getDiagnoseIDs(): Int {
-        return mDao.getDiagnoseIDs()
-    }
-
-
     override fun getCurrentVitals(id: Int): Vitals {
 
         return mDao.getCurrentVitals(id).last()
-    }
-
-    fun getCurrentPatientForVitals(id: Int): PatientBioData {
-        return mDao.getCurrentPatientForVitals(id).patientBioData
     }
 
 
@@ -109,16 +61,6 @@ class Repository(application: Application) : IRepository, IConsult {
      */
     override fun queueForVitals(dailyVitals: DailyVitals) {
         mDao.queueForVitals(dailyVitals)
-    }
-
-    /* override fun getQueueForVitals(): LiveData<MutableList<DailyVitals>> {
-
-         return mDao.getQueueForVitals()
-     }
- */
-
-    fun getCurrentQueVitals(id: Int): DailyVitals {
-        return mDao.getCurrentPatientForVitals(id)
     }
 
 
@@ -298,14 +240,16 @@ class Repository(application: Application) : IRepository, IConsult {
     }
 
     fun fetchAllVitals(position: Int): LiveData<MutableList<Vitals>> {
-        val allVitals: MutableLiveData<MutableList<Vitals>> = MutableLiveData()
+        var allVital: MutableList<Vitals> = mutableListOf()
 
         firestore.collection(DCH)
             .document(position.toString())
-            .collection(VITALS).get()
+            .collection(VITALS).orderBy("date").get()
             .addOnSuccessListener { result ->
                 if (result != null) {
-                  allVitals.value = result.toObjects(Vitals::class.java)
+                    allVital = result.toObjects(Vitals::class.java)
+                    _allVitals.value = allVital
+
                 }
 
                 Log.i(TAG, "patient vitals: ${result}")
@@ -315,9 +259,115 @@ class Repository(application: Application) : IRepository, IConsult {
             }
         return allVitals
 
-    }
-}
 
-/**
- * TODO: Update the details ui with appropriate vitals data
- */
+    }
+
+
+    override fun insertVitalId(id: ViDs) {
+        firestore.collection("vitalsID").document("currentId")
+            .set(id).addOnSuccessListener {
+                Log.i(TAG, "insertVitalsId: ${it}")
+            }.addOnFailureListener {
+                Log.i(TAG, "insertVitalsId: ${it.message}")
+            }
+    }
+
+    override fun getVitalsId(): MutableLiveData<Int>{
+        val id:MutableLiveData<Int> = MutableLiveData<Int>()
+
+        firestore.collection("vitalsID")
+            .document("currentId")
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null){
+                    id.value = document.toObject(ViDs::class.java)!!.vId
+
+                    Log.i(TAG, "getVitalsId: ${id}")
+
+                }
+
+            }
+        return id
+    }
+
+
+
+    //Storing and retrieving the diagnose ids
+    override fun insertDiagnoseId(id: DiagID) {
+        firestore.collection("diagnoseID").document("currentId")
+            .set(id).addOnSuccessListener {
+                Log.i(TAG, "insertDiagnoseId: ${it}")
+            }.addOnFailureListener {
+                Log.i(TAG, "insertDiagnoseId: ${it.message}")
+            }
+    }
+
+    override fun getDiagnoseId(): MutableLiveData<Int>{
+        val id:MutableLiveData<Int> = MutableLiveData<Int>()
+
+        firestore.collection("diagnoseID")
+            .document("currentId")
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null){
+                    id.value = document.toObject(DiagID::class.java)!!.diagnoseId
+
+                    Log.i(TAG, "getVitalsId: ${id}")
+
+                }
+
+            }
+        return id
+    }
+
+    override fun addStaff(staff: Staff) {
+        firestore.collection(STAFF).document(staff.staffId)
+            .set(staff).addOnSuccessListener {
+                Log.i(TAG, "insertDailyVitals: ${it}")
+            }.addOnFailureListener {
+                Log.i(TAG, "insertDailyConsult: ${it.message}")
+            }
+    }
+
+    override fun fetchStaff(): LiveData<MutableList<Staff>> {
+        var listOfRecords: MutableList<Staff> = mutableListOf()
+
+        firestore.collection(STAFF)
+            .orderBy(
+                "dateEmployed",
+                Query.Direction.DESCENDING
+            )
+            .get()
+            .addOnSuccessListener { result ->
+                if (result != null) {
+                    listOfRecords = result.toObjects(Staff::class.java)
+                    _allStaff.value = listOfRecords
+                }
+                Log.i(TAG, "fetchStaff: ${result}")
+
+            }.addOnFailureListener { exception ->
+                Log.e(TAG, "fetchStaff: ", exception)
+            }
+
+        return allStaff
+
+    }
+
+  fun  getStaff(staffID: String):MutableLiveData<Staff>{
+      var aStaff = Staff()
+      val staff :MutableLiveData<Staff> = MutableLiveData()
+      firestore.collection(STAFF).document(staffID)
+         .get().addOnSuccessListener {
+              if (it.exists()) {
+                  aStaff = it.toObject<Staff>()!!
+                  staff.value = aStaff
+                  Log.i(TAG, "insertDailyVitals: ${it}")
+              }
+
+          }.addOnFailureListener {
+              Log.i(TAG, "insertDailyVitals: ${it.message}")
+          }
+      return  staff
+  }
+
+}

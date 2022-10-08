@@ -23,7 +23,8 @@ class VitalsAdapter():ListAdapter<PatientBioData,
         this.context = context
     }
 
-    inner class VitalsViewHolder(var vitalLayout:PatientParticularsCardBinding):RecyclerView.ViewHolder(vitalLayout.root){
+    inner class VitalsViewHolder(var vitalLayout:PatientParticularsCardBinding)
+        :RecyclerView.ViewHolder(vitalLayout.root){
 
         fun binder(patientBioData: PatientBioData){
             vitalLayout.firstName.text = patientBioData.first_Name

@@ -463,7 +463,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/pricipal_diagnosis"
+                        android:id="@+id/principal_diagnosis"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Principal Diagnosis"

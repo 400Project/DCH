@@ -92,17 +92,4 @@ val viewModel= viewModel
 
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(PRIMARY_KEY,primaryKey)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-
-        super.onRestoreInstanceState(savedInstanceState)
-   primaryKey =     savedInstanceState.getInt(PRIMARY_KEY)
-        Log.i("OnSave", "onSaveInstance: is called")
-
-
-    }
 }

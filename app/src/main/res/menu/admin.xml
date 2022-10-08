@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/new_account"
+        android:title="@string/create_account">
+    </item>  <item
+        android:id="@+id/dch_data"
+        android:title="@string/patient_data">
+    </item>
+    <item
+        android:id="@+id/signOut"
+        android:title="@string/sign_out">
+    </item>
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings" />
+    <item
+        android:id="@+id/statistics"
+        android:title="@string/statistics" />
+</menu>

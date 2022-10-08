@@ -1,24 +1,22 @@
 package com.oyatech.dch.details
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.os.bundleOf
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.oyatech.dch.R
-import com.oyatech.dch.consultations.ConsultationViewModel
 import com.oyatech.dch.database.entities.Diagnose
-import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.database.entities.Vitals
 import com.oyatech.dch.databinding.FragmentDetailRecordBinding
-import com.oyatech.dch.patient.PatientBioViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -32,9 +30,9 @@ class DetailRecordFragment : Fragment() {
     val binding get() = _binding!!
 
     val viewModel  : MedicalHistoryViewModel by activityViewModels()
-
-
-    private val showMore = arrayListOf(false,false,false)
+    var diagnoseId = 0
+    private var _listOfVitals: TreeMap<Int, Vitals> = TreeMap()
+    val listOfVitals: TreeMap<Int, Vitals> get() = _listOfVitals
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,25 +47,70 @@ class DetailRecordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val menuProvider: MenuHost = requireActivity()
 
-        var diagnoseId = 0
+
         val bundle = this.arguments
         if (bundle != null){
             diagnoseId = bundle.getInt("diagnoseId",0)
         }
-        MedicalHistoryFragment.diagnosis.get(diagnoseId)?.let { bindToDiagnose(it) }
 
+        viewModel.setPosition(viewModel.position)
 
-      //val diagnose = id?.let { viewModel.allDiagnosis.}!!
+        viewModel.apply {
+            //fetching all the vitals and the diagnosis of a patient
 
-      //  bindDataToViews(vitals)
+            setDiagnosis()
+            val di = diagnoses[diagnoseId]!!
 
-    //    bindToDiagnose(viewModel.diagnose)
+          setPosition(di.patientId)
+            bindToDiagnose(di)
+            fetchAllVitals(position).value?.forEach { vitals ->
+                listOfVitals[vitals.vitalsID] = vitals
+            }
+            listOfVitals[di.vitalsID]?.let { bindDataToViews(it) }
+
+        }
+
         binding.patientDiagnosisLayout.setOnClickListener{
        Toast.makeText(context, "Click",Toast.LENGTH_SHORT).show()
         }
 
 
+        menuProvider.addMenuProvider(object :MenuProvider{
+            /**
+             * Called by the [MenuHost] to allow the [MenuProvider]
+             * to inflate [MenuItem]s into the menu.
+             *
+             * @param menu         the menu to inflate the new menu items into
+             * @param menuInflater the inflater to be used to inflate the updated menu
+             */
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.visits,menu)
+            }
+
+            /**
+             * Called by the [MenuHost] when a [MenuItem] is selected from the menu.
+             *
+             * @param menuItem the menu item that was selected
+             * @return `true` if the given menu item is handled by this menu provider,
+             * `false` otherwise
+             */
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.vital -> {
+                        val bundle = Bundle()
+                        bundle.putInt("editDiagnose",diagnoseId)
+                        findNavController().navigate(R.id.dignosesFragment,bundle)
+                        true
+                    }
+                    else -> {
+                        false
+                    }
+                }
+            }
+//a state that determines when menu should be inflated
+        },viewLifecycleOwner,Lifecycle.State.RESUMED)
     }
 
 
@@ -92,6 +135,20 @@ class DetailRecordFragment : Fragment() {
         _binding = null
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        inflater.inflate(R.menu.visits, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.vital -> findNavController().navigate(R.id.dignosesFragment)
+        }
+        return true
+    }
  private  fun bindDataToViews(vitals:Vitals){
         binding.apply {
             with(vitals){
@@ -112,6 +169,7 @@ class DetailRecordFragment : Fragment() {
                 principalDiagnose.text = principal
                 additionalDiagnosis.text = additional
                 dateDiagnose.text = date
+                patientPrescription.text = prescription
 
             }
         }

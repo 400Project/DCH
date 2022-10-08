@@ -1,6 +1,5 @@
 package com.oyatech.dch.recordforms
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
@@ -16,14 +15,11 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.util.rangeTo
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.firestore.FirebaseFirestore
 import com.oyatech.dch.R
+import com.oyatech.dch.alerts.isEmptyView
 import com.oyatech.dch.patient.PatientBioViewModel
 import com.oyatech.dch.databinding.FragmentBioDataBinding
 import com.oyatech.dch.datacenter.PatientsDataPageActivity
@@ -81,8 +77,10 @@ val myViewModel = viewModel
             if (age>100){
                 binding.patientDoB.setError("Select Date of Birth")
                 binding.patientAge.text = " yrs"
-            }else
-            binding.patientAge.text = age.toString()+"yrs"
+            }else{
+                binding.patientAge.text = age.toString()+"yrs"
+
+            }
         }
 
         binding.patientSex.onItemSelectedListener = getPatientSex()
@@ -95,9 +93,11 @@ binding.next.setOnClickListener {
 
         //register new patient to the hospital records database
         binding.done.setOnClickListener {
-            addNewPatient()
-            startActivity(Intent(this.context,PatientsDataPageActivity::class.java))
-            activity?.finish()
+    if (!addNewPatient()){
+        startActivity(Intent(this.context,PatientsDataPageActivity::class.java))
+        activity?.finish()
+    }
+
         }
     }
 
@@ -132,8 +132,7 @@ binding.next.setOnClickListener {
     }
 
     //Creating new patientBioData object
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun addNewPatient() {
+    private fun addNewPatient():Boolean {
 
         with(binding){
 
@@ -150,23 +149,30 @@ binding.next.setOnClickListener {
             val occupation=patientOccupation.text.toString().trim()
             val mobile =patientMobile.text.toString().trim()
             val nhis =patientNhis.text.toString().trim()
+           if ( (isEmptyView(patientFirstName))||
+               (isEmptyView(patientOtherNames))||
+               (isEmptyView(patientAddress))||
+               (isEmptyView(patientOccupation))||
+               (isEmptyView(patientMobile))){
+               return true
+           }else{
+               val patientBioData = PatientBioData(primaryKey
+                   ,hospitalNumber,
+                   firstName, otherName,
+                   address,dob,age,sex,
+                   occupation,mobile,nhis,date,
+                   Utils.getTime())
 
-                val patientBioData = PatientBioData(primaryKey
-                    ,hospitalNumber,
-                    firstName, otherName,
-                    address,dob,age,sex,
-                    occupation,mobile,nhis,date,
-                    Utils.getTime())
-
-            viewModel.insertPatientFirestore(patientBioData)
-            Toast.makeText(requireContext(),"Patient Added",Toast.LENGTH_SHORT).show()
+               viewModel.insertPatientFirestore(patientBioData)
+               Toast.makeText(requireContext(),"$firstName Added",Toast.LENGTH_SHORT).show()
+return  false
+           }
 
         }
 
     }
 
     //Getting the date from the date picker
-    @SuppressLint("SuspiciousIndentation")
     private fun pickDate() {
 
         val year = calender.get(Calendar.YEAR)
@@ -179,8 +185,10 @@ binding.next.setOnClickListener {
           binding.patientDoB.setText("$day/$monthOfBirth/$year")
             if (year<1910){
                 binding.patientDoB.error = "Select DOB"
-            }else
-            binding.patientAge.text = (calender.get(Calendar.YEAR)-year).toString()+"yrs"
+            }else{
+                binding.patientAge.text = (calender.get(Calendar.YEAR)-year).toString()+"yrs"
+
+            }
       },year,month,day).show()
 
     }
@@ -220,4 +228,6 @@ binding.next.setOnClickListener {
 primaryKey
         super.onPause()
     }
+
+
 }

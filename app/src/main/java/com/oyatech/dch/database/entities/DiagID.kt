@@ -6,4 +6,4 @@ import androidx.room.PrimaryKey
 @Entity
 data class DiagID(
     @PrimaryKey
-    var diagnoseID:Int =0 )
+    var diagnoseId:Int =0 )

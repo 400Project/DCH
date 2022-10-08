@@ -57,9 +57,11 @@ val context = context
         holder.apply {
             itemView.setOnClickListener {
                 val diagnoseId = getItem(adapterPosition).diagnoseID
+                val vitalId = adapterPosition
 
                 val bundle = Bundle()
                 bundle.putInt("diagnoseId",diagnoseId)
+                bundle.putInt("vitalsId",vitalId)
 fragment.findNavController().navigate(R.id.detailRecordFragment,bundle)
                 Log.i("MediHistory", "onBindViewHolder: $bundle")
 

@@ -7,4 +7,4 @@ import com.oyatech.dch.util.Utils
 @Entity
 data class ViDs(
     @PrimaryKey
-    var vitalsID:Int =0 )
+    var vId:Int =0 )

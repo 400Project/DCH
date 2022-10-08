@@ -1,25 +1,34 @@
 package com.oyatech.dch.datacenter
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import androidx.lifecycle.LifecycleOwner
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oyatech.dch.Department
+import com.oyatech.dch.DepartmentPreference
 import com.oyatech.dch.R
-import com.oyatech.dch.patient.PatientBioViewModel
+import com.oyatech.dch.alerts.snackForError
 import com.oyatech.dch.databinding.ActivityPatientsDataPageBinding
+import com.oyatech.dch.patient.PatientBioViewModel
 import com.oyatech.dch.ui.MainActivity
 import com.oyatech.dch.vitals.VitalsViewModel
 
 class PatientsDataPageActivity : MainActivity() {
-    val bioViewModel by lazy {  ViewModelProvider(this)[PatientBioViewModel::class.java] }
+    private val dpPreference by lazy {
+        DepartmentPreference(this)
+    }
+    val bioViewModel by lazy { ViewModelProvider(this)[PatientBioViewModel::class.java] }
     val vitalsViewModel by lazy { ViewModelProvider(this)[VitalsViewModel::class.java] }
-    private val title = arrayListOf( "RECORDS","VITALS","CONSULTATION", "WARDS", "DISPENSARY", "PHARMACY")
+    private var titles = mutableListOf<String>()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityPatientsDataPageBinding
+    private val DEPARTMENT = "department"
+    private var whichDepart: Department? = null
 
     //   private val viewModel: RegisterNewPatientViewModel by viewModels()
     private lateinit var navController: NavController
@@ -27,34 +36,42 @@ class PatientsDataPageActivity : MainActivity() {
 
         super.onCreate(savedInstanceState)
 
+
         binding = ActivityPatientsDataPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+
+        val preference = dpPreference
+
+        val department = preference.department
+
+        if (department != null) {
+            whichDepart = whichDepartment(department)
+        }
+
         /**
          * Create a tab layout with PatientBioFragment, Consultation, PharmacyFragment etc
          */
 
         val tablelayout = binding.tabLayout
-val viewModel = bioViewModel
+        val viewModel = bioViewModel
 
         val viewPager2 = binding.viewPager
-        viewPager2.adapter = TabAdapter(this, Department.WARD)
-        TabLayoutMediator(tablelayout, viewPager2) { tab, position ->
-            run {
+        try {
+            viewPager2.adapter = TabAdapter(this, whichDepart!!)
 
-                tab.text = title[position]
-                setTabBadges(this)
-            }
-        }.attach()
-        // val navController = findNavController(R.id.nav_host_fragment_content_patients_data_page)
-        /*  appBarConfiguration = AppBarConfiguration(navController.graph)
-          setupActionBarWithNavController(navController, appBarConfiguration)
+            TabLayoutMediator(tablelayout, viewPager2) { tab, position ->
+                run {
 
-          binding.fab.setOnClickListener { view ->
-              Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                  .setAnchorView(R.id.fab)
-                  .setAction("Action", null).show()
-          }*/
+                    tab.text = titles[position]
+                  //  setTabBadges()
+                }
+            }.attach()
+
+        } catch (e: Exception) {
+            Toast.makeText(this, "No department", Toast.LENGTH_LONG * 3).show()
+        }
+
 
     }
 
@@ -65,24 +82,60 @@ val viewModel = bioViewModel
 
         return true
     }
-//Setting the badges for the tabs due to the number of patients in the que
-    private fun setTabBadges(lifecycleOwner: LifecycleOwner) {
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.signOut ->{
+                auth.signOut()
+                dpPreference.clearDepartment()
+                startActivity(Intent(this,MainActivity::class.java))
+
+                Toast.makeText(this,"Signed Out",Toast.LENGTH_LONG * 2).show()
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 
-    lifecycle
+    //Setting the badges for the tabs due to the number of patients in the que
+    private fun setTabBadges() {
+
+
         with(binding.tabLayout) {
 
-            bioViewModel.fetchAllRecords().observe(this@PatientsDataPageActivity){totalRecord ->
+            bioViewModel.fetchAllRecords().observe(this@PatientsDataPageActivity) { totalRecord ->
                 totalRecord.size.also {
                     getTabAt(0)?.orCreateBadge?.number = it
                 }
             }
-            vitalsViewModel.fetchDailyVitals().observe(this@PatientsDataPageActivity){ waitingForVital ->
-                waitingForVital.size.also {
-                    getTabAt(1)?.orCreateBadge?.number = it
+            vitalsViewModel.fetchDailyVitals()
+                .observe(this@PatientsDataPageActivity) { waitingForVital ->
+                    waitingForVital.size.also {
+                        getTabAt(1)?.orCreateBadge?.number = it
+                    }
                 }
-            }
+
         }
 
+    }
+
+
+    private fun whichDepartment(dp: String): Department? {
+        val title =
+            arrayListOf("RECORDS", "VITALS", "CONSULTATION", "WARDS", "DISPENSARY", "PHARMACY")
+        return if (dp.equals("OPD", true)) {
+            titles = title.subList(1, 2)
+            Department.OPD
+        } else if (dp.equals("Rec", true)) {
+            titles = title.subList(0, 1)
+            Department.RECORDS
+        } else if (dp.equals("IPD", true)) {
+            titles = title.subList(1, 4)
+            Department.IPD
+        } else if (dp.equals("Adm", true)) {
+            titles = title
+            Department.ADMINISTRATION
+        } else null
     }
 }

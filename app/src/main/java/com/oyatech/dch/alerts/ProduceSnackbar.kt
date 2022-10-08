@@ -1,0 +1,73 @@
+package com.oyatech.dch.alerts
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.content.Intent.ACTION_DIAL
+import android.content.Intent.ACTION_VIEW
+import android.net.Uri
+
+import android.view.View
+import android.widget.Toast
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
+import com.oyatech.dch.R
+
+//context extension method that produces snackbar for a feedback
+public fun Context.snackForError(view: View, errorMessage: String) {
+    Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG * 3)
+        .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+        .setBackgroundTint(resources.getColor(R.color.light_green))
+        .show()
+}
+
+//Empty EditText checker
+public fun isEmptyView(view: TextInputEditText): Boolean {
+    if (view.text!!.isEmpty()) {
+        view.error = "Please Enter data"
+        return true
+    } else
+        return false
+}
+
+//An intent to WhatsApp chat
+public fun Context.whatsApp() {
+    val url = buildString {
+        append("https://api.whatsapp.com/send?phone=$+233242663981")
+    }
+    val i = Intent(ACTION_VIEW)
+    i.data = Uri.parse(url)
+    startActivity(i)
+}
+
+//a call intent from likely patient of the hospital
+fun Context.call() {
+    val callIntent = Intent(ACTION_DIAL).apply {
+        data = Uri.parse(getString(R.string.call))
+    }
+    if (callIntent.resolveActivity(this.packageManager) != null) {
+        this.startActivity(callIntent)
+    }
+}
+
+//a feedback toast for most actions
+fun Context.toaster(ms: String) {
+    Toast.makeText(
+        this,
+        ms,
+        Toast.LENGTH_LONG * 3
+    ).show()
+}
+//intent to show dch location through google map
+fun Context.location(){
+    val callIntent = Intent(ACTION_VIEW).apply {
+        data = Uri.parse(getString(R.string.goe_location))
+    }
+    if (callIntent.resolveActivity(this.packageManager) != null) {
+        this.startActivity(callIntent)
+    }
+}
+
+
+
