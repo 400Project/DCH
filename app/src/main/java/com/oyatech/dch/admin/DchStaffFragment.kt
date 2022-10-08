@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.FragmentDchStaffBinding
 import com.oyatech.dch.datacenter.PatientsDataPageActivity
@@ -19,6 +20,7 @@ class DchStaffFragment : Fragment() {
     private var _binding: FragmentDchStaffBinding? = null
     private val binding get() = _binding!!
     val viewModel: StaffViewModel by activityViewModels()
+    lateinit var auth:FirebaseAuth
     private val DEPARTMENT = "department"
     lateinit var layout: LinearLayoutManager
 
@@ -41,7 +43,7 @@ class DchStaffFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val menuProvider: MenuHost = requireActivity()
         layout = LinearLayoutManager(requireContext())
-
+auth = FirebaseAuth.getInstance()
         val myAdapter = mAdapter
 
 
@@ -77,7 +79,7 @@ class DchStaffFragment : Fragment() {
                     }
                     R.id.dch_data -> {
                         val intent = Intent(requireContext(), PatientsDataPageActivity::class.java)
-                        intent.putExtra(DEPARTMENT,"Admin")
+                        intent.putExtra(DEPARTMENT,"Adm")
                         requireContext().startActivity(intent
                         )
                         true
@@ -85,9 +87,12 @@ class DchStaffFragment : Fragment() {
                     R.id.settings -> {
                         true
                     }
-                    else -> {
-                        false
+                    R.id.signOut -> {
+                        auth.signOut()
+                        activity?.finish()
+                        return true
                     }
+                    else -> {return false}
                 }
             }
 //a state that determines when menu should be inflated

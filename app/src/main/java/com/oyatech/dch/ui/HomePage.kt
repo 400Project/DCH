@@ -34,10 +34,6 @@ class HomePage : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.staffPortal.setOnClickListener {
-            findNavController().navigate(R.id.action_HomePageFragment_to_LoginFragment)
-            Toast.makeText(context,"Click",Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun onDestroyView() {

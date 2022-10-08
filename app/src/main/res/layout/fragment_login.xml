@@ -24,7 +24,7 @@
                 style="@style/TextAppearance.AppCompat.Display3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="10dp"
                 android:gravity="start"
                 android:text="DCH"
                 app:layout_constraintStart_toStartOf="parent"
@@ -33,9 +33,9 @@
             <ImageView
                 android:id="@+id/doc_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="10dp"
-                android:minHeight="100dp"
+                android:layout_height="250dp"
+
+                android:minHeight="150dp"
                 android:scaleType="centerCrop"
 
                 android:src="@drawable/ic_image_doc"
@@ -54,30 +54,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/department"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:entries="@array/department"
-                android:tooltipText="Department"
-                app:layout_constraintBottom_toTopOf="@id/user_id"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/doc_image" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/user_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+
                 android:layout_marginEnd="20dp"
                 android:elevation="@dimen/cardview_default_elevation"
                 app:layout_constraintBottom_toTopOf="@id/password_layout"
-                app:layout_constraintEnd_toEndOf="@id/department"
-                app:layout_constraintStart_toStartOf="@id/department"
-                app:layout_constraintTop_toBottomOf="@id/department">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/progressBar">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/staff_Id"
@@ -118,7 +106,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text=""
                 android:textColor="@color/red"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/login"
@@ -148,8 +135,9 @@
                 android:id="@+id/forget_password"
                 android:clickable="true"
                 android:minHeight="48dp"
-                android:text="Forget Passward? Reset"
-                android:textColor="@color/purple_500"
+                android:textStyle="bold"
+                android:text="Forget Password?\nContact Admin"
+
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/login"

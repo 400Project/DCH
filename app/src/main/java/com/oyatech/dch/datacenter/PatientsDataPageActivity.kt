@@ -21,7 +21,6 @@ import com.oyatech.dch.ui.MainActivity
 import com.oyatech.dch.vitals.VitalsViewModel
 
 class PatientsDataPageActivity : MainActivity() {
-    lateinit var auth:FirebaseAuth
     private val dpPreference by lazy {
         DepartmentPreference(this)
     }
@@ -38,15 +37,16 @@ class PatientsDataPageActivity : MainActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-auth = FirebaseAuth.getInstance()
+
+
         binding = ActivityPatientsDataPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
         val preference = dpPreference
 
-        val intent = intent
-        val department = intent.getStringExtra(DEPARTMENT)
+        val department = preference.department
+
         if (department != null) {
             whichDepart = whichDepartment(department)
         }
@@ -139,7 +139,7 @@ auth = FirebaseAuth.getInstance()
         } else if (dp.equals("IPD", true)) {
             titles = title.subList(1, 4)
             Department.NURSING
-        } else if (dp.equals("Admin", true)) {
+        } else if (dp.equals("Adm", true)) {
             titles = title
             Department.ADMINISTRATION
         } else null

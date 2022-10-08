@@ -6,11 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".patient.PatientBioFragment">
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll_search"
+    <ImageView
+        android:id="@+id/no_medicals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/norecord"/>
+    <TextView
+        android:id="@+id/noMedic"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="200dp"
+        android:text="No Patient Record"
+        app:layout_constraintBottom_toTopOf="@id/no_medicals"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.appcompat.widget.SearchView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,7 +41,6 @@
             app:iconifiedByDefault="false">
         </androidx.appcompat.widget.SearchView>
 
-    </androidx.core.widget.NestedScrollView>
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -34,17 +51,18 @@
         app:layout_constraintTop_toTopOf="parent"></ProgressBar>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/patientRecycleView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/scroll_search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginBottom="20dp"
-            tools:listitem="@layout/patient_particulars_card" />
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/patientRecycleView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search"
+        app:layout_constraintVertical_bias="1.0"
+        tools:listitem="@layout/patient_particulars_card" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"

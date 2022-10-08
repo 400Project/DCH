@@ -120,7 +120,12 @@ class PatientBioFragment : Fragment() {
                 bioData ->
             if (bioData.isNotEmpty())
             {
-                binding.progressBar.visibility = View.INVISIBLE
+                binding.apply {
+                    progressBar.visibility = View.INVISIBLE
+                    noMedicals.visibility = View.INVISIBLE
+                    noMedic.visibility = View.INVISIBLE
+                }
+
             }
             lifecycleScope.launch {
                 Dispatchers.Default

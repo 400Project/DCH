@@ -1,5 +1,6 @@
 package com.oyatech.dch.admin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.oyatech.dch.R
 import com.oyatech.dch.databinding.ActivityAdminBinding
+import com.oyatech.dch.ui.MainActivity
 
 class AdminActivity : AppCompatActivity() {
 
@@ -34,5 +36,12 @@ class AdminActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
 
         return navController.navigateUp()|| super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }

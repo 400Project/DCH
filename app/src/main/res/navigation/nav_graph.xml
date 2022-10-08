@@ -19,4 +19,9 @@
         android:name="com.oyatech.dch.ui.LoginFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_login"/>
+    <fragment
+        android:id="@+id/servicesFragment"
+        android:name="com.oyatech.dch.ui.ServicesFragment"
+        android:label="Services"
+        tools:layout="@layout/fragment_services" />
 </navigation>

@@ -1,4 +1,5 @@
 <resources>
-
+<dimen name="services_margins">10dp</dimen>
+<dimen name="services_text">30dp</dimen>
 
 </resources>

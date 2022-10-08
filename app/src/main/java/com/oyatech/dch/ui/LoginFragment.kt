@@ -55,10 +55,10 @@ class LoginFragment : Fragment() {
      * tied to [Activity.onStart] of the containing
      * Activity's lifecycle.
      */
-    override fun onStart() {
+  /*  override fun onStart() {
         super.onStart()
         val preference = dpPreference
-     staff_department =   preference.department
+        staff_department = preference.department
         val currentUser = auth.currentUser
         if ((staff_department.isNotEmpty()) && (currentUser != null)) {
             intentToDataCenter(staff_department)
@@ -66,7 +66,7 @@ class LoginFragment : Fragment() {
         } else
             Toast.makeText(requireContext(), "No Account yet", Toast.LENGTH_SHORT).show()
 
-    }
+    }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -75,38 +75,21 @@ class LoginFragment : Fragment() {
         //    autocomplete()
 
 
-   //     binding.department.onItemSelectedListener = getStaffDepartment()
+        //     binding.department.onItemSelectedListener = getStaffDepartment()
 
         binding.login.setOnClickListener {
-            if (staff_department == "Admin") {
-                startActivity(Intent(requireContext(), AdminActivity::class.java))
-            } else {
 
                 val email = binding.staffId.text.toString().trim()
                 val password = binding.staffPassword.text.toString().trim()
-               if (isEmptyView(binding.staffId)||isEmptyView(binding.staffPassword)){
+                if (isEmptyView(binding.staffId) || isEmptyView(binding.staffPassword)) {
 
-               }else if (!email.contains("@")) {
+                } else if (!email.contains("@")) {
                     binding.staffId.error = "Missing @ or .com"
 
-                } else {
-                    viewMode.getStaff(password).observe(viewLifecycleOwner) { staff ->
-                        val staff = staff
-                        if (staff == null) {
-                            Toast.makeText(
-                                requireContext(),
-                                "User those not exist",
-                                Toast.LENGTH_LONG * 3
-                            ).show()
-                        } else {
-             signIn(email, password)
-
-                        }
-                    }
-
-                }
+                } else
+                    signIn(email, password)
             }
-        }
+
 
 
     }
@@ -124,122 +107,53 @@ class LoginFragment : Fragment() {
      }*/
 
 
-    private fun signIn(email: String, password: String): Boolean {
-        var success = false
+    private fun signIn(email: String, password: String) {
+
         binding.apply {
             progressBar.visibility = View.VISIBLE
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener { result ->
-                    if (result.isSuccessful) {
+            try {
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { result ->
+                        if (result.isSuccessful) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Sign In:${result.result.user?.email}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            //getting the three characters of the passwaord
+                            staff_department = password.substring(4, 7)
+                            //saving the department to preference
+                            dpPreference.saveDepartment(staff_department)
+                            //Intent to the right activity
+                            intentToDataCenter(staff_department)
+
+                        }
+                    }.addOnFailureListener { failure ->
+                        progressBar.visibility = View.INVISIBLE
+                        noUser.visibility = View.VISIBLE
+                        noUser.text = "Incorrect Credential"
                         Toast.makeText(
                             requireContext(),
-                            "Sign In:${result.result.user?.email}",
+                            "LogIn failed:${failure.message}",
                             Toast.LENGTH_SHORT
                         ).show()
-                        //launching an activity
-                        staff_department = password.substring(4, 7)
-                        dpPreference?.saveDepartment(staff_department)
-                        intentToDataCenter(staff_department)
                     }
-                }.addOnFailureListener { failure ->
-                    progressBar.visibility = View.INVISIBLE
-                    noUser.visibility = View.VISIBLE
-                    noUser.text = "Incorrect Credential"
-                    Toast.makeText(
-                        requireContext(),
-                        "LogIn failed:${failure.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            return success
+            }catch (e:Exception){
+                binding.noUser.text = e.toString()
+            }
+
         }
     }
 
     private fun intentToDataCenter(staff_department: String) {
+        if (staff_department == "Adm"){
+            startActivity(Intent(requireContext(), AdminActivity::class.java))
+        }else {
         val intent =
             Intent(requireContext(), PatientsDataPageActivity::class.java)
-        intent.putExtra(DEPARTMENT, staff_department)
 
         startActivity(intent)
-    }
-
-    private fun getPatientSex(): AdapterView.OnItemSelectedListener {
-//The createFromResource() method allows you to create an ArrayAdapter from the string array.
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.department,
-            android.R.layout.simple_spinner_item
-            /**
-             * You should then call setDropDownViewResource(int) to specify the layout the adapter
-             * should use to display the list of spinner choice
-             */
-        ).also { arrayAdapter ->
-            arrayAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item
-            )
-            binding.department.adapter = arrayAdapter
-//Responding to user selection
-            val item: AdapterView.OnItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapteView: AdapterView<*>?,
-                        p1: View?,
-                        position: Int,
-                        p3: Long
-                    ) {
-                        department = adapteView?.getItemAtPosition(position).toString()
-                        Log.i(
-                            "Sinner",
-                            "onItemSelected: ${adapteView?.getItemAtPosition(position)}"
-                        )
-                    }
-
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-                    }
-                }
-            return item
-
-        }
-    }
-
-    private fun getStaffDepartment(): AdapterView.OnItemSelectedListener {
-//The createFromResource() method allows you to create an ArrayAdapter from the string array.
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.department,
-            android.R.layout.simple_spinner_item
-            /**
-             * You should then call setDropDownViewResource(int) to specify the layout the adapter
-             * should use to display the list of spinner choice
-             */
-        ).also { arrayAdapter ->
-            arrayAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item
-            )
-            binding.department.adapter = arrayAdapter
-//Responding to user selection
-            val item: AdapterView.OnItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapteView: AdapterView<*>?,
-                        p1: View?,
-                        position: Int,
-                        p3: Long
-                    ) {
-                        staff_department = adapteView?.getItemAtPosition(position).toString()
-                        Log.i(
-                            "Sinner",
-                            "onItemSelected: ${adapteView?.getItemAtPosition(position)}"
-                        )
-                    }
-
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-                    }
-                }
-            return item
-
-        }
-    }
+    }}
 }
 
 

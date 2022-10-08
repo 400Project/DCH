@@ -355,12 +355,15 @@ class Repository(application: Application) :
 
   fun  getStaff(staffID: String):MutableLiveData<Staff>{
       var aStaff = Staff()
-      var staff :MutableLiveData<Staff> = MutableLiveData()
+      val staff :MutableLiveData<Staff> = MutableLiveData()
       firestore.collection(STAFF).document(staffID)
          .get().addOnSuccessListener {
-              aStaff = it.toObject<Staff>()!!
-              staff.value = aStaff
-              Log.i(TAG, "insertDailyVitals: ${it}")
+              if (it.exists()) {
+                  aStaff = it.toObject<Staff>()!!
+                  staff.value = aStaff
+                  Log.i(TAG, "insertDailyVitals: ${it}")
+              }
+
           }.addOnFailureListener {
               Log.i(TAG, "insertDailyVitals: ${it.message}")
           }

@@ -9,6 +9,10 @@
         android:title="@string/patient_data">
     </item>
     <item
+        android:id="@+id/signOut"
+        android:title="@string/sign_out">
+    </item>
+    <item
         android:id="@+id/settings"
         android:title="@string/settings" />
     <item
