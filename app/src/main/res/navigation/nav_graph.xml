@@ -24,4 +24,11 @@
         android:name="com.oyatech.dch.ui.ServicesFragment"
         android:label="Services"
         tools:layout="@layout/fragment_services" />
+
+    <fragment
+        android:id="@+id/bookingsFragment"
+        android:name="com.oyatech.dch.BookingsFragment"
+        android:label="fragment_bookings"
+        tools:layout="@layout/fragment_bookings" />
+
 </navigation>
