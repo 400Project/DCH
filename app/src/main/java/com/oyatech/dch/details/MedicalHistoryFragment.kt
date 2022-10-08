@@ -62,7 +62,7 @@ class MedicalHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var adapter = medicalHistoryAdapter
+        var myAdapter = medicalHistoryAdapter
         //getting the position of the patient in the consultation room
         patientId = requireActivity().intent.getIntExtra(PATIENT_VISITS, -1)
 
@@ -77,10 +77,10 @@ class MedicalHistoryFragment : Fragment() {
                     binding.noMedicals.visibility = View.VISIBLE
                 }
                 setLayoutManager(layoutManager)
-                adapter.submitList(it)
+                myAdapter.submitList(it)
 
                 //setting recycle adapter
-                adapter = adapter
+                adapter = myAdapter
 
                 viewModel.setPosition(patientId)
                 lifecycleScope.launch {

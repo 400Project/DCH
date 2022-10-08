@@ -16,6 +16,7 @@ import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.FragmentPatientsBinding
 import com.oyatech.dch.recordforms.PatientRegistrationFormActivity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -75,6 +76,8 @@ class PatientBioFragment : Fragment() {
 
         }
 
+
+
         //    addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
 
 
@@ -116,26 +119,23 @@ class PatientBioFragment : Fragment() {
     }
 
     private fun recycleViewer() {
-        viewModel.fetchAllRecords().observe(viewLifecycleOwner) {
-                bioData ->
-            if (bioData.isNotEmpty())
-            {
-                binding.apply {
-                    progressBar.visibility = View.INVISIBLE
-                    noMedicals.visibility = View.INVISIBLE
-                    noMedic.visibility = View.INVISIBLE
-                }
+        viewModel.fetchAllRecords().observe(viewLifecycleOwner) { bioData ->
 
-            }
             lifecycleScope.launch {
                 Dispatchers.Default
                 bioData.forEach {
                     tree[it.patientId] = it
                 }
                 binding.patientRecycleView.adapter = myAdapter
+                if (bioData.isNotEmpty()) {
+                    binding.progressBar.visibility = View.INVISIBLE
+
+                }
 
                 myAdapter.submitList(bioData)
                 try {
+                    //get the la
+
                     primaryKey = bioData.first().patientId
                 } catch (e: Exception) {
                     Log.i("TAG", "recycleViewer: ${e.message}")

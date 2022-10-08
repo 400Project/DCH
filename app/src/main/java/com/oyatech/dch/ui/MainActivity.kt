@@ -69,13 +69,13 @@ open class MainActivity : AppCompatActivity() {
                     }
                     R.id.servicesFragment -> {
                         this.navigate(R.id.servicesFragment)
-                        drawerLayout.closeDrawer(Gravity.LEFT)
+
 
                     }
                 }
 
             }
-
+            drawerLayout.closeDrawer(Gravity.LEFT)
             true
 
         }

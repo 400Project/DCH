@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.auth.FirebaseAuth
 import com.oyatech.dch.Department
 import com.oyatech.dch.DepartmentPreference
 import com.oyatech.dch.R
@@ -61,11 +59,12 @@ class PatientsDataPageActivity : MainActivity() {
         val viewPager2 = binding.viewPager
         try {
             viewPager2.adapter = TabAdapter(this, whichDepart!!)
+
             TabLayoutMediator(tablelayout, viewPager2) { tab, position ->
                 run {
 
                     tab.text = titles[position]
-                    setTabBadges(this)
+                  //  setTabBadges()
                 }
             }.attach()
 
@@ -90,22 +89,19 @@ class PatientsDataPageActivity : MainActivity() {
                 auth.signOut()
                 dpPreference.clearDepartment()
                 startActivity(Intent(this,MainActivity::class.java))
+
                 Toast.makeText(this,"Signed Out",Toast.LENGTH_LONG * 2).show()
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        startActivity(Intent(this,MainActivity::class.java))
-    }
 
     //Setting the badges for the tabs due to the number of patients in the que
-    private fun setTabBadges(lifecycleOwner: LifecycleOwner) {
+    private fun setTabBadges() {
 
 
-        lifecycle
         with(binding.tabLayout) {
 
             bioViewModel.fetchAllRecords().observe(this@PatientsDataPageActivity) { totalRecord ->
@@ -119,13 +115,11 @@ class PatientsDataPageActivity : MainActivity() {
                         getTabAt(1)?.orCreateBadge?.number = it
                     }
                 }
+
         }
 
     }
 
-    private fun tabTitle() {
-        val subArray = listOf<String>()
-    }
 
     private fun whichDepartment(dp: String): Department? {
         val title =
@@ -138,7 +132,7 @@ class PatientsDataPageActivity : MainActivity() {
             Department.RECORDS
         } else if (dp.equals("IPD", true)) {
             titles = title.subList(1, 4)
-            Department.NURSING
+            Department.IPD
         } else if (dp.equals("Adm", true)) {
             titles = title
             Department.ADMINISTRATION

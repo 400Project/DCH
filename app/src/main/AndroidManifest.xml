@@ -46,11 +46,11 @@
         <activity
             android:name=".datacenter.PatientsDataPageActivity"
             android:exported="false"
-            android:label="@string/title_activity_patients_data_page"
-            android:parentActivityName=".ui.MainActivity" />
+            android:label="@string/title_activity_patients_data_page" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
+            android:launchMode="standard"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -54,8 +54,6 @@ class EmployStaffFragment : Fragment() {
                 if (!newStaff()){
                     Toast.makeText(requireContext(),"Staff Recruit",Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.staffing)
-                    activity?.finish()
-
                 }else
                     Toast.makeText(requireContext(),"Network Error",Toast.LENGTH_SHORT).show()
 

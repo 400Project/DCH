@@ -80,7 +80,8 @@
 
                 android:layout_height="wrap_content">
 
-            <include layout="@layout/footer" />
+            <include android:id="@+id/footer"
+                layout="@layout/footer" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

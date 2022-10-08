@@ -9,7 +9,7 @@
 To be the center of excellence in the delivery of health care and human resource development through the most prudent, cost effective use of available resources.
 
  </string><string name="mission"><b><u>MISSION</u></b>\n
-to provide a comprehensive range of secondary level high quality inpatient and outpatient healthcare services to the People Of Eastern Region and beyond in a client  friendly atmosphere by motivated,competent And contended staff, in a well maintained Hospital Infrastructure
+To provide a comprehensive range of secondary level high quality inpatient and outpatient healthcare services to the People Of Eastern Region and beyond in a client  friendly atmosphere by motivated,competent And contended staff, in a well maintained Hospital Infrastructure
  </string>
 
     <!--For ActionBarToggle-->
@@ -69,5 +69,10 @@ to provide a comprehensive range of secondary level high quality inpatient and o
     <string name="department">Department</string>
     <string name="welcome">\t \t \t     <i>Welcome to</i> \n DANGME COMMUNITY HOSPITAL</string>
     <string name="public_health"><b><u>Public Health</u></b></string>
+    <string name="whatsapp_chat">DCH WhatsApp chat</string>
+    <string name="call">tel:0249728476</string>
+    <string name="calling">Calling DCH</string>
+    <string name="goe_location">geo: 5.737710,0.163097?z=19</string>
+    <string name="location">DCH Location</string>
 
 </resources>

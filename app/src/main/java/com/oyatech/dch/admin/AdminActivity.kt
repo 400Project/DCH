@@ -38,10 +38,4 @@ class AdminActivity : AppCompatActivity() {
         return navController.navigateUp()|| super.onSupportNavigateUp()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
-    }
 }
