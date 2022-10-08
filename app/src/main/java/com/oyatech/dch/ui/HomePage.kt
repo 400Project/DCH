@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.oyatech.dch.R
 import com.oyatech.dch.alerts.call
 import com.oyatech.dch.alerts.location
-import com.oyatech.dch.alerts.toaster
 import com.oyatech.dch.alerts.whatsApp
 import com.oyatech.dch.databinding.FragmentHomeBinding
 
@@ -62,20 +61,19 @@ class HomePage : Fragment(), View.OnClickListener {
                     //whatsApp intent method written as context extension
                     requireContext().apply {
                         whatsApp()
-                        toaster(getString(R.string.whatsapp_chat))
                     }
                 }
                 call -> {
                     requireContext().apply {
                         call()
-                        toaster(getString(R.string.calling))
+
                     }
                 }
 
                 location -> {
                     requireContext().apply {
                         location()
-                        toaster(getString(R.string.location))
+
                     }
                 }
             }
