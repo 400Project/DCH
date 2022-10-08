@@ -39,7 +39,9 @@ public fun Context.whatsApp() {
     val i = Intent(ACTION_VIEW)
     i.data = Uri.parse(url)
     startActivity(i)
+
     toaster(getString(R.string.whatsapp_chat))
+
 }
 
 //a call intent from likely patient of the hospital
@@ -50,6 +52,7 @@ fun Context.call() {
     if (callIntent.resolveActivity(this.packageManager) != null) {
         this.startActivity(callIntent)
     }
+
     //making a toast feedback to the patient
     toaster(getString(R.string.calling))
 }
@@ -71,6 +74,7 @@ fun Context.location(){
         this.startActivity(callIntent)
     }
     toaster(getString(R.string.location))
+
 }
 
 

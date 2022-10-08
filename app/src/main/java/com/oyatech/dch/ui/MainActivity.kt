@@ -70,8 +70,10 @@ open class MainActivity : AppCompatActivity() {
                     R.id.servicesFragment -> {
                         this.navigate(R.id.servicesFragment)
 
+
                     }R.id.bookingsFragment -> {
                         this.navigate(R.id.bookingsFragment)
+
 
                     }
                 }
