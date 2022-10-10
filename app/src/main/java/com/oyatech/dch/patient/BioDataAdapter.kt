@@ -2,9 +2,11 @@ package com.oyatech.dch.patient
 
 import android.content.Context
 import android.content.Intent
+import android.view.LayoutInflater
 import android.view.LayoutInflater.from
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -187,40 +189,45 @@ class BioDataAdapter(context: Context) :
 
     }
     fun showTimeOrDate(date: String, time: String): String {
-
-        var currentTime =todaysTime.replace(":", "").substring(0, 3).toInt()
-        var existingTime = time.replace(":", "").substring(0, 3).toInt()
-        var currentDate = todaysDate.substring(0, 2).toInt()
-        var existingDate = date.substring(0, 2).toInt()
-
-        var recordedTime = currentTime
-            .minus(
-                existingTime
-            )
+        try {
 
 
-        val recordedDate = currentDate
-            .minus(
-                existingDate
-            )
+            val currentTime = todaysTime.replace(":", "").substring(0, 3).toInt()
+            val existingTime = time.replace(":", "").substring(0, 3).toInt()
+            val currentDate = todaysDate.substring(0, 2).toInt()
+            val existingDate = date.substring(0, 2).toInt()
 
-        when {
-            todaysDate ==  date   && recordedTime < 1 -> {
-                return "Just now"
+            val recordedTime = currentTime
+                .minus(
+                    existingTime
+                )
+
+
+            val recordedDate = currentDate
+                .minus(
+                    existingDate
+                )
+
+            when {
+                todaysDate == date && recordedTime < 1 -> {
+                    return "Just now"
+                }
+                todaysDate == date && recordedTime in 1..59 -> {
+                    return "$recordedTime minutes ago"
+                }
+                todaysDate == date && recordedTime > 60 -> {
+                    return "Today, $time"
+                }
+                recordedDate == 1 -> {
+                    return "Yesterday"
+                }
             }
-            todaysDate ==  date && recordedTime in 1..59 -> {
-                return "$recordedTime minutes ago"
-            }
-            todaysDate ==  date   &&  recordedTime > 60 -> {
-                return "Today, $time"
-            }
-            recordedDate == 1  -> {
-                return "Yesterday"
-            }
+
+        }catch (exeception: Exception){
+            
         }
         return date
     }
-
 
 }
 

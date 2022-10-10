@@ -18,6 +18,7 @@ typealias liveData = (LiveData<MutableList<Any>>)
 class Repository(application: Application) :
     IPatient, IConsult, IVitalsId, IDiagnoseId,IStaff {
 
+    private val NEXT_OF_KIN: String="nextOfKins"
     private val STAFF: String = "staff"
     val TAG = Repository::class.java.simpleName
     private var _mao: IDao? = null
@@ -153,6 +154,17 @@ class Repository(application: Application) :
 
         return allRecords
 
+    }
+
+    override fun insertNextOfKin(nextOfKin: NextOfKin) {
+        firestore.collection(DCH).document(nextOfKin.patientId.toString())
+            .collection(NEXT_OF_KIN).document("${nextOfKin.nextOfKinID}")
+            .set(nextOfKin).addOnSuccessListener {
+                Log.i(TAG, "insertDailyVitals: ${it}")
+
+            }.addOnFailureListener {
+                Log.i(TAG, "insertDailyVitals: ${it.message}")
+            }
     }
 
 

@@ -40,7 +40,7 @@ constructor(context: Context) : this() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StaffViewHolder {
     //Inflating the layout for the onCreate to
         // create views for onBind to bind data to the views
-     val    binding = PatientParticularsCardBinding
+     val binding = PatientParticularsCardBinding
          .inflate(LayoutInflater.from(context)
              ,parent,false)
 

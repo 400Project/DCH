@@ -6,8 +6,11 @@ import android.content.Intent
 import android.content.Intent.ACTION_DIAL
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
+import android.text.Editable
+import android.text.TextWatcher
 
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -74,8 +77,28 @@ fun Context.location(){
         this.startActivity(callIntent)
     }
     toaster(getString(R.string.location))
-
 }
 
+
+fun Context.mobileLength(text:TextInputEditText){
+    text.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            text.error = "Enter valid Mobile"
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            if (text.text?.length != 10){
+                text.error = "Mobile No. Invalid"
+            }else
+                text.error = "Mobile No. valid"
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+
+        }
+
+    })
+
+}
 
 

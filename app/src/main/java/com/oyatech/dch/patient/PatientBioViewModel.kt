@@ -8,10 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.oyatech.dch.database.IPatient
 import com.oyatech.dch.database.Repository
 import com.oyatech.dch.database.entities.DailyVitals
+import com.oyatech.dch.database.entities.NextOfKin
 import com.oyatech.dch.database.entities.PatientBioData
 
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -36,6 +38,7 @@ var number = 0
      viewModelScope.launch {
          Dispatchers.IO
          repository.insertPatientFirestore(patientBioData)
+
      }
     }
 
@@ -54,6 +57,14 @@ var number = 0
         }
 
     return allRecords
+    }
+
+    override fun insertNextOfKin(nextOfKin: NextOfKin) {
+        viewModelScope.launch {
+            Dispatchers.IO
+            repository.insertNextOfKin(nextOfKin)
+
+        }
     }
 
 

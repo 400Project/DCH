@@ -11,6 +11,8 @@
         android:label="New Staff"
         tools:layout="@layout/fragment_employ_staff" >
         <action
+            app:popUpTo="@id/staffing"
+            app:popUpToInclusive="true"
             android:id="@+id/action_recruit_staff_to_staffing"
             app:destination="@id/staffing" />
     </fragment>
@@ -26,8 +28,12 @@
         tools:layout="@layout/fragment_dch_staff" >
         <action
             android:id="@+id/action_staffing_to_recruit_staff"
+            app:popUpTo="@id/recruit_staff"
+            app:popUpToSaveState="true"
             app:destination="@id/recruit_staff" />
         <action
+            app:popUpTo="@id/recruit_staff"
+            app:popUpToSaveState="true"
             android:id="@+id/action_staffing_to_createAccountFragment"
             app:destination="@id/createAccountFragment" />
     </fragment>
@@ -37,6 +43,8 @@
         android:label="Create Account"
         tools:layout="@layout/fragment_create_account" >
         <action
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/staffing"
             android:id="@+id/action_createAccountFragment_to_staffing"
             app:destination="@id/staffing" />
     </fragment>

@@ -80,7 +80,7 @@ public class CreateAccountFragment extends Fragment {
 
                 toaster(requireContext(), "Account created successfully");
 
-                findNavController(this).navigate(R.id.staffing);
+                findNavController(this).navigate(R.id.action_createAccountFragment_to_staffing);
                 signOut();
             } else {
                 snackForError(requireContext(), requireView(), "Network Error");

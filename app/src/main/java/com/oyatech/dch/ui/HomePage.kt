@@ -64,27 +64,17 @@ class HomePage : Fragment(), View.OnClickListener {
                     //whatsApp intent method written as context extension
                     requireContext().apply {
                         whatsApp()
-
-
-           toaster(getString(R.string.whatsapp_chat))
-
                     }
                 }
                 call -> {
                     requireContext().apply {
                         call()
-
-
-        toaster(getString(R.string.calling))
                    }
                 }
 
                 location -> {
                     requireContext().apply {
                         location()
-
-       toaster(getString(R.string.location))
-
                     }
                 }
             }

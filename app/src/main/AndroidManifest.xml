@@ -45,6 +45,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".datacenter.PatientsDataPageActivity"
+            android:launchMode="standard"
             android:exported="false"
             android:label="@string/title_activity_patients_data_page" />
         <activity

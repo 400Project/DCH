@@ -16,7 +16,6 @@ import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.databinding.FragmentPatientsBinding
 import com.oyatech.dch.recordforms.PatientRegistrationFormActivity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -37,6 +36,7 @@ class PatientBioFragment : Fragment() {
     private val binding get() = _binding!!
 
     companion object {
+        //current patient at the consultation
         val tree: TreeMap<Int, PatientBioData> = TreeMap()
     }
 
@@ -75,7 +75,6 @@ class PatientBioFragment : Fragment() {
             recycleViewer()
 
         }
-
 
 
         //    addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
@@ -134,8 +133,7 @@ class PatientBioFragment : Fragment() {
 
                 myAdapter.submitList(bioData)
                 try {
-                    //get the la
-
+                    //getting and setting the last patient ID
                     primaryKey = bioData.first().patientId
                 } catch (e: Exception) {
                     Log.i("TAG", "recycleViewer: ${e.message}")

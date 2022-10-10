@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class NextOfKin(
-    @PrimaryKey(autoGenerate = true) val nextOfKin:Int,
-
-    var fullName:String,
-    var mobile:String?,
-    var relationship:String,
-    var address: String?,
-    var occupation:String?
+     val nextOfKinID:Int?,
+    val patientId:Int?,
+    val fullName:String?,
+    val mobile:String?,
+    val relationship:String?,
+    val address: String?,
+    val occupation:String?
 )
