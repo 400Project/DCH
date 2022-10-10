@@ -4,10 +4,10 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/log_In"
-            android:title="Staff"></item>
+            android:title="Patients" />
         <item
             android:id="@+id/servicesFragment"
-            android:title="Services"></item>
+            android:title="Services" />
 
 
         <item
@@ -17,10 +17,10 @@
         </item>
         <item
             android:id="@+id/testimonyFragment"
-            android:title="Testimonies"></item>
+            android:title="Testimonies" />
         <item
             android:id="@+id/bookingsFragment"
-            android:title="Bookings"></item>
+            android:title="Bookings" />
 
 
         <item

@@ -56,7 +56,7 @@ val viewModel= viewModel
 
 
         binding.done.setOnClickListener {
-            val nextOfKin = nextOfKinDetails()
+          //  val nextOfKin = nextOfKinDetails()
             
             Toast.makeText(this, "Record Updated", Toast.LENGTH_SHORT).show()
 
@@ -79,8 +79,8 @@ val viewModel= viewModel
 
         }
     }
-
-    fun nextOfKinDetails():NextOfKin{
+/*
+    private fun nextOfKinDetails():NextOfKin{
         with(binding){
          val fullName =   nextOfKingName.text.toString().trim()
          val relationship =   nofKRelationshipLayout.text.toString().trim()
@@ -90,6 +90,6 @@ val viewModel= viewModel
             return NextOfKin(primaryKey,fullName,relationship,mobile,address,occupation)
         }
 
-    }
+    }*/
 
 }

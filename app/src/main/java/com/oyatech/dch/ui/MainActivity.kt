@@ -3,6 +3,7 @@ package com.oyatech.dch.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -36,7 +37,7 @@ open class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = HomeActivityMainBinding.inflate(layoutInflater)
+        binding = HomeActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
 

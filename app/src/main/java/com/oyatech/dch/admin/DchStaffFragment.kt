@@ -49,7 +49,7 @@ auth = FirebaseAuth.getInstance()
 
         recycleViewer()
         binding.addPatient.setOnClickListener {
-            findNavController().navigate(R.id.recruit_staff)
+            findNavController().navigate(R.id.action_staffing_to_recruit_staff)
         }
 
         menuProvider.addMenuProvider(object : MenuProvider {

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".recordforms.PatientRegistrationFormActivity">
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +52,7 @@
                 android:src="@drawable/ic_medical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></ImageView>
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <EditText
@@ -81,7 +80,7 @@
                 android:inputType="textCapWords"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/firstname_layout"></EditText>
+                app:layout_constraintTop_toBottomOf="@id/firstname_layout" />
 
 
             <EditText
@@ -90,10 +89,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/ic_location"
-                android:hint="Address"
+                android:hint="@string/address"
                 android:inputType="textCapWords"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/otherNames_layout"></EditText>
+                app:layout_constraintTop_toBottomOf="@id/otherNames_layout" />
 
             <EditText
                 android:id="@+id/patient_DoB"
@@ -102,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_meeting_date"
                 android:editable="false"
-                android:hint="Date Of Birth"
+                android:hint="@string/date_of_birth"
                 android:minHeight="50dp"
                 app:layout_constraintEnd_toStartOf="@id/patient_age"
                 app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="30dp"
                 android:padding="5dp"
-                android:text="Age : "
+                android:text="@string/age"
                 app:layout_constraintBottom_toBottomOf="@id/patient_DoB"
                 app:layout_constraintEnd_toStartOf="@id/gender"
                 app:layout_constraintStart_toEndOf="@id/patient_DoB"
@@ -127,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="30dp"
                 android:padding="5dp"
-                android:text="Sex:"
+                android:text="@string/gender"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="@id/patient_age"
                 app:layout_constraintEnd_toStartOf="@id/patient_sex"
@@ -145,7 +144,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/patient_DoB"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/gender"
-                app:layout_constraintTop_toBottomOf="@id/address_layout"></Spinner>
+                app:layout_constraintTop_toBottomOf="@id/address_layout" />
 
             <EditText
                 android:id="@+id/occupation_layout"
@@ -153,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/ic_occupation"
-                android:hint="Occupation"
+                android:hint="@string/occupation"
                 android:inputType="textCapWords"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/patient_DoB">
@@ -166,10 +165,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/ic_mobile"
-                android:hint="Mobile Number"
+                android:hint="@string/mobile_number"
                 android:inputType="phone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/occupation_layout"></EditText>
+                app:layout_constraintTop_toBottomOf="@id/occupation_layout" />
 
             <EditText
                 android:id="@+id/nihs_layout"
@@ -177,25 +176,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/ic_pulse_life"
-                android:hint="NHIS"
+                android:hint="@string/insurance_no"
                 android:inputType="phone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mobile_layout"></EditText>
+                app:layout_constraintTop_toBottomOf="@id/mobile_layout" />
 
             <TextView
                 android:id="@+id/next_of_king_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next Of Kin"
+                android:text="@string/next_of_kin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nihs_layout"></TextView>
+                app:layout_constraintTop_toBottomOf="@id/nihs_layout" />
 
             <EditText
-                android:id="@+id/next_of_king_name"
+                android:id="@+id/next_of_king_name_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Next of King Full Name"
+                android:hint="@string/next_of_king_full_name"
                 android:inputType="textCapWords"
                 android:minWidth="100dp"
                 android:textAlignment="center"
@@ -211,20 +210,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_mobile"
-                android:hint="Mobile"
+                android:hint="@string/mobile_number"
                 android:inputType="phone"
                 android:minWidth="100dp"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="@id/nofK_relationship_layout"
-                app:layout_constraintStart_toStartOf="@id/next_of_king_name"
-                app:layout_constraintTop_toBottomOf="@id/next_of_king_name"></EditText>
+                app:layout_constraintStart_toStartOf="@id/next_of_king_name_layout"
+                app:layout_constraintTop_toBottomOf="@id/next_of_king_name_layout" />
 
             <EditText
                 android:id="@+id/nofK_relationship_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_family"
-                android:hint="Relationship With Patient"
+                android:hint="@string/relationship"
                 android:inputType="textCapWords"
                 android:minWidth="100dp"
                 android:textAlignment="center"
@@ -239,25 +238,26 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_location"
-                android:hint="Address"
+                android:hint="@string/address"
                 android:inputType="textCapWords"
                 android:minWidth="100dp"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nofK_relationship_layout"></EditText>
- <EditText
+                app:layout_constraintTop_toBottomOf="@id/nofK_relationship_layout" />
+
+            <EditText
                 android:id="@+id/occupation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_occupation"
-                android:hint="Occupation"
+                android:hint="@string/occupation"
                 android:inputType="textCapWords"
                 android:minWidth="100dp"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nofK_address"></EditText>
+                app:layout_constraintTop_toBottomOf="@id/nofK_address" />
 
 
             <com.google.android.material.button.MaterialButton
