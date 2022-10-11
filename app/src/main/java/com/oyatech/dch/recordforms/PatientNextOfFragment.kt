@@ -1,6 +1,5 @@
 package com.oyatech.dch.recordforms
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputEditText
 import com.oyatech.dch.R
 import com.oyatech.dch.alerts.isEmptyView
 import com.oyatech.dch.alerts.snackForError
 import com.oyatech.dch.database.entities.NextOfKin
 import com.oyatech.dch.databinding.FragmentNextOfKingBinding
-import com.oyatech.dch.datacenter.PatientsDataPageActivity
 import com.oyatech.dch.patient.PatientBioViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.oyatech.dch.alerts.trimText
 
 
 /**
@@ -56,7 +54,7 @@ class PatientNextOfFragment : Fragment() {
                         delay(5000)
                         binding.progressBar.visibility = View.INVISIBLE
                         requireContext().snackForError(view, "Patient Registered")
-                        findNavController().navigate(R.id.action_bioDataFragment_to_nextOfFragment)
+                        findNavController().navigate(R.id.action_nextOfFragment_to_bioDataFragment)
                     }
 
                 }
@@ -79,11 +77,11 @@ class PatientNextOfFragment : Fragment() {
 
         val patientId = patient.patientId
         with(binding) {
-            val nxtKFullName = kinsFullName.text.toString().trim()
-            val mobile = nextOfKingMobile.text.toString().trim()
-            val relation = nextOfKingRelationship.text.toString().trim()
-            val occupation = nextOfKingOccupation.text.toString().trim()
-            val address = nextOfAddress.text.toString().trim()
+            val nxtKFullName = trimText(kinsFullName)
+            val mobile = trimText(kinsFullName)
+            val relation = trimText(nextOfKingRelationship)
+            val occupation = trimText(nextOfKingOccupation)
+            val address = trimText(nextOfAddress)
             //Empty exception handling
             if ((isEmptyView(kinsFullName)) ||
                 (isEmptyView(nextOfKingMobile)) ||
@@ -110,13 +108,8 @@ class PatientNextOfFragment : Fragment() {
 
             }
 
-            /**
-             * TODO: find out why the break isn't working
-             */
         }
     }
 
-    private fun trimMaker(editText: TextInputEditText): String {
-        return editText.text.toString().trim()
-    }
+
 }

@@ -17,11 +17,6 @@
             app:destination="@id/staffing" />
     </fragment>
     <fragment
-        android:id="@+id/nextOfFragment"
-        android:name="com.oyatech.dch.admin.StaffFragment"
-        android:label="Next Of King"
-        tools:layout="@layout/fragment_next_of_king" />
-    <fragment
         android:id="@+id/staffing"
         android:name="com.oyatech.dch.admin.DchStaffFragment"
         android:label="DCH Staff"
@@ -30,9 +25,11 @@
             android:id="@+id/action_staffing_to_recruit_staff"
             app:popUpTo="@id/recruit_staff"
             app:popUpToSaveState="true"
+            app:popUpToInclusive="true"
             app:destination="@id/recruit_staff" />
         <action
-            app:popUpTo="@id/recruit_staff"
+            app:popUpTo="@id/createAccountFragment"
+            app:popUpToInclusive="true"
             app:popUpToSaveState="true"
             android:id="@+id/action_staffing_to_createAccountFragment"
             app:destination="@id/createAccountFragment" />

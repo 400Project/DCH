@@ -91,5 +91,6 @@ To provide a comprehensive range of secondary level high quality inpatient and o
     <string name="next_of_kin">Next Of Kin</string>
     <string name="next_of_king_full_name">Next of King Full Name</string>
     <string name="relationship">Relationship With Patient</string>
+    <string name="incorrect_credentials">Incorrect Credential</string>
 
 </resources>

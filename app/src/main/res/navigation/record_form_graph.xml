@@ -18,7 +18,7 @@
         android:id="@+id/nextOfFragment"
         android:name="com.oyatech.dch.recordforms.PatientNextOfFragment"
         android:label="Next Of King"
-        tools:layout="@layout/fragment_next_of_king" >
+        tools:layout="@layout/fragment_next_of_king">
         <action
             android:id="@+id/action_nextOfFragment_to_bioDataFragment"
             app:popUpTo="@id/bioDataFragment"

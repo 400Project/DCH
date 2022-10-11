@@ -26,7 +26,6 @@ class PatientRegistrationFormActivity : AppCompatActivity() {
          navController = navHostFragment.navController
      setupActionBarWithNavController(navController)
 
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

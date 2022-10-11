@@ -1,6 +1,5 @@
 package com.oyatech.dch.alerts
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_DIAL
@@ -10,7 +9,6 @@ import android.text.Editable
 import android.text.TextWatcher
 
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -18,10 +16,11 @@ import com.google.android.material.textfield.TextInputEditText
 import com.oyatech.dch.R
 
 //context extension method that produces snackbar for a feedback
-public fun Context.snackForError(view: View, errorMessage: String) {
-    Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG * 3)
+public fun Context.snackForError(view: View, feedback: String) {
+    Snackbar.make(view, feedback, Snackbar.LENGTH_LONG * 4)
         .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
-        .setBackgroundTint(resources.getColor(R.color.light_green))
+        .setTextColor(resources.getColor(R.color.white))
+        .setBackgroundTint(resources.getColor(com.google.android.material.R.color.m3_ref_palette_black))
         .show()
 }
 
@@ -101,4 +100,6 @@ fun Context.mobileLength(text:TextInputEditText){
 
 }
 
-
+ fun trimText(editText: TextInputEditText): String {
+    return editText.text.toString().trim()
+}

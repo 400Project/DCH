@@ -26,7 +26,7 @@
                 android:src="@drawable/ic_medical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></ImageView>
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -132,11 +132,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/sex"
-                android:tooltipText="Sex"
+                android:tooltipText="@string/gender"
                 app:layout_constraintBottom_toBottomOf="@id/patient_DoB"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/gender"
-                app:layout_constraintTop_toBottomOf="@id/address_layout"></Spinner>
+                app:layout_constraintTop_toBottomOf="@id/address_layout" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/occupation_layout"
@@ -195,10 +195,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/done"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/nihs_layout" />
 
 
             <com.google.android.material.button.MaterialButton

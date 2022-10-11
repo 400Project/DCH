@@ -30,6 +30,7 @@ import com.oyatech.dch.util.Utils
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
+import com.oyatech.dch.alerts.trimText
 
 
 class PatientRegistrationFragment : Fragment() {
@@ -40,6 +41,7 @@ class PatientRegistrationFragment : Fragment() {
     companion object {
         var patientBioData = PatientBioData()
     }
+    private val PRIMARY_KEY = "patient_primary_key"
 
 
     val viewModel: PatientBioViewModel by activityViewModels()
@@ -60,7 +62,6 @@ class PatientRegistrationFragment : Fragment() {
         _binding = FragmentBioDataBinding.inflate(
             LayoutInflater.from(context), container, false
         )
-
         return binding.root.rootView
     }
 
@@ -73,7 +74,7 @@ class PatientRegistrationFragment : Fragment() {
         //Phone number formatter according to Ghana local
 
         formatPhoneNumber()
-        val myViewModel = viewModel
+
         binding.patientDoB.setOnClickListener {
 
             //getting the calender by using the DatePickerDialog
@@ -104,14 +105,14 @@ class PatientRegistrationFragment : Fragment() {
                 val date = Utils.getDate()
                 val sex = sex
 
-                val firstName = patientFirstName.text.toString().trim()
-                val otherName = patientOtherNames.text.toString().trim()
-                val address = patientAddress.text.toString().trim()
-                val dob = patientDoB.text.toString().trim()
+                val firstName = trimText(patientFirstName)
+                val otherName = trimText(patientOtherNames)
+                val address = trimText(patientAddress)
+                val dob =  patientDoB.text.toString().trim()
                 val age = computeDateOfBirth(calender.get(Calendar.YEAR), patientYear)
-                val occupation = patientOccupation.text.toString().trim()
-                val mobile = patientMobile.text.toString().trim()
-                val nhis = patientNhis.text.toString().trim()
+                val occupation = trimText(patientOccupation)
+                val mobile = trimText(patientMobile)
+                val nhis = trimText(patientNhis)
                 if ((isEmptyView(patientFirstName)) ||
                     (isEmptyView(patientOtherNames)) ||
                     (isEmptyView(patientAddress)) ||
@@ -211,14 +212,14 @@ class PatientRegistrationFragment : Fragment() {
             val date = Utils.getDate()
             val sex = sex
 
-            val firstName = patientFirstName.text.toString().trim()
-            val otherName = patientOtherNames.text.toString().trim()
-            val address = patientAddress.text.toString().trim()
-            val dob = patientDoB.text.toString().trim()
+            val firstName = trimText(patientFirstName)
+            val otherName = trimText(patientOtherNames)
+            val address = trimText(patientAddress)
+            val dob =  patientDoB.text.toString().trim()
             val age = computeDateOfBirth(calender.get(Calendar.YEAR), patientYear)
-            val occupation = patientOccupation.text.toString().trim()
-            val mobile = patientMobile.text.toString().trim()
-            val nhis = patientNhis.text.toString().trim()
+            val occupation = trimText(patientOccupation)
+            val mobile = trimText(patientMobile)
+            val nhis = trimText(patientNhis)
             if ((isEmptyView(patientFirstName)) ||
                 (isEmptyView(patientOtherNames)) ||
                 (isEmptyView(patientAddress)) ||
@@ -296,12 +297,9 @@ class PatientRegistrationFragment : Fragment() {
     }
 
 
-    private val PRIMARY_KEY = "patient_primary_key"
-
 
     override fun onPause() {
         Log.i("Regid", "onPause: is called")
-        primaryKey
         super.onPause()
     }
 
