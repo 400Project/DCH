@@ -1,15 +1,13 @@
 package com.oyatech.dch.database.entities
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.util.*
-
-@Entity
 data class Dispensary(
-    @PrimaryKey(autoGenerate = true) val dispenID: Int,
+    val dispenseId: Int,
     //Foreign Key
-    val staffID: Int,
-
-    val date:String,
-    val time: String
+    val staffName: String?,
+    val patientFName:String?,
+    val patientOtherName:String?,
+    val prescription: String?,
+    val hospitalNumber: String?,
+    val date:String?,
+    val time: String?
 )

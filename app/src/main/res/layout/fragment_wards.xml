@@ -15,7 +15,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/patient_particulars_card"></androidx.recyclerview.widget.RecyclerView>
+        tools:listitem="@layout/patient_particulars_card" />
 
+    <ImageView
+        android:id="@+id/empty_ward"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        android:src="@drawable/empty_ward"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

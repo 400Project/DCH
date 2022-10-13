@@ -8,7 +8,14 @@
         android:id="@+id/medicalHistoryFragment"
         android:name="com.oyatech.dch.details.MedicalHistoryFragment"
         tools:layout="@layout/fragment_medical_history"
-        android:label="Patient Visits"/>
+        android:label="Patient Visits">
+        <action
+            android:id="@+id/action_medicalHistoryFragment_to_dignosesFragment"
+            app:destination="@id/dignosesFragment" />
+        <action
+            android:id="@+id/action_medicalHistoryFragment_to_detailRecordFragment"
+            app:destination="@id/detailRecordFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailRecordFragment"
         android:name="com.oyatech.dch.details.DetailRecordFragment"
@@ -18,7 +25,16 @@
         android:id="@+id/dignosesFragment"
         android:name="com.oyatech.dch.details.DiagnosesFragment"
         android:label="Diagnoses"
-        tools:layout="@layout/fragment_dignoses" />
+        tools:layout="@layout/fragment_dignoses" >
+        <action
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/medicalHistoryFragment"
+            android:id="@+id/action_diagnosesFragment_to_medicalHistoryFragment"
+            app:destination="@id/medicalHistoryFragment" />
+        <action
+            android:id="@+id/action_dignosesFragment_to_detailRecordFragment"
+            app:destination="@id/detailRecordFragment" />
+    </fragment>
 
 
 </navigation>

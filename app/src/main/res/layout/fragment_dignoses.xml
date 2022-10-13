@@ -836,7 +836,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/nurse_note"
+                    android:id="@+id/doctor_note"
                     android:hint="Nurse Instruction"
                     android:minHeight="100dp"/>
             </com.google.android.material.textfield.TextInputLayout>

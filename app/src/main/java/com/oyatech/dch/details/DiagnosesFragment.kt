@@ -23,6 +23,7 @@ import com.oyatech.dch.database.entities.Diagnose
 import com.oyatech.dch.database.entities.Vitals
 import com.oyatech.dch.databinding.FragmentDignosesBinding
 import kotlinx.coroutines.launch
+import com.oyatech.dch.ward.WardViewModel
 
 
 class DiagnosesFragment : Fragment() {
@@ -32,6 +33,7 @@ class DiagnosesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: MedicalHistoryViewModel by activityViewModels()
+    private val wardViewModel:WardViewModel by activityViewModels()
 
     private var diagnoseID = 0
     private var edit = 0
@@ -114,7 +116,7 @@ class DiagnosesFragment : Fragment() {
 
 
 
-                findNavController().navigate(R.id.medicalHistoryFragment)
+                findNavController().navigate(R.id.action_diagnosesFragment_to_medicalHistoryFragment)
 
             } else {
 
@@ -138,6 +140,10 @@ class DiagnosesFragment : Fragment() {
             viewModel.apply {
                 removeConsultation(patientId)
             }
+        }else if ((treatStatus == "Admitted")
+            ||  (treatStatus == "Detained")){
+            //passing patient reference to be save into the ward
+            wardViewModel.insertWard(MedicalHistoryFragment.patient)
         }
     }
 
@@ -225,13 +231,14 @@ class DiagnosesFragment : Fragment() {
                 val principal = principalDiagnosis.text.toString().trim()
                 val additional = additionalDiagnosis.text.toString().trim()
                 val prescription = prescription.text.toString().trim()
-                val nurseNote = nurseNote.text.toString().trim()
+                val doctorNote = doctorNote.text.toString().trim()
+                val nurseNote = "Patient' BP stable"
                 val tests = firstTest.text.toString().trim()
 
                     diagnose = Diagnose(
                         diagnoseID, patientId, vitalsID, provisional,
-                        principal, additional, prescription,
-                        nurseNote, "Dr.Robert", treatment
+                        principal, additional, prescription,doctorNote,
+                        nurseNote, "Dr.Robert", treatment,tests
                     )
             }
         return diagnose
@@ -255,7 +262,7 @@ class DiagnosesFragment : Fragment() {
             )
             binding.treatmentStatus.adapter = arrayAdapter
 //Responding to user selection
-            val item: AdapterView.OnItemSelectedListener =
+            var item: AdapterView.OnItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
                         adapteView: AdapterView<*>?,
@@ -278,9 +285,10 @@ class DiagnosesFragment : Fragment() {
         binding.apply {
             diagnose?.let {
                 provisionalDiagnosis.setText(it.provisional)
-                principalDiagnosis.setText(it.provisional)
+                principalDiagnosis.setText(it.principal)
                 additionalDiagnosis.setText(it.additional)
                 prescription.setText(it.prescription)
+                doctorNote.setText(it.doctorNote)
             }
 
         }

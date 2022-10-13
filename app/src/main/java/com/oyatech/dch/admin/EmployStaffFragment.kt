@@ -17,9 +17,9 @@ import com.oyatech.dch.databinding.FragmentEmployStaffBinding
 import com.oyatech.dch.model.Staff
 import com.oyatech.dch.alerts.trimText
 
-
+// TODO: Rename and change types of parameters
 class EmployStaffFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     val viewModel:StaffViewModel by activityViewModels()
     private   var _binding: FragmentEmployStaffBinding? =null
     private   val binding get() = _binding!!

@@ -80,19 +80,6 @@ class PatientBioFragment : Fragment() {
         //    addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
 
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-
-            override fun onQueryTextChange(query: String?): Boolean {
-                searching(query!!)
-
-                return true
-            }
-
-        })
-
 
         binding.addPatient.setOnClickListener {
             val intent = Intent(requireContext(), PatientRegistrationFormActivity::class.java)
@@ -145,14 +132,17 @@ class PatientBioFragment : Fragment() {
 
 
     fun searching(search: String) {
-
-        /*     viewModel.searchForPatient(search).observe(viewLifecycleOwner) { bioData ->
-                 bioData.let {
-                     myAdapter.submitList(it)
-
-                 }
-             }*/
-    }
+        //recall the recycle if the there's no query
+/*if (search.isEmpty()){
+    recycleViewer()
+}else{*/
+        viewModel.searchPatient(search).observe(viewLifecycleOwner) { bioData ->
+            bioData.let {
+                myAdapter.submitList(it)
+                binding.patientRecycleView.adapter = myAdapter
+           // }
+        }
+    }}
 
     override fun onPause() {
 

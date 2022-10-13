@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oyatech.dch.database.entities.PatientBioData
@@ -25,7 +24,7 @@ class ConsultationsFragment : Fragment() {
         ConsultationAdapter(requireContext())
     }
     companion object{
-        val trees = TreeMap<Int , PatientBioData> ()
+        val medicalHistory = TreeMap<Int , PatientBioData> ()
     }
 
     private val viewModel: ConsultationViewModel by activityViewModels()
@@ -65,7 +64,7 @@ class ConsultationsFragment : Fragment() {
                 Dispatchers.IO
                 it.forEach {
                     v.add(it.bios)
-                    trees[it.bios.patientId] = it.bios
+                    medicalHistory[it.bios.patientId] = it.bios
                 }
             }
             adapter.submitList(v)

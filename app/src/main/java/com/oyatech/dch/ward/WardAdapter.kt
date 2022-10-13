@@ -7,25 +7,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.oyatech.dch.model.PatientBioData
+import com.oyatech.dch.database.entities.PatientBioData
 import com.oyatech.dch.ward.WardAdapter.WardViewHolder
-import com.oyatech.dch.databinding.PatientParticularsCardBinding
+import com.oyatech.dch.databinding.WardCardBinding
 import com.oyatech.dch.details.DetailActivity
 
 class WardAdapter(context: Context): ListAdapter<PatientBioData,WardViewHolder>(Diff) {
     private val context = context;
-    final  val PATIENT_AT_WARD = "com.oyatech.dch.details"
 
-    class WardViewHolder(var binding: PatientParticularsCardBinding) :
+    final val PATIENT_VISITS = "com.oyatech.dch.details"
+    class WardViewHolder(var binding: WardCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindAllQues(patientBioData: PatientBioData) {
+        fun bindAllQues(dispensary: PatientBioData?) {
 
             binding.apply {
-                patientBioData.apply {
-                    firstName.text = first_Name
-                    otherName.text = otherNames
+                dispensary?.let {
+                    firstName.text = it.first_Name
+                    otherName.text = it.otherNames
+                    hospitalNumberTextView.text = it.hospitalNumber
+                    timeRecorded.text = it.times
+                    visits.text = "2"
                 }
-
             }
         }
     }
@@ -55,7 +57,7 @@ class WardAdapter(context: Context): ListAdapter<PatientBioData,WardViewHolder>(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WardViewHolder {
         val consultLayoutBinder =
-            PatientParticularsCardBinding.inflate(from(parent.context), parent, false)
+            WardCardBinding.inflate(from(parent.context), parent, false)
         return WardViewHolder(consultLayoutBinder)
     }
 
@@ -84,18 +86,17 @@ class WardAdapter(context: Context): ListAdapter<PatientBioData,WardViewHolder>(
         val particulars = getItem(position)
         with(holder) {
             bindAllQues(particulars)
-
         }
 
-        holder.itemView.setOnClickListener{
-            val visits = Intent(context,DetailActivity::class.java)
-            visits.putExtra(PATIENT_AT_WARD,position)
+        holder.itemView.setOnClickListener {
+            val atWard = getItem(holder.adapterPosition).patientId
+            val visits = Intent(context, DetailActivity::class.java)
+
+            visits.putExtra(PATIENT_VISITS, atWard)
             context.startActivity(visits)
 
         }
     }
-
-
     /**
      * Returns the total number of items in the data set held by the adapter.
      *
@@ -103,7 +104,6 @@ class WardAdapter(context: Context): ListAdapter<PatientBioData,WardViewHolder>(
      */
     override fun getItemCount() = currentList.size
 }
-
 
 object Diff : DiffUtil.ItemCallback<PatientBioData>(){
     /**

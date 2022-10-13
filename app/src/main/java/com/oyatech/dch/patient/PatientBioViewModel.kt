@@ -59,6 +59,15 @@ var number = 0
     return allRecords
     }
 
+    override fun searchPatient(query: String): LiveData<MutableList<PatientBioData>> {
+       var result:LiveData<MutableList<PatientBioData>> = MutableLiveData()
+        viewModelScope.launch {
+            Dispatchers.Default
+         result =   repository.searchPatient(query)
+        }
+        return result
+    }
+
     override fun insertNextOfKin(nextOfKin: NextOfKin) {
         viewModelScope.launch {
             Dispatchers.IO

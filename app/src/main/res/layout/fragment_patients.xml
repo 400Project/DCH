@@ -38,6 +38,7 @@
             app:queryHint="Search patient by Name, H.No"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:inputType="textCapWords"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/search"
             app:iconifiedByDefault="false">
@@ -47,11 +48,11 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-android:visibility="visible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ProgressBar>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
