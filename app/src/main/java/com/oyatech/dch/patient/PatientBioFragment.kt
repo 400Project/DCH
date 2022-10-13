@@ -80,6 +80,19 @@ class PatientBioFragment : Fragment() {
         //    addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
 
 
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                searching(query!!)
+
+                return true
+            }
+
+        })
+
 
         binding.addPatient.setOnClickListener {
             val intent = Intent(requireContext(), PatientRegistrationFormActivity::class.java)
