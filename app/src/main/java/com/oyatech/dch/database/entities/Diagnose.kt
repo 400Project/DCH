@@ -18,10 +18,11 @@ data class Diagnose(
     var principal: String,
     var additional: String,
     var prescription: String,
-    var nurseNote: String,
+    var doctorNote:String?,
+    var nurseNote: String?,
     val staffName: String,
     var treatmentStatus: String,
-    var labs: String = "Not Lab",
+    var labs: String ?,
     val date: String = Utils.getDate(),
 val time: String = Utils.getTime()
 ) {

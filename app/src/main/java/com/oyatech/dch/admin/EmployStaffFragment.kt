@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -16,9 +15,11 @@ import com.oyatech.dch.R
 import com.oyatech.dch.alerts.isEmptyView
 import com.oyatech.dch.databinding.FragmentEmployStaffBinding
 import com.oyatech.dch.model.Staff
+import com.oyatech.dch.alerts.trimText
 
+// TODO: Rename and change types of parameters
 class EmployStaffFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     val viewModel:StaffViewModel by activityViewModels()
     private   var _binding: FragmentEmployStaffBinding? =null
     private   val binding get() = _binding!!
@@ -97,9 +98,6 @@ class EmployStaffFragment : Fragment() {
 
     }
 
-    private fun trimText(editText:EditText):String{
-        return editText.text.toString().trim()
-    }
 
     private fun getStaffGender(): AdapterView.OnItemSelectedListener {
 //The createFromResource() method allows you to create an ArrayAdapter from the string array.

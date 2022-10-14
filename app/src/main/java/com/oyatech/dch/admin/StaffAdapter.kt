@@ -21,7 +21,7 @@ constructor(context: Context) : this() {
 }
 
     inner class StaffViewHolder
-        ( val staffView:PatientParticularsCardBinding)
+        (private val staffView:PatientParticularsCardBinding)
         :ViewHolder(staffView.root){
         fun bindData(staff: Staff){
 
@@ -31,7 +31,7 @@ constructor(context: Context) : this() {
                     otherName.text = staff.otherName
                     recordedBy.text = staff.department
                     timeRecorded.text = staff.dateEmployed
-                    hospitalNumberTextView.text = staff.role
+                    hospitalNumberTextView.text = staff.staffId
 
             }
         }
@@ -43,7 +43,6 @@ constructor(context: Context) : this() {
      val binding = PatientParticularsCardBinding
          .inflate(LayoutInflater.from(context)
              ,parent,false)
-
         return  StaffViewHolder(binding)
     }
 

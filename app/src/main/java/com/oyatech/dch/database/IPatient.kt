@@ -14,6 +14,7 @@ interface IPatient {
     //Firebase calls
     fun insertPatientFirestore(patientBioData: PatientBioData)
    fun fetchAllRecords(): LiveData<MutableList<PatientBioData>>
+   fun searchPatient(query:String): LiveData<MutableList<PatientBioData>>
 
    fun insertNextOfKin(nextOfKin: NextOfKin)
 

@@ -4,12 +4,12 @@ import static androidx.navigation.fragment.FragmentKt.findNavController;
 import static com.oyatech.dch.alerts.ProduceSnackbarKt.isEmptyView;
 import static com.oyatech.dch.alerts.ProduceSnackbarKt.snackForError;
 import static com.oyatech.dch.alerts.ProduceSnackbarKt.toaster;
+import static com.oyatech.dch.alerts.ProduceSnackbarKt.trimText;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,9 +51,9 @@ public class CreateAccountFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.signUp.setOnClickListener(view1 -> {
-            String email = binding.staffEmail.getText().toString().trim();
-            String password = binding.password.getText().toString().trim();
-            String repeat_password = binding.repeatPassword.getText().toString().trim();
+            String email = trimText(binding.staffEmail);
+            String password = trimText(binding.password);
+            String repeat_password = trimText(binding.repeatPassword);
             if (isEmptyView(binding.staffEmail) ||
                     isEmptyView(binding.password) ||
                     isEmptyView(binding.repeatPassword)) {
@@ -63,10 +63,11 @@ public class CreateAccountFragment extends Fragment {
 
             } else if (!password.equals(repeat_password)) {
 
-                toaster(requireContext(),"Password Not match");
+                toaster(requireContext(), "Password Not match");
 
             } else {
 //creating a new account to a user and signing him/her out
+                progressVisible();
                 signUp(email, password);
 
             }
@@ -78,12 +79,23 @@ public class CreateAccountFragment extends Fragment {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
 
-                toaster(requireContext(), "Account created successfully");
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(3000);
+                            toaster(requireContext(), "Account created successfully");
+                            progressInVisible();
+                            signOut();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
-                findNavController(this).navigate(R.id.action_createAccountFragment_to_staffing);
-                signOut();
             } else {
-                snackForError(requireContext(), requireView(), "Network Error");
+                snackForError(requireContext(), requireView(), "It seems your internet in down");
+                progressInVisible();
 
             }
         });
@@ -91,5 +103,14 @@ public class CreateAccountFragment extends Fragment {
 
     private void signOut() {
         auth.signOut();
+        findNavController(this).navigate(R.id.action_createAccountFragment_to_staffing);
+    }
+
+    private void progressVisible() {
+        binding.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void progressInVisible() {
+        binding.progressBar.setVisibility(View.INVISIBLE);
     }
 }

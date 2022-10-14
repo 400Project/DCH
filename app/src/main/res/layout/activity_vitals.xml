@@ -173,98 +173,6 @@
                 app:layout_constraintTop_toBottomOf="@id/bio_layout" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/nOfKin_layout"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="12dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="5dp"
-                app:layout_constraintTop_toBottomOf="@id/divider1">
-
-                <TextView
-                    android:id="@+id/next_of_kin_text"
-                    style="@style/TextAppearance.AppCompat.Headline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Next of Kin"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/nOfKin_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Full Name: "
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/next_of_kin_text" />
-
-                <TextView
-                    android:id="@+id/nextOfKingName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/next_of_kin_text"
-                    tools:text="Oyadier Olivier" />
-
-                <TextView
-                    android:id="@+id/nOfKin_Mo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mobile : "
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/nOfKin_text" />
-
-                <TextView
-                    android:id="@+id/nextOfKingMobile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/nOfKin_Mo"
-                    app:layout_constraintTop_toBottomOf="@id/nextOfKingName"
-                    tools:text="0245589874" />
-
-                <TextView
-                    android:id="@+id/nOfKin_relationship"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Relationship : "
-                    app:layout_constraintEnd_toStartOf="@id/nextOfKingRelationship"
-                    app:layout_constraintTop_toTopOf="@id/nextOfKingRelationship" />
-
-                <TextView
-                    android:id="@+id/nextOfKingRelationship"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/nextOfKingName"
-                    tools:text="Wife" />
-
-                <TextView
-                    android:id="@+id/nOfKin_occupa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Occupation : "
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/nextOfKingMobile" />
-
-                <TextView
-                    android:id="@+id/nextOfKinOccupation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toEndOf="@id/nOfKin_occupa"
-                    app:layout_constraintTop_toBottomOf="@id/nextOfKingMobile"
-                    tools:text="Teaching" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider3"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/nOfKin_layout" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/allergies_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -272,7 +180,7 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider3">
+                app:layout_constraintTop_toBottomOf="@id/divider1">
 
                 <TextView
                     android:id="@+id/allergies_text"
@@ -402,7 +310,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="40dp"
                 android:layout_marginBottom="40dp"
-                android:text="Consultation Room"
+                android:text="@string/save"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

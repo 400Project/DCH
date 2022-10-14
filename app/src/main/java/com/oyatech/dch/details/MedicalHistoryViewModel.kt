@@ -9,12 +9,14 @@ import com.oyatech.dch.database.IDiagnoseId
 import com.oyatech.dch.database.Repository
 import com.oyatech.dch.database.entities.DiagID
 import com.oyatech.dch.database.entities.Diagnose
+import com.oyatech.dch.database.entities.Dispensary
 import com.oyatech.dch.database.entities.Vitals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-class MedicalHistoryViewModel(application: Application) : AndroidViewModel(application),IDiagnoseId {
+class MedicalHistoryViewModel(application: Application) : AndroidViewModel(application),
+    IDiagnoseId {
 
     private var _repository: Repository? = null
     private val repository get() = _repository!!
@@ -24,7 +26,7 @@ class MedicalHistoryViewModel(application: Application) : AndroidViewModel(appli
     val position get() = _position!!
 
     private var _allDiagnosis: LiveData<MutableList<Diagnose>>? = null
-    val allDiagnosis: LiveData<MutableList<Diagnose>> get() = _allDiagnosis!!
+    private val allDiagnosis: LiveData<MutableList<Diagnose>> get() = _allDiagnosis!!
 
     private var _listOfVitals: TreeMap<Int, Vitals> = TreeMap()
     val listOfVitals: TreeMap<Int, Vitals> get() = _listOfVitals
@@ -35,6 +37,9 @@ class MedicalHistoryViewModel(application: Application) : AndroidViewModel(appli
 
     private var _diagnoses: TreeMap<Int, Diagnose> = TreeMap()
     val diagnoses: TreeMap<Int, Diagnose> get() = _diagnoses
+
+    private var _dipensery: Dispensary? = null
+     val dipensery: Dispensary get()  = _dipensery!!
 
     init {
         _repository = Repository(application)
@@ -104,7 +109,8 @@ class MedicalHistoryViewModel(application: Application) : AndroidViewModel(appli
     }
 
     override fun getDiagnoseId(): LiveData<Int> {
-    return    repository.getDiagnoseId()
+        return repository.getDiagnoseId()
     }
+
 
 }

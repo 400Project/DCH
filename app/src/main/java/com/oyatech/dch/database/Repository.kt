@@ -15,10 +15,12 @@ import com.oyatech.dch.model.Staff
 
 typealias liveData = (LiveData<MutableList<Any>>)
 
-class Repository(application: Application) :
-    IPatient, IConsult, IVitalsId, IDiagnoseId,IStaff {
 
-    private val NEXT_OF_KIN: String="nextOfKins"
+class Repository(application: Application) :
+    IPatient, IConsult, IVitalsId, IDiagnoseId, IStaff, IWard {
+
+    private val NEXT_OF_KIN: String = "nextOfKins"
+    private val WARD = "ward"
     private val STAFF: String = "staff"
     val TAG = Repository::class.java.simpleName
     private var _mao: IDao? = null
@@ -156,6 +158,27 @@ class Repository(application: Application) :
 
     }
 
+    override fun searchPatient(query: String): LiveData<MutableList<PatientBioData>> {
+        val patient: MutableLiveData<MutableList<PatientBioData>> = MutableLiveData()
+        firestore.collection(DCH).orderBy("first_Name").startAt(query).endAt(query + '\uf8ff')
+            .addSnapshotListener { snapshot, exeption ->
+                if (exeption != null) {
+
+                    Log.i(TAG, "searchRecord: Failed")
+                    return@addSnapshotListener
+                }
+                if ((snapshot != null) && (snapshot.size() > -1)) {
+                    Log.d(TAG, "Current data: $snapshot")
+                    patient.value = snapshot.toObjects(PatientBioData::class.java)
+
+                } else {
+                    Log.d(TAG, "Current data: null")
+                }
+
+            }
+        return patient
+    }
+
     override fun insertNextOfKin(nextOfKin: NextOfKin) {
         firestore.collection(DCH).document(nextOfKin.patientId.toString())
             .collection(NEXT_OF_KIN).document("${nextOfKin.nextOfKinID}")
@@ -284,14 +307,14 @@ class Repository(application: Application) :
             }
     }
 
-    override fun getVitalsId(): MutableLiveData<Int>{
-        val id:MutableLiveData<Int> = MutableLiveData<Int>()
+    override fun getVitalsId(): MutableLiveData<Int> {
+        val id: MutableLiveData<Int> = MutableLiveData<Int>()
 
         firestore.collection("vitalsID")
             .document("currentId")
             .get()
             .addOnSuccessListener { document ->
-                if (document != null){
+                if (document != null) {
                     id.value = document.toObject(ViDs::class.java)!!.vId
 
                     Log.i(TAG, "getVitalsId: ${id}")
@@ -301,7 +324,6 @@ class Repository(application: Application) :
             }
         return id
     }
-
 
 
     //Storing and retrieving the diagnose ids
@@ -314,14 +336,14 @@ class Repository(application: Application) :
             }
     }
 
-    override fun getDiagnoseId(): MutableLiveData<Int>{
-        val id:MutableLiveData<Int> = MutableLiveData<Int>()
+    override fun getDiagnoseId(): MutableLiveData<Int> {
+        val id: MutableLiveData<Int> = MutableLiveData<Int>()
 
         firestore.collection("diagnoseID")
             .document("currentId")
             .get()
             .addOnSuccessListener { document ->
-                if (document != null){
+                if (document != null) {
                     id.value = document.toObject(DiagID::class.java)!!.diagnoseId
 
                     Log.i(TAG, "getVitalsId: ${id}")
@@ -332,6 +354,9 @@ class Repository(application: Application) :
         return id
     }
 
+    /**
+     * TODO: create a sign interface method or member method that helps to create a collection into dp
+     */
     override fun addStaff(staff: Staff) {
         firestore.collection(STAFF).document(staff.staffId)
             .set(staff).addOnSuccessListener {
@@ -365,21 +390,53 @@ class Repository(application: Application) :
 
     }
 
-  fun  getStaff(staffID: String):MutableLiveData<Staff>{
-      var aStaff = Staff()
-      val staff :MutableLiveData<Staff> = MutableLiveData()
-      firestore.collection(STAFF).document(staffID)
-         .get().addOnSuccessListener {
-              if (it.exists()) {
-                  aStaff = it.toObject<Staff>()!!
-                  staff.value = aStaff
-                  Log.i(TAG, "insertDailyVitals: ${it}")
-              }
+    fun getStaff(staffID: String): MutableLiveData<Staff> {
+        var aStaff = Staff()
+        val staff: MutableLiveData<Staff> = MutableLiveData()
+        firestore.collection(STAFF).document(staffID)
+            .get().addOnSuccessListener {
+                if (it.exists()) {
+                    aStaff = it.toObject<Staff>()!!
+                    staff.value = aStaff
+                    Log.i(TAG, "insertDailyVitals: ${it}")
+                }
 
-          }.addOnFailureListener {
-              Log.i(TAG, "insertDailyVitals: ${it.message}")
-          }
-      return  staff
-  }
+            }.addOnFailureListener {
+                Log.i(TAG, "insertDailyVitals: ${it.message}")
+            }
+        return staff
+    }
+
+    override fun insertWard(patient: PatientBioData) {
+        firestore.collection(WARD).document(patient.patientId.toString())
+            .set(patient).addOnSuccessListener {
+                Log.i(TAG, "insertWard: $it")
+            }.addOnFailureListener {
+                Log.i(TAG, "ward inserting fails: ${it.message}")
+            }
+
+    }
+
+    override fun removeFromWard(position: Int) {
+        firestore.collection(WARD)
+            .document("$position").delete()
+    }
+
+    override fun fetchWard(): LiveData<MutableList<PatientBioData>> {
+        val ward: MutableLiveData<MutableList<PatientBioData>> = MutableLiveData()
+        firestore.collection(WARD).get()
+            .addOnSuccessListener { result ->
+                if (result != null) {
+                    ward.value = result.toObjects(PatientBioData::class.java)
+                }
+                Log.i(TAG, "fetchConsults: $result")
+
+            }.addOnFailureListener { exception ->
+                Log.e(TAG, "fetchAllRecords: ", exception)
+            }
+
+        return ward
+    }
+
 
 }

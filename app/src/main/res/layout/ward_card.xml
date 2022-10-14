@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    app:circularflow_defaultRadius="@dimen/cardview_default_elevation">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:minHeight="70dp"
+        android:maxHeight="100dp"
+        android:elevation="2dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+
+                android:id="@+id/firstName"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Francis"/>
+
+            <TextView
+
+                android:id="@+id/otherName"
+                style="@style/TextAppearance.Material3.LabelLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="4dp"
+                android:ellipsize="end"
+                android:maxLength="15"
+                android:maxLines="1"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/firstName"
+                app:layout_constraintStart_toEndOf="@id/firstName"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.487"
+                tools:text="Oyadier Teye">
+
+            </TextView>
+
+            <TextView
+
+                android:id="@+id/time_recorded"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Time" />
+
+            <TextView
+                android:id="@+id/medicine"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/firstName"
+            app:layout_constraintStart_toStartOf="parent"
+                tools:text="Paracetamol and Lunart" />
+
+
+            <TextView
+                android:id="@+id/visits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="10dp"
+                app:layout_constraintStart_toStartOf="@id/medicine"
+                app:layout_constraintTop_toBottomOf="@id/medicine"
+                tools:text="Visit: 1" />
+
+
+            <TextView
+                android:id="@+id/recordedBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/hospitalNumberTextView"
+                app:layout_constraintStart_toEndOf="@id/visits"
+                app:layout_constraintTop_toBottomOf="@id/medicine"
+                tools:text="By: Francisca Noah" />
+
+            <TextView
+                android:id="@+id/hospitalNumberTextView"
+                style="@style/TextAppearance.Material3.BodySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/time_recorded"
+                app:layout_constraintTop_toTopOf="@+id/recordedBy"
+                tools:text="DCH/12/2022" />
+          <!--  <TextView
+                android:id="@+id/attended"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=".sp"
+                android:textSize="2sp"
+                app:layout_constraintEnd_toEndOf="@+id/hospitalNumberTextView"
+                app:layout_constraintTop_toBottomOf="@id/hospitalNumberTextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+            />-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

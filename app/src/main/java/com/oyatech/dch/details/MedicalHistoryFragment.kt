@@ -2,10 +2,11 @@ package com.oyatech.dch.details
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,10 +27,12 @@ class MedicalHistoryFragment : Fragment() {
 
     companion object {
         var diagnosis: TreeMap<Int, Diagnose> = TreeMap()
+        var patient  = PatientBioData()
     }
+
     var patientId: Int = 0
 
-    val viewModel : MedicalHistoryViewModel by activityViewModels()
+    val viewModel: MedicalHistoryViewModel by activityViewModels()
     val myAdapter by lazy {
         MedicalHistoryAdapter(requireContext(), this)
     }
@@ -62,13 +65,15 @@ class MedicalHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var myAdapter = medicalHistoryAdapter
+        val myAdapter = medicalHistoryAdapter
         //getting the position of the patient in the consultation room
         patientId = requireActivity().intent.getIntExtra(PATIENT_VISITS, -1)
 
         //getting he/her medical history
-        val patient = ConsultationsFragment.trees[patientId]!!
-
+        patient = ConsultationsFragment.medicalHistory[patientId]!!
+        /**
+         * TODO; I HAVE TO LOAD THE PATIENT BIO FROM ONLINE AT THE WARD FRAGMENT
+         */
         val layoutManager = LinearLayoutManager(requireContext())
         binding.visitsRecycleView.apply {
             viewModel.fetchDiagnosis(patientId).observe(viewLifecycleOwner) { it ->
@@ -96,7 +101,7 @@ class MedicalHistoryFragment : Fragment() {
         bindPatientDetails(patient)
 
         //updating the recycleView
-    //    createRecycleViewer()
+        //    createRecycleViewer()
 
         binding.addPatientDiagnosis.setOnClickListener {
 

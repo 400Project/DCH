@@ -2,13 +2,9 @@ package com.oyatech.dch.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.firebase.auth.FirebaseAuth
@@ -17,9 +13,11 @@ import com.oyatech.dch.R
 import com.oyatech.dch.admin.AdminActivity
 import com.oyatech.dch.admin.StaffViewModel
 import com.oyatech.dch.alerts.isEmptyView
+import com.oyatech.dch.alerts.snackForError
+import com.oyatech.dch.alerts.toaster
+import com.oyatech.dch.alerts.trimText
 import com.oyatech.dch.databinding.FragmentLoginBinding
 import com.oyatech.dch.datacenter.PatientsDataPageActivity
-
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -50,23 +48,6 @@ class LoginFragment : Fragment() {
 
     }
 
-    /**
-     * Called when the Fragment is visible to the user.  This is generally
-     * tied to [Activity.onStart] of the containing
-     * Activity's lifecycle.
-     */
-  /*  override fun onStart() {
-        super.onStart()
-        val preference = dpPreference
-        staff_department = preference.department
-        val currentUser = auth.currentUser
-        if ((staff_department.isNotEmpty()) && (currentUser != null)) {
-            intentToDataCenter(staff_department)
-            Toast.makeText(requireContext(), "Signed In", Toast.LENGTH_SHORT).show()
-        } else
-            Toast.makeText(requireContext(), "No Account yet", Toast.LENGTH_SHORT).show()
-
-    }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -79,17 +60,16 @@ class LoginFragment : Fragment() {
 
         binding.login.setOnClickListener {
 
-                val email = binding.staffId.text.toString().trim()
-                val password = binding.staffPassword.text.toString().trim()
-                if (isEmptyView(binding.staffId) || isEmptyView(binding.staffPassword)) {
+            val email = trimText(binding.staffId)
+            val password = trimText(binding.staffPassword)
+            if (isEmptyView(binding.staffId) || isEmptyView(binding.staffPassword)) {
 
-                } else if (!email.contains("@")) {
-                    binding.staffId.error = "Missing @ or .com"
+            } else if (!email.contains("@")) {
+                binding.staffId.error = "Missing @ or .com"
 
-                } else
-                    signIn(email, password)
-            }
-
+            } else
+                signIn(email, password)
+        }
 
 
     }
@@ -115,11 +95,10 @@ class LoginFragment : Fragment() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { result ->
                         if (result.isSuccessful) {
-                            Toast.makeText(
-                                requireContext(),
-                                "Sign In:${result.result.user?.email}",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            //Log in feedback
+
+                            requireContext().toaster("Signed In Successfully")
+                            progressBar.visibility = View.INVISIBLE
                             //getting the three characters of the passwaord
                             staff_department = password.substring(4, 7)
                             //saving the department to preference
@@ -131,14 +110,15 @@ class LoginFragment : Fragment() {
                     }.addOnFailureListener { failure ->
                         progressBar.visibility = View.INVISIBLE
                         noUser.visibility = View.VISIBLE
-                        noUser.text = "Incorrect Credential"
-                        Toast.makeText(
-                            requireContext(),
-                            "LogIn failed:${failure.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        noUser.text = getString(R.string.incorrect_credentials)
+
+                        requireContext().snackForError(
+                            requireView(),
+                            "LogIn failed. Please Check your internet connection"
+                        )
+
                     }
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 binding.noUser.text = e.toString()
             }
 
@@ -146,14 +126,16 @@ class LoginFragment : Fragment() {
     }
 
     private fun intentToDataCenter(staff_department: String) {
-        if (staff_department == "Adm"){
+        if (staff_department == "Adm") {
             startActivity(Intent(requireContext(), AdminActivity::class.java))
-        }else {
-        val intent =
-            Intent(requireContext(), PatientsDataPageActivity::class.java)
+        } else {
+            val intent =
+                Intent(requireContext(), PatientsDataPageActivity::class.java)
 
-        startActivity(intent)
-    }}
+            startActivity(intent)
+            requireActivity().finish()
+        }
+    }
 }
 
 

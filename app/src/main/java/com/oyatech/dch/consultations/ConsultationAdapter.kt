@@ -24,6 +24,7 @@ class ConsultationAdapter(context: Context) :
                 with(patientBioData){
                     firstName.text = patientBioData.first_Name
                     otherName.text = patientBioData.otherNames
+
                 }
             }
         }
