@@ -62,10 +62,10 @@ class Repository(application: Application) :
     /**
      * Daily Vitals list.
      */
-    override fun queueForVitals(dailyVitals: DailyVitals) {
+   /* override fun queueForVitals(dailyVitals: DailyVitals) {
         mDao.queueForVitals(dailyVitals)
     }
-
+*/
 
     /**
      * Daily Consultation table

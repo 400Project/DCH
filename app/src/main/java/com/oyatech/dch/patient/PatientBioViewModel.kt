@@ -28,9 +28,7 @@ var number = 0
     init {
         _repository = Repository(application)
     }
-    override fun queueForVitals(dailyVitals: DailyVitals) {
-        return repository.queueForVitals(dailyVitals)
-    }
+
 
 
 

@@ -52,7 +52,6 @@ class PatientBioFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-//TODO: I HAVE TO WORK ON THE SEARCH AGAIN
         _binding = FragmentPatientsBinding.inflate(inflater, container, false)
         return binding.root
 

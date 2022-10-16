@@ -3,7 +3,7 @@
     <string name="action_settings">Sign Out</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">D C H</string>
-    <string name="second_fragment_label">Staff Login</string>
+    <string name="second_fragment_label">Login</string>
 
     <string name="vission"><b><u>VISION</u></b>\n
 To be the center of excellence in the delivery of health care and human resource development through the most prudent, cost effective use of available resources.
@@ -93,5 +93,6 @@ To provide a comprehensive range of secondary level high quality inpatient and o
     <string name="relationship">Relationship With Patient</string>
     <string name="incorrect_credentials">Incorrect Credential</string>
     <string name="save">Save</string>
+    <string name="activate">Activate</string>
 
 </resources>

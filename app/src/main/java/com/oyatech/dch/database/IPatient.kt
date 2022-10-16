@@ -8,7 +8,7 @@ import com.oyatech.dch.database.entities.PatientBioData
 interface IPatient {
     //insert patient bio data into the database
 
-    fun queueForVitals(dailyVitals: DailyVitals)
+   // fun queueForVitals(dailyVitals: DailyVitals)
   //  fun getQueueForVitals(): LiveData<MutableList<DailyVitals>>
 
     //Firebase calls

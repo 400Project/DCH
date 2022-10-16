@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".recordforms.PatientRegistrationFormActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,9 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:elevation="5dp">
+            android:elevation="5dp"
+            android:saveEnabled="false">
 
             <TextView
+                android:id="@id/status"
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,13 +48,13 @@
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:maxWidth="110dp"
-                android:maxHeight="110dp"
+                android:layout_width="109dp"
+                android:layout_height="119dp"
+                android:maxWidth="150dp"
+                android:maxHeight="150dp"
                 android:src="@drawable/ic_medical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/hospitalNumberTextView"
+                app:layout_constraintStart_toEndOf="@id/status"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -59,7 +62,7 @@
                 android:id="@+id/firstname_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/ic_person"
                 android:hint="First Name"
@@ -67,7 +70,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
 
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/image">
 
             </EditText>
 
@@ -182,93 +185,119 @@
                 app:layout_constraintTop_toBottomOf="@id/mobile_layout" />
 
             <TextView
-                android:id="@+id/next_of_king_text"
+                android:id="@+id/next_kin_layout_hide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:padding="5dp"
+
                 android:text="@string/next_of_kin"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@id/next_kin_layout"
+                app:layout_constraintEnd_toStartOf="@id/hide_or_show"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nihs_layout">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/hide_or_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="110dp"
+                android:maxHeight="110dp"
+                android:src="@drawable/ic_arrow_down_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/next_kin_layout_hide"
                 app:layout_constraintTop_toBottomOf="@id/nihs_layout" />
 
-            <EditText
-                android:id="@+id/next_of_king_name_layout"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/next_kin_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/next_of_king_full_name"
-                android:inputType="textCapWords"
-                android:minWidth="100dp"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/nofK_mobile"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/next_of_king_text">
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/next_kin_layout_hide">
 
-            </EditText>
 
-            <EditText
-                android:id="@+id/nofK_mobile"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_mobile"
-                android:hint="@string/mobile_number"
-                android:inputType="phone"
-                android:minWidth="100dp"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="@id/nofK_relationship_layout"
-                app:layout_constraintStart_toStartOf="@id/next_of_king_name_layout"
-                app:layout_constraintTop_toBottomOf="@id/next_of_king_name_layout" />
+                <EditText
+                    android:id="@+id/next_of_king_name_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/next_of_king_full_name"
+                    android:inputType="textCapWords"
+                    android:minWidth="100dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/nofK_mobile"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/nofK_relationship_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_family"
-                android:hint="@string/relationship"
-                android:inputType="textCapWords"
-                android:minWidth="100dp"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nofK_mobile">
+                </EditText>
 
-            </EditText>
+                <EditText
+                    android:id="@+id/nofK_mobile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_mobile"
+                    android:hint="@string/mobile_number"
+                    android:inputType="phone"
+                    android:minWidth="100dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@id/nofK_relationship_layout"
+                    app:layout_constraintStart_toStartOf="@id/next_of_king_name_layout"
+                    app:layout_constraintTop_toBottomOf="@id/next_of_king_name_layout" />
 
-            <EditText
-                android:id="@+id/nofK_address"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_location"
-                android:hint="@string/address"
-                android:inputType="textCapWords"
-                android:minWidth="100dp"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nofK_relationship_layout" />
+                <EditText
+                    android:id="@+id/nofK_relationship_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_family"
+                    android:hint="@string/relationship"
+                    android:inputType="textCapWords"
+                    android:minWidth="100dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nofK_mobile">
 
-            <EditText
-                android:id="@+id/occupation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_occupation"
-                android:hint="@string/occupation"
-                android:inputType="textCapWords"
-                android:minWidth="100dp"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nofK_address" />
+                </EditText>
+
+                <EditText
+                    android:id="@+id/nofK_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_location"
+                    android:hint="@string/address"
+                    android:inputType="textCapWords"
+                    android:minWidth="100dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nofK_relationship_layout" />
+
+                <EditText
+                    android:id="@+id/occupation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_occupation"
+                    android:hint="@string/occupation"
+                    android:inputType="textCapWords"
+                    android:minWidth="100dp"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nofK_address" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/done"
+                android:id="@+id/update"
                 style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
-                android:layout_marginBottom="10dp"
 
                 android:backgroundTint="@color/green"
                 android:text="Update"
@@ -276,25 +305,22 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/vital_que"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/occupation" />
+                app:layout_constraintTop_toBottomOf="@id/next_kin_layout" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/vital_que"
                 style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="50dp"
                 android:layout_marginEnd="30dp"
-                android:layout_marginBottom="10dp"
-
                 android:backgroundTint="@color/purple_500"
-                android:text="Vitals"
+                android:text="@string/activate"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.Switch"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/done"
-                app:layout_constraintTop_toBottomOf="@id/occupation" />
+                app:layout_constraintStart_toEndOf="@id/update"
+                app:layout_constraintTop_toTopOf="@+id/update" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

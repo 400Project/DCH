@@ -2,6 +2,7 @@ package com.oyatech.dch
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +26,7 @@ class EditBioDataActivity : AppCompatActivity() {
     private var _patientBioData: PatientBioData?= null
     private val patientBioData get() = _patientBioData!!
 
+    var isShown = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,14 +57,35 @@ val viewModel= viewModel
         }
 
 
-        binding.done.setOnClickListener {
+        binding.update.setOnClickListener {
           //  val nextOfKin = nextOfKinDetails()
             
             Toast.makeText(this, "Record Updated", Toast.LENGTH_SHORT).show()
 
         }
+
+        binding.apply {
+            hideOrShow.setOnClickListener {
+
+                when(isShown){
+                    false ->  {
+                        nextKinLayout.visibility = View.VISIBLE
+                        hideOrShow.setImageResource(R.drawable.ic_arrow_up_24)
+                        isShown = true
+                    }else -> {
+                    nextKinLayout.visibility = View.GONE
+                    hideOrShow.setImageResource(R.drawable.ic_arrow_down_24)
+                    isShown = false
+                    }
+
+
+                }
+
+
+                Toast.makeText(this@EditBioDataActivity,"Show",Toast.LENGTH_LONG * 3).show()
+            }
+        }
     }
-    //TODO: SAVE TO VITAL ENTITY
 
     fun details(patientBioData: PatientBioData) {
         with(binding) {

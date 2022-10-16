@@ -96,7 +96,6 @@ class LoginFragment : Fragment() {
                     .addOnCompleteListener { result ->
                         if (result.isSuccessful) {
                             //Log in feedback
-
                             requireContext().toaster("Signed In Successfully")
                             progressBar.visibility = View.INVISIBLE
                             //getting the three characters of the passwaord
@@ -111,7 +110,7 @@ class LoginFragment : Fragment() {
                         progressBar.visibility = View.INVISIBLE
                         noUser.visibility = View.VISIBLE
                         noUser.text = getString(R.string.incorrect_credentials)
-
+                        //Using a snackbar to give feedback
                         requireContext().snackForError(
                             requireView(),
                             "LogIn failed. Please Check your internet connection"
